@@ -29,11 +29,28 @@ public class Main {
             default -> throw new IllegalArgumentException("Invalid code: '%s'".formatted(pieceCode));
         };
 
+        // Here we provide the obligatory printout of all asked-for grid states.
+        // To keep things simple at this stage, we simulate an empty grid by providing
+        // a rotation array with no data.
+        System.out.println(renderRotation(new Integer[]{}));
+
         for (var rotation : piece) {
             System.out.println(renderRotation(rotation));
         }
+
+        // Since the first rotation of 'O' is also its last rotation, we must avoid printing
+        // the corresponding grid twice (the chosen piece's starting grid was already printed
+        // out in the above for-loop).
+         if (piece != O) {
+             System.out.println(renderRotation(piece[0]));
+         }
     }
 
+    /** Get a String representation of a grid housing the rotation of a Tetris piece.
+     *
+     * @param rotation The piece's rotation, represented as an array of int positions.
+     * @return A printable String grid of the given rotation.
+     */
     private static String renderRotation(Integer[] rotation) {
         var buffer = new String[Main.ROTATION_AREA];
 
