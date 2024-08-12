@@ -3,73 +3,64 @@ package tetris;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
-    static final int ROTATION_AREA = 16;
+final class Board {
+    private final int width;
+    private final int height;
+    private final char[][] cells;
+    private static final char DEFAULT_CHAR = '-';
+    private static final char PIECE_CHAR = '0';
 
-    public static void main(String[] args) {
-        Integer[][] O = {{5, 6, 9, 10}};
-        Integer[][] I = {{1, 5, 9, 13}, {4, 5, 6, 7}, {1, 5, 9, 13}, {4, 5, 6, 7}};
-        Integer[][] S = {{6, 5, 9, 8}, {5, 9, 10, 14}, {6, 5, 9, 8}, {5, 9, 10, 14}};
-        Integer[][] Z = {{4, 5, 9, 10}, {2, 5, 6, 9}, {4, 5, 9, 10}, {2, 5, 6, 9}};
-        Integer[][] L = {{1, 5, 9, 10}, {2, 4, 5, 6}, {1, 2, 6, 10}, {4, 5, 6, 8}};
-        Integer[][] J = {{2, 6, 9, 10}, {4, 5, 6, 10}, {1, 2, 5, 9}, {0, 4, 5, 6}};
-        Integer[][] T = {{1, 4, 5, 6}, {1, 4, 5, 9}, {4, 5, 6, 9}, {1, 5, 6, 9}};
+    public Board(int width, int height) {
+        this.cells = new char[width][height];
 
-        var scanner = new Scanner(System.in);
-        String pieceCode = scanner.next();
-
-        var piece = switch(pieceCode) {
-            case "O" -> O;
-            case "I" -> I;
-            case "S" -> S;
-            case "Z" -> Z;
-            case "L" -> L;
-            case "J" -> J;
-            case "T" -> T;
-            default -> throw new IllegalArgumentException("Invalid code: '%s'".formatted(pieceCode));
-        };
-
-        // Here we provide the obligatory printout of all asked-for grid states.
-        // To keep things simple at this stage, we simulate an empty grid by providing
-        // a rotation array with no data.
-        System.out.println(renderRotation(new Integer[]{}));
-
-        for (var rotation : piece) {
-            System.out.println(renderRotation(rotation));
+        // Initialize all cells to '-'
+        for (var row : cells) {
+            Arrays.fill(row, DEFAULT_CHAR);
         }
 
-        // Since the first rotation of 'O' is also its last rotation, we must avoid printing
-        // the corresponding grid twice (the chosen piece's starting grid was already printed
-        // out in the above for-loop).
-         if (piece != O) {
-             System.out.println(renderRotation(piece[0]));
-         }
+        this.width = width;
+        this.height = height;
     }
 
-    /** Get a String representation of a grid housing the rotation of a Tetris piece.
-     *
-     * @param rotation The piece's rotation, represented as an array of int positions.
-     * @return A printable String grid of the given rotation.
-     */
-    private static String renderRotation(Integer[] rotation) {
-        var buffer = new String[Main.ROTATION_AREA];
+    private void updateState(Piece piece) {
+        var drawingTemplate = piece.getDrawingTemplate(width);
 
-        for (int i = 0; i < buffer.length; i++) {
-            String ending;
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                var linearIndex = col + width * row;
 
-            if (i % 4 == 3) {
-                ending = "\n";
-            } else {
-                ending = " ";
+                if (drawingTemplate.contains(linearIndex)) {
+                    cells[row][col] = PIECE_CHAR;
+                } else {
+                    cells[row][col] = DEFAULT_CHAR;
+                }
+            }
+        }
+    }
+
+    public String getStringRepresentation(Piece piece) {
+        updateState(piece);
+        var builder = new StringBuilder();
+
+        for (var row : cells) {
+            for (var cell : row) {
+                builder.append("%c ".formatted(cell));
             }
 
-            buffer[i] = "-" + ending;
+            builder.append("%n");
         }
 
-        for (int index : rotation) {
-            buffer[index] = buffer[index].replace("-", "0");
-        }
+        return builder.toString();
+    }
+}
 
-        return Arrays.stream(buffer).reduce("", (whole, cell) -> whole + cell);
+/** TODO
+ *     Allow updateState to accept a null parameter, in which case the drawing template is set to -1, -1, -1, -1,
+ *     so that '-' is written everywhere in the board. (We can have that bogus drawing template saved somewhere
+ *     as a static field, either in a Utils class, or something similar.)
+ */
+public class Main {
+    public static void main(String[] args) {
+        var scanner = new Scanner(System.in);
     }
 }
