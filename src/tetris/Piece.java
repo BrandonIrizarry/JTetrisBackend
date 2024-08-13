@@ -58,7 +58,18 @@ public final class Piece {
 
         return getCurrentRotation()
                        .stream()
-                       .map(point -> basePoint + (point / FRAME_DIMENSION) * boardWidth + point % FRAME_DIMENSION)
+                       .map(point -> {
+                           var rowBasePoint = basePoint + (point / FRAME_DIMENSION) * boardWidth;
+                           var finalPoint = rowBasePoint + point % FRAME_DIMENSION;
+
+                           // Detect whether this point has wrapped around to the next row;
+                           // if so, bring it back up to (x, y - 1).
+                           if (finalPoint % boardWidth < rowBasePoint % boardWidth) {
+                               finalPoint -= boardWidth;
+                           }
+
+                           return finalPoint;
+                       })
                        .toList();
     }
 }
