@@ -33,7 +33,6 @@ public class Main {
         var boardHeight = boardDimensions.get(1);
 
         var board = new Board(boardHeight, boardWidth);
-        board.updateState(null);
         System.out.println(board);
 
         piece.setFrameOrigin(3, 0);

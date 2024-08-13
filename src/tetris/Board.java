@@ -25,7 +25,7 @@ public final class Board {
     public void updateState(Piece piece) {
         // If 'piece' is null, use a drawing template that can't appear on the board, so that
         // no 'PIECE_CHAR' is ever written.
-        var drawingTemplate = piece == null ? List.of(-1, -1, -1, -1) : piece.getDrawingTemplate(width);
+        var drawingTemplate = piece.getDrawingTemplate(width);
 
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
