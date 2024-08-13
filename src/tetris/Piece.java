@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
-/** The internal, data representation of a Tetris piece.
+/** The internal data representation of a Tetris piece.
  * The successive elements of the 'rotations' buffer describe
  * a counterclockwise rotation. Rendering is handled by a separate class.
  */
