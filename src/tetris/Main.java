@@ -47,12 +47,8 @@ public class Main {
 
             switch(command) {
                 case "rotate" -> piece.rotateCounterclockwise();
-                case "left" -> {
-                    piece.moveLeft();
-                }
-                case "right" -> {
-                    piece.moveRight();
-                }
+                case "left" -> piece.moveLeft();
+                case "right" -> piece.moveRight();
                 case "down" -> { }
                 case "exit" -> { break gameLoop; }
                 default -> throw new IllegalArgumentException("invalid command");
