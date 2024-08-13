@@ -17,11 +17,19 @@ public class Main {
     public static void main(String[] args) {
         var scanner = new Scanner(System.in);
         var pieceLetter = scanner.nextLine();
+
+        var piece = pieceTable.get(pieceLetter);
+        if (piece == null) throw new AssertionError();
+
         var boardWidth = scanner.nextInt();
         var boardHeight = scanner.nextInt();
 
         var board = new Board(boardHeight, boardWidth);
         board.updateState(null);
+        System.out.println(board);
+
+        piece.setFrameOrigin(3, 0);
+        board.updateState(piece);
         System.out.println(board);
     }
 }

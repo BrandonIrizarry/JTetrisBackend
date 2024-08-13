@@ -13,10 +13,18 @@ public final class Piece {
     private final Deque<List<Integer>> rotations = new ArrayDeque<>();
     private int xOffset;
     private int yOffset;
+    public static final int FRAME_DIMENSION = 4;
 
     @SafeVarargs
     public Piece(List<Integer>... rotations) {
         this.rotations.addAll(Arrays.asList(rotations));
+    }
+
+    // When spawning a piece for the first time, we need to first specify the
+    // initial x and y offsets.
+    public void setFrameOrigin(int xOffset, int yOffset) {
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
     }
 
     public void moveDown() {
@@ -50,7 +58,7 @@ public final class Piece {
 
         return getCurrentRotation()
                        .stream()
-                       .map(point -> point + basePoint)
+                       .map(point -> basePoint + (point / FRAME_DIMENSION) * boardWidth + point % FRAME_DIMENSION)
                        .toList();
     }
 }
