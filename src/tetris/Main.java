@@ -49,17 +49,16 @@ public class Main {
                 case "rotate" -> piece.rotateCounterclockwise();
                 case "left" -> {
                     piece.moveLeft();
-                    piece.moveDown();
                 }
                 case "right" -> {
                     piece.moveRight();
-                    piece.moveDown();
                 }
-                case "down" -> piece.moveDown();
+                case "down" -> { }
                 case "exit" -> { break gameLoop; }
                 default -> throw new IllegalArgumentException("invalid command");
             }
 
+            piece.moveDown();
             board.updateState(piece);
             System.out.println(board);
         }
