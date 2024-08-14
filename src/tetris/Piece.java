@@ -78,23 +78,22 @@ public final class Piece {
 
         while (true) {
             var basePoint = xOffset + boardWidth * yOffset;
+            var currentRotation = getCurrentRotation();
 
-            drawingTemplate = getCurrentRotation()
+            drawingTemplate = currentRotation
                                       .stream()
-                                      .takeWhile(point -> {
-                                          var rowBasePoint = basePoint + (point / FRAME_DIMENSION) * boardWidth;
-                                          var finalPoint = rowBasePoint + point % FRAME_DIMENSION;
-
-                                          return finalPoint % boardWidth >= rowBasePoint % boardWidth;
-                                      })
                                       .map(point -> {
                                           var rowBasePoint = basePoint + (point / FRAME_DIMENSION) * boardWidth;
-
                                           return rowBasePoint + point % FRAME_DIMENSION;
                                       })
                                       .toList();
 
-            if (drawingTemplate.size() == NUM_TILES) {
+            // Check if the resulting tiles correspond to a whole Tetris piece (that is, there
+            // was no wrapping around).
+            var backProjection = backProjectDrawingTemplate(drawingTemplate, basePoint, boardWidth);
+
+            if (currentRotation.equals(backProjection)) {
+                // Every cell is legal.
                 break;
             } else {
                 var undoMethod = undoActions.get(lastMove);
@@ -104,5 +103,16 @@ public final class Piece {
         }
 
         return drawingTemplate;
+    }
+
+    private List<Integer> backProjectDrawingTemplate(List<Integer> drawingTemplate, int basePoint, int boardWidth) {
+        return drawingTemplate
+                       .stream()
+                       .map(point -> {
+                           var topLeftPoint = point - basePoint;
+
+                           return topLeftPoint > 3 ? topLeftPoint - (boardWidth - FRAME_DIMENSION) : topLeftPoint;
+                       })
+                       .toList();
     }
 }
