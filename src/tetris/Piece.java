@@ -74,45 +74,21 @@ public final class Piece {
     }
 
     public List<Integer> getDrawingTemplate(int boardWidth) {
-        List<Integer> drawingTemplate = null;
+        var basePoint = xOffset + boardWidth * yOffset;
+        var currentRotation = getCurrentRotation();
 
-        while (true) {
-            var basePoint = xOffset + boardWidth * yOffset;
-            var currentRotation = getCurrentRotation();
-
-            drawingTemplate = currentRotation
-                                      .stream()
-                                      .map(point -> {
-                                          var rowBasePoint = basePoint + (point / FRAME_DIMENSION) * boardWidth;
-                                          return rowBasePoint + point % FRAME_DIMENSION;
-                                      })
-                                      .toList();
-
-            // Check if the resulting tiles correspond to a whole Tetris piece (that is, there
-            // was no wrapping around).
-            var backProjection = backProjectDrawingTemplate(drawingTemplate, basePoint, boardWidth);
-
-            if (currentRotation.equals(backProjection)) {
-                // Every cell is legal.
-                break;
-            } else {
-                var undoMethod = undoActions.get(lastMove);
-
-                undoMethod.accept(this);
-            }
-        }
-
-        return drawingTemplate;
-    }
-
-    private List<Integer> backProjectDrawingTemplate(List<Integer> drawingTemplate, int basePoint, int boardWidth) {
-        return drawingTemplate
+        return currentRotation
                        .stream()
                        .map(point -> {
-                           var topLeftPoint = point - basePoint;
-
-                           return topLeftPoint > 3 ? topLeftPoint - (boardWidth - FRAME_DIMENSION) : topLeftPoint;
+                           var rowBasePoint = basePoint + (point / FRAME_DIMENSION) * boardWidth;
+                           return rowBasePoint + point % FRAME_DIMENSION;
                        })
                        .toList();
+    }
+
+    public void undo() {
+        var lastMoveMethod = undoActions.get(lastMove);
+
+        lastMoveMethod.accept(this);
     }
 }

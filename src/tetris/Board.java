@@ -1,6 +1,7 @@
 package tetris;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public final class Board {
@@ -26,6 +27,11 @@ public final class Board {
         // If 'piece' is null, use a drawing template that can't appear on the board, so that
         // no 'PIECE_CHAR' is ever written.
         var drawingTemplate = piece.getDrawingTemplate(width);
+
+        if (!validate(drawingTemplate)) {
+            piece.undo();
+            drawingTemplate = piece.getDrawingTemplate(width);
+        }
 
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
@@ -53,5 +59,35 @@ public final class Board {
         }
 
         return builder.toString();
+    }
+
+    private boolean validate(List<Integer> drawingTemplate) {
+        var sortedTemplate = drawingTemplate
+                             .stream()
+                             .sorted(Comparator.naturalOrder())
+                             .toList();
+
+        // Detect wrapping across the right boundary.
+        for (int i = 1; i < sortedTemplate.size(); i++) {
+            var previousPoint = sortedTemplate.get(i - 1);
+            var currentPoint = sortedTemplate.get(i);
+
+            if (previousPoint % width == width - 1 && currentPoint % width == 0) {
+                return false;
+            }
+        }
+
+        // Detect wrapping across the left boundary.
+        // The wrapping is detectable if we iterate across the template backwards.
+        for (int i = sortedTemplate.size() - 1; i >= 1; i--) {
+            var previousPoint = sortedTemplate.get(i - 1);
+            var currentPoint = sortedTemplate.get(i);
+
+            if (previousPoint % width == 0 && currentPoint % width == width - 1) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
