@@ -24,7 +24,15 @@ public final class Board {
     }
 
     public void updateState(Piece piece) {
+        if (piece.isFrozen()) {
+            return;
+        }
+
         var drawingTemplate = piece.getDrawingTemplate(width);
+
+        if (drawingTemplate.stream().anyMatch(point -> point / width == height - 1)) {
+            piece.freeze();
+        }
 
         if (!validate(drawingTemplate)) {
             piece.undo();

@@ -24,6 +24,7 @@ public final class Piece {
     );
 
     private Move lastMove;
+    private boolean frozen = false;
 
     public static final int FRAME_DIMENSION = 4;
 
@@ -40,6 +41,8 @@ public final class Piece {
     }
 
     public void moveDown() {
+        if (frozen) return;
+
         yOffset++;
 
         // Note that we don't save a move down as the last move,
@@ -47,22 +50,30 @@ public final class Piece {
     }
 
     public void moveLeft() {
+        if (frozen) return;
+
         xOffset--;
         lastMove = Move.Left;
     }
 
     public void moveRight() {
+        if (frozen) return;
+
         xOffset++;
         lastMove = Move.Right;
     }
 
     public void rotateCounterclockwise() {
+        if (frozen) return;
+
         var tmp = rotations.pop();
         rotations.addLast(tmp);
         lastMove = Move.Counterclockwise;
     }
 
     public void rotateClockwise() {
+        if (frozen) return;
+
         var tmp = rotations.removeLast();
         rotations.push(tmp);
         lastMove = Move.Clockwise;
@@ -89,5 +100,13 @@ public final class Piece {
         var lastMoveMethod = undoActions.get(lastMove);
 
         lastMoveMethod.accept(this);
+    }
+
+    public void freeze() {
+        frozen = true;
+    }
+
+    public boolean isFrozen() {
+        return frozen;
     }
 }
