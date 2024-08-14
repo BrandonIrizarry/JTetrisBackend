@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 enum Move {
-    Down, Left, Right, Clockwise, Counterclockwise
+    Left, Right, Clockwise, Counterclockwise
 }
 
 /** The internal data representation of a Tetris piece.
@@ -17,7 +17,6 @@ public final class Piece {
     private int yOffset;
 
     private final static Map<Move, Consumer<Piece>> undoActions = Map.of(
-            Move.Down, Piece::moveDown,
             Move.Left, Piece::moveRight,
             Move.Right, Piece::moveLeft,
             Move.Clockwise, Piece::rotateCounterclockwise,
@@ -43,6 +42,9 @@ public final class Piece {
 
     public void moveDown() {
         yOffset++;
+
+        // Note that we don't save a move down as the last move,
+        // since there is no possibility of undoing it (currently).
     }
 
     public void moveLeft() {
