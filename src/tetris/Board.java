@@ -24,8 +24,6 @@ public final class Board {
     }
 
     public void updateState(Piece piece) {
-        // If 'piece' is null, use a drawing template that can't appear on the board, so that
-        // no 'PIECE_CHAR' is ever written.
         var drawingTemplate = piece.getDrawingTemplate(width);
 
         if (!validate(drawingTemplate)) {
