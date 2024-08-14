@@ -26,7 +26,6 @@ public final class Piece {
     private Move lastMove;
 
     public static final int FRAME_DIMENSION = 4;
-    public static final int NUM_TILES = 4;
 
     @SafeVarargs
     public Piece(List<Integer>... rotations) {
