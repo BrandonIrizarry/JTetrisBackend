@@ -24,21 +24,29 @@ public final class Board {
     }
 
     public void updateState(Piece piece) {
+        // If the piece can't be moved anymore, there is no point in updating any
+        // state, so return.
         if (piece.isFrozen()) {
             return;
         }
 
         var drawingTemplate = piece.getDrawingTemplate(width);
 
+        // If any of the drawing template's points is at the bottom row of the board,
+        // the piece has officially landed, and so can't be moved anymore.
         if (drawingTemplate.stream().anyMatch(point -> point / width == height - 1)) {
             piece.freeze();
         }
 
+        // Refetch a drawing template if the current one is invalid, undoing the piece's
+        // previous move.
         if (!validate(drawingTemplate)) {
             piece.undo();
             drawingTemplate = piece.getDrawingTemplate(width);
         }
 
+        // Update the board according to whether the drawing template specifies
+        // it.
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 var linearIndex = col + width * row;
@@ -68,6 +76,9 @@ public final class Board {
     }
 
     private boolean validate(List<Integer> drawingTemplate) {
+        // Sort, in case either the original piece data was entered by me in an
+        // unsorted manner, or else some algorithm should've previously shuffled
+        // the data in the template.
         var sortedTemplate = drawingTemplate
                              .stream()
                              .sorted(Comparator.naturalOrder())
@@ -94,6 +105,7 @@ public final class Board {
             }
         }
 
+        // Nothing wrong otherwise.
         return true;
     }
 }
