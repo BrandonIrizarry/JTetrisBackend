@@ -1,4 +1,6 @@
-package tetris;
+package tetris.pieces;
+
+import tetris.pieces.Piece;
 
 import java.util.Arrays;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package tetris;
+package tetris.pieces;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -28,16 +28,13 @@ public final class Piece {
 
     public static final int FRAME_DIMENSION = 4;
 
+    // Note that this constructor isn't meant to be called outside this package;
+    // that's the job of the Pieces class, which is used as a builder for this class.
     @SafeVarargs
-    public Piece(List<Integer>... rotations) {
+    Piece(int xOffsetInitial, int yOffsetInitial, List<Integer>... rotations) {
+        this.xOffset = xOffsetInitial;
+        this.yOffset = yOffsetInitial;
         this.rotations.addAll(Arrays.asList(rotations));
-    }
-
-    // When spawning a piece for the first time, we need to first specify the
-    // initial x and y offsets.
-    public void setFrameOrigin(int xOffset, int yOffset) {
-        this.xOffset = xOffset;
-        this.yOffset = yOffset;
     }
 
     public void moveDown() {

@@ -1,9 +1,16 @@
-package tetris;
+package tetris.main;
+
+import tetris.pieces.Board;
+import tetris.pieces.Piece;
+import tetris.pieces.Pieces;
 
 import java.util.*;
-import java.util.function.Supplier;
+import java.util.function.BiFunction;
 
 public class Main {
+    final static int X_OFFSET_INITIAL = 3;
+    final static int Y_OFFSET_INITIAL = 0;
+
     public static void main(String[] args) {
         var scanner = new Scanner(System.in);
 
@@ -11,7 +18,7 @@ public class Main {
         var board = getFreshBoard(scanner);
         System.out.println(board);
 
-        // Begin the initial setup: the user at this point can enter\
+        // Begin the initial setup: the user at this point can enter
         // "piece" or "exit" only.
         var maybePiece = enterInitialInputState(scanner);
 
@@ -23,7 +30,6 @@ public class Main {
         // If not, the user asked for a piece, so initialize it, and then enter the
         // subsequent while-loop.
         var piece = maybePiece.get();
-        piece.setFrameOrigin(3, 0);
         board.updateState(piece);
         System.out.println(board);
 
@@ -43,11 +49,13 @@ public class Main {
 
             // Change the reference to point to the newly allocated piece.
             piece = maybePiece.get();
+            board.updateState(piece);
+            System.out.println(board);
         }
     }
 
     private static Piece getFreshPiece(Scanner scanner) {
-        final Map<String, Supplier<Piece>> pieceTable = Map.of(
+        final Map<String, BiFunction<Integer, Integer, Piece>> pieceTable = Map.of(
                 "I", Pieces.Factory_II,
                 "J", Pieces.Factory_JJ,
                 "L", Pieces.Factory_LL,
@@ -62,7 +70,7 @@ public class Main {
         var pieceFactory = pieceTable.get(pieceLetter);
         if (pieceFactory == null) throw new AssertionError();
 
-        return pieceFactory.get();
+        return pieceFactory.apply(X_OFFSET_INITIAL, Y_OFFSET_INITIAL);
     }
 
     private static Board getFreshBoard(Scanner scanner) {
