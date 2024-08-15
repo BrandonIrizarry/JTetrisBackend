@@ -1,6 +1,6 @@
 package tetris.main;
 
-import tetris.pieces.Board;
+import tetris.board.Board;
 import tetris.pieces.Piece;
 import tetris.pieces.Pieces;
 

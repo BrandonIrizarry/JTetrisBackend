@@ -1,4 +1,4 @@
-package tetris.pieces;
+package tetris.board;
 
 import tetris.pieces.Piece;
 
