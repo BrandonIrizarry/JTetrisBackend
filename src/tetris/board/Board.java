@@ -5,6 +5,7 @@ import tetris.pieces.Piece;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public final class Board {
     private final int width;
@@ -12,6 +13,10 @@ public final class Board {
     private final char[][] cells;
     private static final char DEFAULT_CHAR = '-';
     private static final char PIECE_CHAR = '0';
+    // Used to denote a tile of a piece when it has landed, and is therefore frozen.
+    // This designation is only internal: when printing, this character is displayed as
+    // 'O', as if it were any other tile.
+    private static final char FROZEN_CHAR = 'G';
 
     public Board(int height, int width) {
         this.cells = new char[height][width];
@@ -42,9 +47,16 @@ public final class Board {
             drawingTemplate = piece.getDrawingTemplate(width);
         }
 
-        // If any of the drawing template's points is at the bottom row of the board,
-        // the piece has officially landed, and so can't be moved anymore.
-        if (drawingTemplate.stream().anyMatch(point -> point / width == height - 1)) {
+        // If any of the drawing template's points is at the bottom row of the board
+        // (or has landed on another frozen piece), freeze the piece.
+        Predicate<Integer> hasLanded = (point) -> {
+            var row = point / width;
+            var col = point % width;
+
+            return (row == height - 1) || (cells[row + 1][col] == 'G');
+        };
+
+        if (drawingTemplate.stream().anyMatch(hasLanded)) {
             piece.freeze();
         }
 
@@ -54,9 +66,11 @@ public final class Board {
             for (int col = 0; col < width; col++) {
                 var linearIndex = col + width * row;
 
+                // Note that, here we avoid accidentally overwriting FROZEN_CHAR cells,
+                // since they represent pieces that have landed, and are therefore permanent.
                 if (drawingTemplate.contains(linearIndex)) {
-                    cells[row][col] = PIECE_CHAR;
-                } else {
+                    cells[row][col] = piece.isFrozen() ? FROZEN_CHAR : PIECE_CHAR;
+                } else if (cells[row][col] != FROZEN_CHAR) {
                     cells[row][col] = DEFAULT_CHAR;
                 }
             }
@@ -69,7 +83,10 @@ public final class Board {
 
         for (var row : cells) {
             for (var cell : row) {
-                builder.append("%c ".formatted(cell));
+                // When printing the board, display 'G' characters
+                // as 'O', since this is what users (and Hyperskill) expect.
+                var ch = cell == 'G' ? 'O' : cell;
+                builder.append("%c ".formatted(ch));
             }
 
             builder.append("\n");
