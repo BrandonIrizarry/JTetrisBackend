@@ -64,4 +64,6 @@ public final class Pieces {
                     List.of(1, 2, 6, 7),
                     List.of(2, 5, 6, 9)
             );
+
+    public static final Piece gameOver = new Piece(0, 0, List.of());
 }
