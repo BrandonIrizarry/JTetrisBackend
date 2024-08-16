@@ -199,4 +199,26 @@ public final class Board {
             }
         }
     }
+
+    /** Check whether the board has any column filled to the top with FROZEN_CHAR.
+     * If so, return false, to let the caller know that the game is lost.
+     * @return Whether a column is filled to the top with FROZEN_CHAR.
+     */
+    public boolean checkLosingState() {
+        for (int col = 0; col < cells[0].length; col++) {
+            int countFrozenChars = 0;
+
+            for (var row : cells) {
+                if (row[col] == FROZEN_CHAR) {
+                    countFrozenChars++;
+                }
+            }
+
+            if (countFrozenChars == height) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

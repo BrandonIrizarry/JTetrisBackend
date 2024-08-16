@@ -49,6 +49,12 @@ public class Main {
 
             // Change the reference to point to the newly allocated piece.
             piece = maybePiece.get();
+
+            if (piece.equals(Pieces.gameOver)) {
+                System.out.println("Game Over!");
+                return;
+            }
+
             board.updateState(piece);
             System.out.println(board);
         }
@@ -129,6 +135,12 @@ public class Main {
             piece.moveDown();
             board.updateState(piece);
             System.out.println(board);
+
+            var lostTheGame = board.checkLosingState();
+
+            if (lostTheGame) {
+                return Optional.of(Pieces.gameOver);
+            }
         }
     }
 }
