@@ -2,6 +2,7 @@ package tetris.board;
 
 import tetris.pieces.Piece;
 
+import java.nio.CharBuffer;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +18,7 @@ public final class Board {
     // This designation is only internal: when printing, this character is displayed as
     // 'O', as if it were any other tile.
     private static final char FROZEN_CHAR = 'G';
+    private static final char EMPTY_CHAR = 'E';
 
     public Board(int height, int width) {
         this.cells = new char[height][width];
@@ -127,5 +129,54 @@ public final class Board {
 
         // Nothing wrong otherwise.
         return true;
+    }
+
+    public void breakHorizontalRows() {
+        // First, mark all rows consisting exclusively of 'G' for deletion.
+        for (var row : cells) {
+            var allFrozenChars = CharBuffer.wrap(row)
+                               .chars()
+                               .allMatch(ch -> (char)ch == FROZEN_CHAR);
+
+            if (allFrozenChars) {
+                Arrays.fill(row, EMPTY_CHAR);
+            }
+
+            eliminateEmptyChars();
+        }
+    }
+
+    private void eliminateEmptyChars() {
+
+        while (true) {
+            boolean foundEmptyChar = false;
+
+            for (int row = 0; row < cells.length; row++) {
+                for (int col = 0; col < cells[row].length; col++) {
+                    if (cells[row][col] == EMPTY_CHAR) {
+                        foundEmptyChar = true;
+
+                        if (row == 0) {
+                            cells[row][col] = DEFAULT_CHAR;
+                        } else {
+                            switch (cells[row - 1][col]) {
+                                case DEFAULT_CHAR -> cells[row][col] = DEFAULT_CHAR;
+                                case FROZEN_CHAR -> {
+                                    var tmp = cells[row - 1][col];
+                                    cells[row - 1][col] = cells[row][col];
+                                    cells[row][col] = tmp;
+                                }
+                                case EMPTY_CHAR -> { }
+                                default -> throw new IllegalStateException("Illegal char: %c".formatted(cells[row - 1][col]));
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!foundEmptyChar) {
+                break;
+            }
+        }
     }
 }

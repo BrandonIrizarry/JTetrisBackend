@@ -109,7 +109,7 @@ public class Main {
                 case "left" -> piece.moveLeft();
                 case "right" -> piece.moveRight();
                 case "down" -> { }
-                case "break" -> { } // TODO
+                case "break" -> board.breakHorizontalRows();
                 case "exit" -> { return Optional.empty(); }
                 case "piece" -> {
                     if (piece.isFrozen()) {
