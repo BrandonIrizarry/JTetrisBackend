@@ -87,7 +87,7 @@ public final class Board {
             for (var cell : row) {
                 // When printing the board, display 'G' characters
                 // as 'O', since this is what users (and Hyperskill) expect.
-                var ch = cell == 'G' ? 'O' : cell;
+                var ch = cell == FROZEN_CHAR ? PIECE_CHAR : cell;
                 builder.append("%c ".formatted(ch));
             }
 
