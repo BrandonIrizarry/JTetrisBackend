@@ -12,12 +12,20 @@ public final class Board {
     private final int width;
     private final int height;
     private final char[][] cells;
+
+    /** Models an ordinary empty tile in the Tetris board. */
     private static final char DEFAULT_CHAR = '-';
+
+    /** Models a tile of a Tetris piece, as it's still falling down. */
     private static final char PIECE_CHAR = '0';
-    // Used to denote a tile of a piece when it has landed, and is therefore frozen.
-    // This designation is only internal: when printing, this character is displayed as
-    // 'O', as if it were any other tile.
+
+    /** Used to denote a tile of a piece when it has landed, and is therefore frozen.
+     * This designation is only internal: when printing, this character is displayed as
+     * 'O', as if it were any other tile. */
     private static final char FROZEN_CHAR = 'G';
+
+    /** Models a (temporary) empty space left after clearing a filled horizontal row with
+     * the 'break' command. */
     private static final char EMPTY_CHAR = 'E';
 
     public Board(int height, int width) {
@@ -131,6 +139,7 @@ public final class Board {
         return true;
     }
 
+    /** Update board state by clearing any filled horizontal rows. */
     public void breakHorizontalRows() {
         // First, mark all rows consisting exclusively of 'G' for deletion.
         for (var row : cells) {
@@ -146,9 +155,20 @@ public final class Board {
         }
     }
 
+    /** Clear out all EMPTY_CHAR tiles, causing pieces above to fall in the process.
+     * The rules are:
+     * 1. If an EMPTY_CHAR is at the top of the board, replace it with DEFAULT_CHAR.
+     * 2. If an EMPTY_CHAR is beneath a DEFAULT_CHAR, replace the former with DEFAULT_CHAR.
+     * 3. If an EMPTY_CHAR is beneath another EMPTY_CHAR, do nothing.
+     * 4. If an EMPTY_CHAR is beneath a FROZEN_CHAR, pull the latter downward by swapping
+     *      their positions.
+     * 5. Note that it's impossible for an EMPTY_CHAR to be beneath a PIECE_CHAR, since
+     *    the PIECE_CHAR would've been frozen by then, and thus converted to a FROZEN_CHAR.
+     */
     private void eliminateEmptyChars() {
-
         while (true) {
+            // If we don't find any more EMPTY_CHAR after scanning the board,
+            // we exit this while loop.
             boolean foundEmptyChar = false;
 
             for (int row = 0; row < cells.length; row++) {
