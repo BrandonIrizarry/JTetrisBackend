@@ -60,9 +60,9 @@ Output J-Tetris.gif
 Require java
 
 Set Shell "bash"
-Set FontSize 32
-Set Width 1200
-Set Height 600
+Set FontSize 22
+Set Width 600
+Set Height 400
 
 Type "cd J-Tetris" Sleep 500ms  Enter
 Type "./gradlew build" Sleep 500ms  Enter
@@ -72,12 +72,82 @@ Type "10 10" Sleep 500ms  Enter
 Type "piece" Sleep 500ms  Enter
 Type "O" Sleep 500ms  Enter
 Type "left" Sleep 500ms  Enter
+Sleep 500ms
 Type "left" Sleep 500ms  Enter
+Sleep 500ms
 Type "left" Sleep 500ms  Enter
+Sleep 500ms
 Type "left" Sleep 500ms  Enter
+Sleep 500ms
 Type "down" Sleep 500ms Enter
+Sleep 500ms
 Type "down" Sleep 500ms Enter
+Sleep 500ms
 Type "down" Sleep 500ms Enter
+Sleep 500ms
 Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "piece" Sleep 500ms Enter
+Sleep 500ms
+Type "L" Sleep 500ms Enter
+Sleep 500ms
+Type "rotate" Sleep 500ms Enter
+Sleep 500ms
+Type "left" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "piece" Sleep 500ms Enter
+Sleep 500ms
+Type "T" Sleep 500ms Enter
+Sleep 500ms
+Type "rotate" Sleep 500ms Enter
+Sleep 500ms
+Type "right" Sleep 500ms Enter
+Sleep 500ms
+Type "right" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "piece" Sleep 500ms Enter
+Sleep 500ms
+Type "L" Sleep 500ms Enter
+Sleep 500ms
+Type "right" Sleep 500ms Enter
+Sleep 500ms
+Type "right" Sleep 500ms Enter
+Sleep 500ms
+Type "right" Sleep 500ms Enter
+Sleep 500ms
+Type "right" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "down" Sleep 500ms Enter
+Sleep 500ms
+Type "break" Sleep 500ms Enter
+Sleep 500ms
 
 Sleep 5s

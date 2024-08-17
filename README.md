@@ -16,6 +16,12 @@ And, to boot, Tetris is a game I enjoyed playing very much when I was
 younger, even getting somewhat good at it (though I never [beat
 it](https://www.youtube.com/watch?v=POc1Et73WZg)).
 
+## Demo
+A GIF demo of the project in action (building, then execution.) The
+commands used are explained further below.
+
+![Demo of J-Tetris](J-Tetris.gif)
+
 ## Running the current version
 1. Clone locally.
 2. Within the top-level project directory: `./gradelw build`, then
