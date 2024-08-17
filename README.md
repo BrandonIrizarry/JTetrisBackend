@@ -45,19 +45,19 @@ again, in the same manner as described above.
 ### Keywords
 - piece
   - Enter a new piece: select from I, J, L, O, S, T, or Z. This
-    command only works either at the beginning of the game, or when
-    the current piece has landed.
+	command only works either at the beginning of the game, or when
+	the current piece has landed.
 - left, right, rotate
   - Move/rotate the piece.
 - down
   - Do nothing (let the piece fall down one space). Note that
-    currently, there is currently no "drop" command, as we're used to in classic
-    Tetris.
+	currently, there is currently no "drop" command, as we're used to in classic
+	Tetris.
 - break
   - In the current state of the project, when the player completes
-    lines, she must "claim" them manually, with this command. Of
-    course, this will only take effect if there are completed lines in
-    the first place. There is currently no scoring system set up.
+	lines, she must "claim" them manually, with this command. Of
+	course, this will only take effect if there are completed lines in
+	the first place. There is currently no scoring system set up.
 - exit
   - Exit the game.
   
