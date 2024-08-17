@@ -17,8 +17,11 @@ younger, even getting somewhat good at it (though I never [beat
 it](https://www.youtube.com/watch?v=POc1Et73WZg)).
 
 ## Demo
-A GIF demo of the project in action (building, then execution.) The
+A GIF demo of the project in action (includes build step.) The
 commands used are explained further below.
+
+The demo was creating using the excellent
+[VHS](https://github.com/charmbracelet/vhs) program.
 
 ![Demo of J-Tetris](J-Tetris.gif)
 

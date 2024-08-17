@@ -61,8 +61,8 @@ Require java
 
 Set Shell "bash"
 Set FontSize 22
-Set Width 600
-Set Height 400
+Set Width 650
+Set Height 450
 
 Type "cd J-Tetris" Sleep 500ms  Enter
 Type "./gradlew build" Sleep 500ms  Enter
