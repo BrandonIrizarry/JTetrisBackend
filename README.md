@@ -85,6 +85,9 @@ Some ideas:
   - Hyperskill version lacks a "drop" command
   - Music/sound?
   - Fancy art?
+  - Levels (dropping speed increases; does scoring increase?)
+  - Preview window showing the next piece
+  - Scoring a tetris
   
 - Refine the "interpreter" aspect of the project
   - Refactor the command-accepting logic?
