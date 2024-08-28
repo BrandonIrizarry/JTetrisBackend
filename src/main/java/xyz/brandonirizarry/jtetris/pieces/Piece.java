@@ -96,9 +96,9 @@ public final class Piece {
     }
 
     public void undo() {
-        var lastMoveMethod = undoActions.get(lastMove);
+        var undoActionFn = undoActions.get(lastMove);
 
-        lastMoveMethod.accept(this);
+        undoActionFn.accept(this);
     }
 
     public void freeze() {
