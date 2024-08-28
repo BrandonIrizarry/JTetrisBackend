@@ -1,4 +1,4 @@
-package tetris.pieces;
+package xyz.brandonirizarry.jtetris.pieces;
 
 import java.util.List;
 import java.util.function.BiFunction;

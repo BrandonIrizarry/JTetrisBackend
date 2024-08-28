@@ -1,6 +1,6 @@
-package tetris.board;
+package xyz.brandonirizarry.jtetris.board;
 
-import tetris.pieces.Piece;
+import xyz.brandonirizarry.jtetris.pieces.Piece;
 
 import java.nio.CharBuffer;
 import java.util.Arrays;

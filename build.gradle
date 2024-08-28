@@ -4,6 +4,6 @@ plugins {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'tetris.main.Main'
+        attributes 'Main-Class': 'xyz.brandonirizarry.tetris.main.Main'
     }
 }

@@ -1,8 +1,8 @@
-package tetris.main;
+package xyz.brandonirizarry.jtetris.main;
 
-import tetris.board.Board;
-import tetris.pieces.Piece;
-import tetris.pieces.Pieces;
+import xyz.brandonirizarry.jtetris.board.Board;
+import xyz.brandonirizarry.jtetris.pieces.Piece;
+import xyz.brandonirizarry.jtetris.pieces.Pieces;
 
 import java.util.*;
 import java.util.function.BiFunction;
