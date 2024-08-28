@@ -3,15 +3,17 @@ package xyz.brandonirizarry.jtetris.pieces;
 import java.util.*;
 import java.util.function.Consumer;
 
-enum Move {
-    Left, Right, Clockwise, Counterclockwise
-}
-
 /** The internal data representation of a Tetris piece.
  * The successive elements of the 'rotations' buffer describe
  * a counterclockwise rotation. Rendering is handled by a separate class.
  */
 public final class Piece {
+    /** An enum representing one of the four possible motions of a
+     * Tetris piece. */
+    private enum Move {
+        Left, Right, Clockwise, Counterclockwise
+    }
+
     private final Deque<List<Integer>> rotations = new ArrayDeque<>();
     private int xOffset;
     private int yOffset;
