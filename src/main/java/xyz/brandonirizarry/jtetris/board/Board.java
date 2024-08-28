@@ -63,7 +63,7 @@ public final class Board {
             var row = point / width;
             var col = point % width;
 
-            return (row == height - 1) || (cells[row + 1][col] == 'G');
+            return (row == height - 1) || (cells[row + 1][col] == FROZEN_CHAR);
         };
 
         if (drawingTemplate.stream().anyMatch(hasLanded)) {
