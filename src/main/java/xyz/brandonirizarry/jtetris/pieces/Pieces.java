@@ -3,10 +3,7 @@ package xyz.brandonirizarry.jtetris.pieces;
 import java.util.List;
 import java.util.function.BiFunction;
 
-/** A means of scoping the various Tetris pieces within a dedicated class.
- * Each piece is publicly accessible as a static (final) field, e.g 'Piece.OO',
- * 'Piece.LL'.
- */
+/** A means of scoping the various Tetris pieces within a dedicated class. */
 public final class Pieces {
     public static final BiFunction<Integer, Integer, Piece> Factory_II =
             (xOffset, yOffset) -> new Piece(
