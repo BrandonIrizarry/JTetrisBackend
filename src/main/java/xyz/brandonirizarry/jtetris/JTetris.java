@@ -6,22 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-enum GridToken {
-    Empty('-'), Piece('O');
-
-    private final char symbol;
-
-    GridToken(char symbol) {
-        this.symbol = symbol;
-    }
-
-    public char getSymbol() {
-        return symbol;
-    }
-}
-
-record Coordinate(int row, int column) { }
-
 public class JTetris {
     static Map<String, Deque<List<Coordinate>>> pieceMap = new HashMap<>(Map.of(
             /*
