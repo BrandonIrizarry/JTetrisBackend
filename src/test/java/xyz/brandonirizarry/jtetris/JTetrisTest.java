@@ -1,38 +1,41 @@
 package xyz.brandonirizarry.jtetris;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
 
 import java.net.URISyntaxException;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JTetrisTest {
     @Test
+    @DisplayName("Z-piece stencil coordinates are correct")
     void testZ() throws URISyntaxException {
+        // Invoke 'main', so that the values of pieceMap are populated with
+        // rotations.
         JTetris.main(new String[]{});
-        var actualPieceZ = JTetris.pieceMap.get("Z")
-                                                .stream()
-                                                .flatMap(Collection::stream)
-                                                .toList();
+        var actualPieceZ = JTetris.pieceMap.get("Z");
 
-        var expectedPieceZ = List.of(
+        var expectedPieceZ = new CircularBuffer<>(
                 // First rotation.
-                new Coordinate(0, 1),
-                new Coordinate(0, 2),
-                new Coordinate(1, 2),
-                new Coordinate(1, 3),
+                List.of(
+                        new Coordinate(0, 1),
+                        new Coordinate(0, 2),
+                        new Coordinate(1, 2),
+                        new Coordinate(1, 3)
+                ),
 
                 // Second rotation.
-                new Coordinate(0, 2),
-                new Coordinate(1, 1),
-                new Coordinate(1, 2),
-                new Coordinate(2, 1)
+                List.of(
+                        new Coordinate(0, 2),
+                        new Coordinate(1, 1),
+                        new Coordinate(1, 2),
+                        new Coordinate(2, 1)
+                )
         );
 
-        for (var i = 0; i < expectedPieceZ.size(); i++) {
-            assertEquals(expectedPieceZ.get(i), actualPieceZ.get(i));
-        }
+        assertEquals(expectedPieceZ, actualPieceZ, "Stencil generates incorrect coordinates");
     }
 }

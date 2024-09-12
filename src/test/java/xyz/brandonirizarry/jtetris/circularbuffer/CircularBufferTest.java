@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CircularBufferTest {
     @Test
-    @DisplayName("Integer-based circular buffer")
+    @DisplayName("Rotation presents correct element")
     void simpleTestWithIntegers() {
         var buffer = new CircularBuffer<>(1, 2, 3, 4);
         assertEquals(1, buffer.getFirst());
@@ -22,22 +22,12 @@ public class CircularBufferTest {
     }
 
     @Test
-    @DisplayName("Zero-element buffer throws exception")
-    void zeroElementsThrowsException() {
-        assertThrows(
-                IllegalArgumentException.class,
-                CircularBuffer<Integer>::new,
-                "Zero-element buffer"
-        );
+    @DisplayName("Equality of two integer-based buffers")
+    void checkSimpleEquality() {
+        var buffer1 = new CircularBuffer<>(1, 2, 3);
+        var buffer2 = new CircularBuffer<>(1, 2, 3);
+
+        assertEquals(buffer1, buffer2);
     }
 
-    @Test
-    @DisplayName("One-element buffer throws exception")
-    void oneElementThrowsException() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> new CircularBuffer<>(1),
-                "One-element buffer"
-        );
-    }
 }

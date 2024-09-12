@@ -1,5 +1,7 @@
 package xyz.brandonirizarry.jtetris;
 
+import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -7,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class JTetris {
-    static Map<String, Deque<List<Coordinate>>> pieceMap = new HashMap<>(Map.of(
+    static Map<String, CircularBuffer<List<Coordinate>>> pieceMap = new HashMap<>(Map.of(
             /*
             "I", new ArrayDeque<>(),
             "J", new ArrayDeque<>(),
@@ -16,7 +18,7 @@ public class JTetris {
             "S", new ArrayDeque<>(),
             "T", new ArrayDeque<>(),
              */
-            "Z", new ArrayDeque<>()
+            "Z", new CircularBuffer<>()
     ));
 
     public static void main(String[] args) throws URISyntaxException {
