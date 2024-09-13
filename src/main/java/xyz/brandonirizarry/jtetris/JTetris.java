@@ -66,18 +66,7 @@ public class JTetris {
                             );
                         }
 
-                        {
-                            var size = rotation.size();
-                            assert size == 4 : "Rotation size found: %d".formatted(size);
-                        }
-
-                        rotations.add(new Rotation(
-                                rotation.get(0),
-                                rotation.get(1),
-                                rotation.get(2),
-                                rotation.get(3))
-                        );
-
+                        rotations.add(Rotation.fromList(rotation));
                     } catch (IOException e) {
                         System.out.println("what?");
                     }
