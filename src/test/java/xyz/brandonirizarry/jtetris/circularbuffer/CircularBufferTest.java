@@ -30,4 +30,11 @@ public class CircularBufferTest {
         assertEquals(buffer1, buffer2);
     }
 
+    @Test
+    @DisplayName("String representation")
+    void checkStringRepresentation() {
+        var buffer = new CircularBuffer<>(1, 2, 3);
+
+        assertEquals("[1, 2, 3]", buffer.toString());
+    }
 }

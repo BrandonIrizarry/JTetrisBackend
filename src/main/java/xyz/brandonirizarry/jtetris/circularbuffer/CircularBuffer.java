@@ -40,4 +40,9 @@ public class CircularBuffer<T> {
     public int hashCode() {
         return Objects.hashCode(buffer);
     }
+
+    @Override
+    public String toString() {
+        return buffer.toString();
+    }
 }
