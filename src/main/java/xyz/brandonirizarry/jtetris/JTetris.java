@@ -5,6 +5,7 @@ import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -21,6 +22,35 @@ public class JTetris {
             "Z", new CircularBuffer<>()
     ));
 
+    private static Rotation getRotationFromFilepath(Path path) {
+        List<Coordinate> rotation = new ArrayList<>();
+
+        try (var scanner = new Scanner(path).useDelimiter("")) {
+            var rowIndex = 0;
+            var columnIndex = 0;
+
+            while (scanner.hasNext()) {
+                switch (scanner.next().charAt(0)) {
+                    case '\n' -> { continue; }
+                    case 'O' -> rotation.add(new Coordinate(rowIndex, columnIndex));
+                }
+
+                columnIndex++;
+
+                if (columnIndex == 4) {
+                    columnIndex = 0;
+                    rowIndex++;
+
+                    if (rowIndex == 4) break;
+                }
+            }
+        } catch (IOException e) {
+            System.out.printf("Couldn't create scanner for file '%s'%n", path);
+        }
+
+        return Rotation.fromList(rotation);
+    }
+
     public static void main(String[] args) throws URISyntaxException {
         for (var pieceName : pieceMap.keySet()) {
             var dir = JTetris.class.getClassLoader().getResource(pieceName);
@@ -32,45 +62,9 @@ public class JTetris {
                 directoryContentsStream
                         .sorted()
                         .forEach(path -> {
-                    try (var scanner = new Scanner(path).useDelimiter("")) {
-                        var rowIndex = 0;
-                        var columnIndex = 0;
-                        List<Coordinate> rotation = new ArrayList<>();
-
-                        while (scanner.hasNext()) {
-                            var rawToken = scanner.next().charAt(0);
-
-                            if (rawToken == '\n') {
-                                continue;
-                            }
-
-                            if (rawToken == 'O') {
-                                rotation.add(new Coordinate(rowIndex, columnIndex));
-                            }
-
-                            columnIndex++;
-
-                            if (columnIndex == 4) {
-                                columnIndex = 0;
-                                rowIndex++;
-
-                                if (rowIndex == 4) {
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (rowIndex > 4) {
-                            throw new IllegalStateException(
-                                    "rowIndex out of bounds with value: %d".formatted(rowIndex)
-                            );
-                        }
-
-                        rotations.add(Rotation.fromList(rotation));
-                    } catch (IOException e) {
-                        System.out.println("what?");
-                    }
-                });
+                            var rotation = getRotationFromFilepath(path);
+                            rotations.add(rotation);
+                        });
             } catch (IOException e) {
                 System.out.println("oops");
             }
