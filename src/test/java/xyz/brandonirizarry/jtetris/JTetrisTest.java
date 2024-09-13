@@ -19,7 +19,7 @@ public class JTetrisTest {
 
     @Test
     @DisplayName("Z-piece stencil coordinates are correct")
-    void testZ() {
+    void checkStencilCoordinatesZ() {
         var actualPieceZ = JTetris.pieceMap.get("Z");
 
         var expectedPieceZ = new CircularBuffer<>(
