@@ -23,7 +23,7 @@ application {
 }
 
 dependencies {
-    implementation("com.google.guava:guava:33.3.0-jre")
+    implementation(libs.guava)
     testImplementation(libs.junit.jupiter)
 }
 
