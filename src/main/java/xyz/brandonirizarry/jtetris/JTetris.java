@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class JTetris {
-    static Map<String, CircularBuffer<List<Coordinate>>> pieceMap = new HashMap<>(Map.of(
+    static Map<String, CircularBuffer<Rotation>> pieceMap = new HashMap<>(Map.of(
             /*
             "I", new ArrayDeque<>(),
             "J", new ArrayDeque<>(),
@@ -66,7 +66,18 @@ public class JTetris {
                             );
                         }
 
-                        rotations.add(rotation);
+                        {
+                            var size = rotation.size();
+                            assert size == 4 : "Rotation size found: %d".formatted(size);
+                        }
+
+                        rotations.add(new Rotation(
+                                rotation.get(0),
+                                rotation.get(1),
+                                rotation.get(2),
+                                rotation.get(3))
+                        );
+
                     } catch (IOException e) {
                         System.out.println("what?");
                     }

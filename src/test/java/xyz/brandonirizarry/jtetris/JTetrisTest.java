@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
 
 import java.net.URISyntaxException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,16 +18,14 @@ public class JTetrisTest {
         var actualPieceZ = JTetris.pieceMap.get("Z");
 
         var expectedPieceZ = new CircularBuffer<>(
-                // First rotation.
-                List.of(
+                new Rotation(
                         new Coordinate(0, 1),
                         new Coordinate(0, 2),
                         new Coordinate(1, 2),
                         new Coordinate(1, 3)
                 ),
 
-                // Second rotation.
-                List.of(
+                new Rotation(
                         new Coordinate(0, 2),
                         new Coordinate(1, 1),
                         new Coordinate(1, 2),
