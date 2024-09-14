@@ -15,9 +15,9 @@ public class JTetris {
             "I", new ArrayDeque<>(),
             "J", new ArrayDeque<>(),
             "L", new ArrayDeque<>(),
-            "O", new ArrayDeque<>(),
             "S", new ArrayDeque<>(),
              */
+            "O", new CircularBuffer<>(),
             "T", new CircularBuffer<>(),
             "Z", new CircularBuffer<>()
     ));
