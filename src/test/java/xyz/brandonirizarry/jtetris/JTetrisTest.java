@@ -99,7 +99,7 @@ public class JTetrisTest {
 
     @ParameterizedTest
     @MethodSource("getStencilTestArgs")
-    @DisplayName("Stencil template generates correct coordinates")
+    @DisplayName("Stencil templates generate correct coordinates")
     void checkStencilCoordinates(String pieceName, CircularBuffer<Rotation> stencilDefinition) {
         var actualPiece = JTetris.pieceMap.get(pieceName);
 
