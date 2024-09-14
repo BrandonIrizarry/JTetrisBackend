@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JTetrisTest {
+public class StencilDefinitionsTest {
     private static final Map<String, CircularBuffer<Rotation>> stencilCoordinateDefinitions = Map.of(
             "Z", new CircularBuffer<>(
                     new Rotation(
