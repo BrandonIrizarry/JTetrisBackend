@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JTetrisTest {
     private static final Map<String, CircularBuffer<Rotation>> stencilCoordinateDefinitions = Map.of(
-        "Z", new CircularBuffer<>(
+            "Z", new CircularBuffer<>(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(0, 2),
@@ -30,7 +30,7 @@ public class JTetrisTest {
                             new Coordinate(2, 1)
                     )
             ),
-    "T", new CircularBuffer<>(
+            "T", new CircularBuffer<>(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(1, 1),
@@ -59,19 +59,12 @@ public class JTetrisTest {
                             new Coordinate(1, 2)
                     )
             ),
-            "Z", new CircularBuffer<>(
+            "O", new CircularBuffer<>(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(0, 2),
-                            new Coordinate(1, 2),
-                            new Coordinate(1, 3)
-                    ),
-
-                    new Rotation(
-                            new Coordinate(0, 2),
                             new Coordinate(1, 1),
-                            new Coordinate(1, 2),
-                            new Coordinate(2, 1)
+                            new Coordinate(1, 2)
                     )
             )
     );
