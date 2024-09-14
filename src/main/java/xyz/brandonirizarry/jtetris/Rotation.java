@@ -17,4 +17,9 @@ public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) {
                 list.get(3)
         );
     }
+
+    @Override
+    public String toString() {
+        return "<%s %s %s %s>".formatted(a, b, c, d);
+    }
 }
