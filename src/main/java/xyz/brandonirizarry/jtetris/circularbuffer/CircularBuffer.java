@@ -2,13 +2,10 @@ package xyz.brandonirizarry.jtetris.circularbuffer;
 
 import com.google.common.collect.Iterables;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.Objects;
+import java.util.*;
 
-public class CircularBuffer<T> {
-    private final Deque<T> buffer;
+public class CircularBuffer<T> implements Iterable<T> {
+    final Deque<T> buffer;
 
     @SafeVarargs
     public CircularBuffer(T... elements) {
@@ -44,5 +41,10 @@ public class CircularBuffer<T> {
     @Override
     public String toString() {
         return buffer.toString();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return buffer.iterator();
     }
 }
