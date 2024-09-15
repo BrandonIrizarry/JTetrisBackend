@@ -1,6 +1,8 @@
 package xyz.brandonirizarry.jtetris;
 
 import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
+import xyz.brandonirizarry.jtetris.recordtypes.Coordinate;
+import xyz.brandonirizarry.jtetris.recordtypes.Rotation;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

@@ -1,4 +1,4 @@
-package xyz.brandonirizarry.jtetris;
+package xyz.brandonirizarry.jtetris.recordtypes;
 
 import java.util.List;
 

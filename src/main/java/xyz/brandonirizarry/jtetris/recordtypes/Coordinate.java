@@ -1,4 +1,4 @@
-package xyz.brandonirizarry.jtetris;
+package xyz.brandonirizarry.jtetris.recordtypes;
 
 public record Coordinate(int row, int column) {
     @Override

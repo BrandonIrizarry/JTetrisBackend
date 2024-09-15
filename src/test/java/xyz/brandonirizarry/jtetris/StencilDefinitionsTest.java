@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
+import xyz.brandonirizarry.jtetris.recordtypes.Coordinate;
+import xyz.brandonirizarry.jtetris.recordtypes.Rotation;
 
 import java.util.Map;
 import java.util.stream.Stream;
