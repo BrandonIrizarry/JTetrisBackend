@@ -16,12 +16,100 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StencilDefinitionsTest {
     private static final Map<String, CircularBuffer<Rotation>> stencilCoordinateDefinitions = Map.of(
+            "I", new CircularBuffer<>(
+                    new Rotation(
+                            new Coordinate(0, 0),
+                            new Coordinate(0, 1),
+                            new Coordinate(0, 2),
+                            new Coordinate(0, 3)
+                    ),
+
+                    new Rotation(
+                            new Coordinate(0, 1),
+                            new Coordinate(1, 1),
+                            new Coordinate(2, 1),
+                            new Coordinate(3, 1)
+                    )
+            ),
+            "J", new CircularBuffer<>(
+                    new Rotation(
+                            new Coordinate(0, 2),
+                            new Coordinate(1, 2),
+                            new Coordinate(2, 1),
+                            new Coordinate(2, 2)
+                    ),
+
+                    new Rotation(
+                            new Coordinate(0, 0),
+                            new Coordinate(0, 1),
+                            new Coordinate(0, 2),
+                            new Coordinate(1, 2)
+                    ),
+
+                    new Rotation(
+                            new Coordinate(0, 1),
+                            new Coordinate(0, 2),
+                            new Coordinate(1, 1),
+                            new Coordinate(2, 1)
+                    ),
+
+                    new Rotation(
+                            new Coordinate(0, 1),
+                            new Coordinate(1, 1),
+                            new Coordinate(1, 2),
+                            new Coordinate(1, 3)
+                    )
+            ),
+            "L", new CircularBuffer<>(
+                    new Rotation(
+                            new Coordinate(0, 1),
+                            new Coordinate(1, 1),
+                            new Coordinate(2, 1),
+                            new Coordinate(2, 2)
+                    ),
+
+                    new Rotation(
+                            new Coordinate(0, 2),
+                            new Coordinate(1, 0),
+                            new Coordinate(1, 1),
+                            new Coordinate(1, 2)
+                    ),
+
+                    new Rotation(
+                            new Coordinate(0, 1),
+                            new Coordinate(0, 2),
+                            new Coordinate(1, 2),
+                            new Coordinate(2, 2)
+                    ),
+
+                    new Rotation(
+                            new Coordinate(0, 1),
+                            new Coordinate(0, 2),
+                            new Coordinate(0, 3),
+                            new Coordinate(1, 1)
+                    )
+            ),
             "O", new CircularBuffer<>(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(0, 2),
                             new Coordinate(1, 1),
                             new Coordinate(1, 2)
+                    )
+            ),
+            "S", new CircularBuffer<>(
+                    new Rotation(
+                            new Coordinate(0, 1),
+                            new Coordinate(0, 2),
+                            new Coordinate(1, 0),
+                            new Coordinate(1, 1)
+                    ),
+
+                    new Rotation(
+                            new Coordinate(0, 1),
+                            new Coordinate(1, 1),
+                            new Coordinate(1, 2),
+                            new Coordinate(2, 2)
                     )
             ),
             "T", new CircularBuffer<>(
