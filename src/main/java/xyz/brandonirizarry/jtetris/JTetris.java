@@ -49,7 +49,7 @@ public class JTetris {
         return Rotation.fromList(rotation);
     }
 
-    public static void main(String[] args) throws URISyntaxException {
+    public static void main(String[] args) {
         for (var pieceName : pieceMap.keySet()) {
             var dir = JTetris.class.getClassLoader().getResource(pieceName);
             assert dir != null;
@@ -63,8 +63,12 @@ public class JTetris {
                             var rotation = getRotationFromFilepath(path);
                             rotations.add(rotation);
                         });
+            } catch (URISyntaxException e) {
+                System.out.println("Directory resource invalid or not found");
+                System.out.println(e.getMessage());
             } catch (IOException e) {
-                System.out.println("oops");
+                System.out.println("Something went wrong when opening the directory");
+                System.out.println(e.getMessage());
             }
 
             pieceMap.put(pieceName, rotations);
