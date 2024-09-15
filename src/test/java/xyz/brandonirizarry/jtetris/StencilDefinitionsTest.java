@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
 
-import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -174,7 +173,7 @@ public class StencilDefinitionsTest {
     // Invoke 'main', so that the values of pieceMap are populated with
     // rotations.
     @BeforeAll
-    static void populatePieceMap() throws URISyntaxException {
+    static void populatePieceMap() {
         JTetris.main(new String[]{});
     }
 
