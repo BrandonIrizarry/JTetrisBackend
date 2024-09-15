@@ -1,6 +1,6 @@
-package xyz.brandonirizarry.jtetris;
+package xyz.brandonirizarry.jtetris.board;
 
-public enum GridToken {
+enum GridToken {
     Empty('-'), Piece('O');
 
     private final char symbol;
