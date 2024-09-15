@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
+import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 import xyz.brandonirizarry.jtetris.recordtypes.Coordinate;
 import xyz.brandonirizarry.jtetris.recordtypes.Rotation;
 
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StencilDefinitionsTest {
     private static final Map<String, CircularBuffer<Rotation>> stencilCoordinateDefinitions = Map.of(
-            "I", new CircularBuffer<>(
+            "I", new Piece(
                     new Rotation(
                             new Coordinate(0, 0),
                             new Coordinate(0, 1),
@@ -32,7 +33,7 @@ public class StencilDefinitionsTest {
                             new Coordinate(3, 1)
                     )
             ),
-            "J", new CircularBuffer<>(
+            "J", new Piece(
                     new Rotation(
                             new Coordinate(0, 2),
                             new Coordinate(1, 2),
@@ -61,7 +62,7 @@ public class StencilDefinitionsTest {
                             new Coordinate(1, 3)
                     )
             ),
-            "L", new CircularBuffer<>(
+            "L", new Piece(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(1, 1),
@@ -90,7 +91,7 @@ public class StencilDefinitionsTest {
                             new Coordinate(1, 1)
                     )
             ),
-            "O", new CircularBuffer<>(
+            "O", new Piece(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(0, 2),
@@ -98,7 +99,7 @@ public class StencilDefinitionsTest {
                             new Coordinate(1, 2)
                     )
             ),
-            "S", new CircularBuffer<>(
+            "S", new Piece(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(0, 2),
@@ -113,7 +114,7 @@ public class StencilDefinitionsTest {
                             new Coordinate(2, 2)
                     )
             ),
-            "T", new CircularBuffer<>(
+            "T", new Piece(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(1, 1),
@@ -142,7 +143,7 @@ public class StencilDefinitionsTest {
                             new Coordinate(1, 2)
                     )
             ),
-            "Z", new CircularBuffer<>(
+            "Z", new Piece(
                     new Rotation(
                             new Coordinate(0, 1),
                             new Coordinate(0, 2),

@@ -1,6 +1,6 @@
 package xyz.brandonirizarry.jtetris;
 
-import xyz.brandonirizarry.jtetris.circularbuffer.CircularBuffer;
+import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 import xyz.brandonirizarry.jtetris.recordtypes.Coordinate;
 import xyz.brandonirizarry.jtetris.recordtypes.Rotation;
 
@@ -12,14 +12,14 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class JTetris {
-    static Map<String, CircularBuffer<Rotation>> pieceMap = new HashMap<>(Map.of(
-            "I", new CircularBuffer<>(),
-            "J", new CircularBuffer<>(),
-            "L", new CircularBuffer<>(),
-            "S", new CircularBuffer<>(),
-            "O", new CircularBuffer<>(),
-            "T", new CircularBuffer<>(),
-            "Z", new CircularBuffer<>()
+    static Map<String, Piece> pieceMap = new HashMap<>(Map.of(
+            "I", new Piece(),
+            "J", new Piece(),
+            "L", new Piece(),
+            "S", new Piece(),
+            "O", new Piece(),
+            "T", new Piece(),
+            "Z", new Piece()
     ));
 
     private static Rotation getRotationFromFilepath(Path path) {
