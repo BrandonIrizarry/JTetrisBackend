@@ -11,12 +11,10 @@ import java.util.*;
 
 public class JTetris {
     static Map<String, CircularBuffer<Rotation>> pieceMap = new HashMap<>(Map.of(
-            /*
-            "I", new ArrayDeque<>(),
-            "J", new ArrayDeque<>(),
-            "L", new ArrayDeque<>(),
-            "S", new ArrayDeque<>(),
-             */
+            "I", new CircularBuffer<>(),
+            "J", new CircularBuffer<>(),
+            "L", new CircularBuffer<>(),
+            "S", new CircularBuffer<>(),
             "O", new CircularBuffer<>(),
             "T", new CircularBuffer<>(),
             "Z", new CircularBuffer<>()
