@@ -18,4 +18,14 @@ public class Piece extends CircularBuffer<Rotation> {
 
         return translatedPiece;
     }
+
+    public Piece copy() {
+        var piece = new Piece();
+
+        for (var rotation : buffer) {
+            piece.add(rotation);
+        }
+
+        return piece;
+    }
 }
