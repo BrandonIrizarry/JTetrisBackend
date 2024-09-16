@@ -7,7 +7,6 @@ import xyz.brandonirizarry.jtetris.Tetromino;
 import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,17 +19,8 @@ public class BoardTest {
                                             .getClassLoader()
                                             .getResourceAsStream("emptyBoard20by10.txt")) {
             assert inStream != null;
-            try (var scanner = new Scanner(inStream).useDelimiter("")) {
-                while (scanner.hasNext()) {
-                    var currentChar = scanner.next().charAt(0);
-                    if (currentChar == '\n') continue;
-
-                    assertEquals(
-                            GridToken.Empty.getSymbol(),
-                            currentChar,
-                            "Non-empty character");
-                }
-            }
+            var fileContents = new String(inStream.readAllBytes());
+            assertEquals(fileContents, board.toString());
         } catch (IOException e) {
             System.out.println("Nonexistent file");
         }
