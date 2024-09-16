@@ -61,4 +61,23 @@ public class BoardTest {
             System.out.println("Nonexistent file");
         }
     }
+
+    @Test
+    @DisplayName("Check L after D1 then L1")
+    void checkAfterD1ThenL1() {
+        Piece newPiece = Tetromino.L.getPiece().translate(0, 3);
+        board.introducePiece(newPiece);
+        board.moveDown();
+        board.moveLeft();
+
+        try (var inStream = JTetris.class
+                                    .getClassLoader()
+                                    .getResourceAsStream("boardL_D1L1.txt")) {
+            assert inStream != null;
+            var fileContents = new String(inStream.readAllBytes());
+            assertEquals(fileContents, board.toString());
+        } catch (IOException e) {
+            System.out.println("Nonexistent file");
+        }
+    }
 }
