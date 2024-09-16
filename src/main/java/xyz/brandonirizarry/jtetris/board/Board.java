@@ -5,8 +5,6 @@ import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 public class Board {
     private final GridToken[][] board;
     private Piece currentPiece;
-    private int rowOffset = 0;
-    private int columnOffset = 0;
 
     public Board(int numRows, int numColumns) {
         board = new GridToken[numRows][numColumns];
@@ -34,9 +32,7 @@ public class Board {
     }
 
     public void introducePiece(Piece piece) {
-        this.rowOffset = 0;
-        this.columnOffset = 3;
-        this.currentPiece = piece.translate(rowOffset, columnOffset);
+        this.currentPiece = piece;
         this.paint();
     }
 

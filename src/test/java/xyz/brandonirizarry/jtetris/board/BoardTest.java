@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import xyz.brandonirizarry.jtetris.JTetris;
 import xyz.brandonirizarry.jtetris.Tetromino;
+import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -39,7 +40,8 @@ public class BoardTest {
     @DisplayName("Check display after introducing L")
     void checkDisplayAfterIntroducingL() {
         var board = new Board(20, 10);
-        board.introducePiece(Tetromino.L.getPiece());
+        Piece newPiece = Tetromino.L.getPiece().translate(0, 3);
+        board.introducePiece(newPiece);
 
         try (var inStream = JTetris.class
                                     .getClassLoader()
