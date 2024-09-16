@@ -36,6 +36,11 @@ public class Board {
         this.paint();
     }
 
+    public void moveDown() {
+        this.currentPiece = this.currentPiece.translate(1, 0);
+        this.paint();
+    }
+
     private void paint() {
         var currentRotation = currentPiece.getFirst();
 
@@ -44,9 +49,17 @@ public class Board {
         var c = currentRotation.c();
         var d = currentRotation.d();
 
-        board[a.row()][a.column()] = GridToken.Piece;
-        board[b.row()][b.column()] = GridToken.Piece;
-        board[c.row()][c.column()] = GridToken.Piece;
-        board[d.row()][d.column()] = GridToken.Piece;
+        for (var rowIndex = 0; rowIndex < board.length; rowIndex++) {
+            for (var columnIndex = 0; columnIndex < board[rowIndex].length; columnIndex++) {
+                if (rowIndex == a.row() && columnIndex == a.column()
+                || rowIndex == b.row() && columnIndex == b.column()
+                || rowIndex == c.row() && columnIndex == c.column()
+                || rowIndex == d.row() && columnIndex == d.column()) {
+                    board[rowIndex][columnIndex] = GridToken.Piece;
+                } else {
+                    board[rowIndex][columnIndex] = GridToken.Empty;
+                }
+            }
+        }
     }
 }
