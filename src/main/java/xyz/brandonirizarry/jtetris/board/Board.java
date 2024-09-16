@@ -34,7 +34,9 @@ public class Board {
     }
 
     public void introducePiece(Piece piece) {
-        this.currentPiece = piece;
+        this.rowOffset = 0;
+        this.columnOffset = 3;
+        this.currentPiece = piece.translate(rowOffset, columnOffset);
         this.paint();
     }
 
