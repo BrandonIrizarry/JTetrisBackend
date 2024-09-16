@@ -1,4 +1,4 @@
-package xyz.brandonirizarry.jtetris.constants;
+package xyz.brandonirizarry.jtetris;
 
 import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 import xyz.brandonirizarry.jtetris.recordtypes.Coordinate;
