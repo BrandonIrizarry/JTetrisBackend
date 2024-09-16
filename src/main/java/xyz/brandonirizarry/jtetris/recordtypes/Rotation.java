@@ -1,8 +1,9 @@
 package xyz.brandonirizarry.jtetris.recordtypes;
 
+import java.util.Iterator;
 import java.util.List;
 
-public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) {
+public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) implements Iterable<Coordinate> {
     public static Rotation fromList(List<Coordinate> list) {
         if (list.size() != 4) {
             throw new AssertionError(
@@ -21,6 +22,11 @@ public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) {
     @Override
     public String toString() {
         return "<%s %s %s %s>".formatted(a, b, c, d);
+    }
+
+    @Override
+    public Iterator<Coordinate> iterator() {
+        return List.of(a, b, c, d).iterator();
     }
 
     public Rotation translate(int dr, int dc) {
