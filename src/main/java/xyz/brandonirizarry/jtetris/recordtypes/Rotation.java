@@ -23,11 +23,11 @@ public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) {
         return "<%s %s %s %s>".formatted(a, b, c, d);
     }
 
-    public Rotation translate(int rowOffset, int columnOffset) {
-        var aTranslated = a().translate(rowOffset, columnOffset);
-        var bTranslated = b().translate(rowOffset, columnOffset);
-        var cTranslated = c().translate(rowOffset, columnOffset);
-        var dTranslated = d().translate(rowOffset, columnOffset);
+    public Rotation translate(int dr, int dc) {
+        var aTranslated = a().translate(dr, dc);
+        var bTranslated = b().translate(dr, dc);
+        var cTranslated = c().translate(dr, dc);
+        var dTranslated = d().translate(dr, dc);
 
         return new Rotation(
                 aTranslated,

@@ -23,14 +23,14 @@ public class Piece extends CircularBuffer<Rotation> {
         this.columnOffset = columnOffset;
     }
 
-    public Piece translate(int rowOffset, int columnOffset) {
+    public Piece translate(int dr, int dc) {
         var translatedPiece = new Piece(
-                this.rowOffset + rowOffset,
-                this.columnOffset + columnOffset
+                this.rowOffset + dr,
+                this.columnOffset + dc
         );
 
         for (var rotation : buffer) {
-            var translatedRotation = rotation.translate(rowOffset, columnOffset);
+            var translatedRotation = rotation.translate(dr, dc);
 
             translatedPiece.add(translatedRotation);
         }

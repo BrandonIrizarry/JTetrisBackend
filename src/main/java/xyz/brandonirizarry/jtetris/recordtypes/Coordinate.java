@@ -1,8 +1,8 @@
 package xyz.brandonirizarry.jtetris.recordtypes;
 
 public record Coordinate(int row, int column) {
-    public Coordinate translate(int rowOffset, int columnOffset) {
-        return new Coordinate(row + rowOffset, column + columnOffset);
+    public Coordinate translate(int dr, int dc) {
+        return new Coordinate(row + dr, column + dc);
     }
 
     @Override
