@@ -36,14 +36,17 @@ public class Board {
         this.update();
     }
 
-    public void moveDown() {
-        this.currentPiece = this.currentPiece.translate(1, 0);
+    private void translateCurrentPiece(int dr, int dc) {
+        this.currentPiece = this.currentPiece.translate(dr, dc);
         this.update();
     }
 
+    public void moveDown() {
+        translateCurrentPiece(1, 0);
+    }
+
     public void moveLeft() {
-        this.currentPiece = this.currentPiece.translate(0, -1);
-        this.update();
+        translateCurrentPiece(0, -1);
     }
 
     private void update() {
