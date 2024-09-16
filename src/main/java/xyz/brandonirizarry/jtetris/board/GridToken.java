@@ -12,4 +12,9 @@ enum GridToken {
     public char getSymbol() {
         return symbol;
     }
+
+    @Override
+    public String toString() {
+        return Character.toString(symbol);
+    }
 }
