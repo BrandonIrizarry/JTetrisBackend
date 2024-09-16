@@ -33,15 +33,15 @@ public class Board {
 
     public void introducePiece(Piece piece) {
         this.currentPiece = piece;
-        this.paint();
+        this.update();
     }
 
     public void moveDown() {
         this.currentPiece = this.currentPiece.translate(1, 0);
-        this.paint();
+        this.update();
     }
 
-    private void paint() {
+    private void update() {
         var currentRotation = currentPiece.getFirst();
 
         var a = currentRotation.a();
