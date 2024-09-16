@@ -1,7 +1,12 @@
 package xyz.brandonirizarry.jtetris.board;
 
+import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
+
 public class Board {
     private final GridToken[][] board;
+    private Piece currentPiece;
+    private int rowOffset = 0;
+    private int columnOffset = 0;
 
     public Board(int numRows, int numColumns) {
         board = new GridToken[numRows][numColumns];
@@ -26,5 +31,24 @@ public class Board {
         }
 
         return builder.toString();
+    }
+
+    public void introducePiece(Piece piece) {
+        this.currentPiece = piece;
+        this.paint();
+    }
+
+    private void paint() {
+        var currentRotation = currentPiece.getFirst();
+
+        var a = currentRotation.a();
+        var b = currentRotation.b();
+        var c = currentRotation.c();
+        var d = currentRotation.d();
+
+        board[a.row()][a.column()] = GridToken.Piece;
+        board[b.row()][b.column()] = GridToken.Piece;
+        board[c.row()][c.column()] = GridToken.Piece;
+        board[d.row()][d.column()] = GridToken.Piece;
     }
 }
