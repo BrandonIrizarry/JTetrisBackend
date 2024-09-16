@@ -41,6 +41,11 @@ public class Board {
         this.update();
     }
 
+    public void moveLeft() {
+        this.currentPiece = this.currentPiece.translate(0, -1);
+        this.update();
+    }
+
     private void update() {
         var currentRotation = currentPiece.getFirst();
 
