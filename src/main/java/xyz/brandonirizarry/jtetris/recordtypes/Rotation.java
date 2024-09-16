@@ -2,6 +2,7 @@ package xyz.brandonirizarry.jtetris.recordtypes;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) implements Iterable<Coordinate> {
     public static Rotation fromList(List<Coordinate> list) {
@@ -41,5 +42,17 @@ public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) i
                 cTranslated,
                 dTranslated
         );
+    }
+
+    public boolean hasMember(int rowIndex, int columnIndex) {
+        var coordinate = new Coordinate(rowIndex, columnIndex);
+
+        for (var coord : this) {
+            if (Objects.equals(coord, coordinate)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
