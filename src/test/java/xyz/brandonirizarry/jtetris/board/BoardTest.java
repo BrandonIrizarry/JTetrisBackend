@@ -11,10 +11,11 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BoardTest {
+    private final Board board = new Board(20, 10);
+
     @Test
     @DisplayName("Check empty 20x10 board printout")
     void checkEmptyBoardDisplay() {
-        var board = new Board(20, 10);
         try (var inStream = JTetris.class
                                             .getClassLoader()
                                             .getResourceAsStream("emptyBoard20by10.txt")) {
@@ -29,7 +30,6 @@ public class BoardTest {
     @Test
     @DisplayName("Check display after introducing L")
     void checkDisplayAfterIntroducingL() {
-        var board = new Board(20, 10);
         Piece newPiece = Tetromino.L.getPiece().translate(0, 3);
         board.introducePiece(newPiece);
 
