@@ -102,5 +102,26 @@ public class BoardTest {
                 System.out.println("Nonexistent file");
             }
         }
+
+        @Test
+        @DisplayName("Check left wall collision")
+        @Order(4)
+        void checkLeftWallCollision() {
+            board.introducePiece(newPiece);
+
+            for (var i = 0; i < 100; i++) {
+                board.moveLeft();
+            }
+
+            try (var inStream = JTetris.class
+                                        .getClassLoader()
+                                        .getResourceAsStream("boardL_leftFlush.txt")) {
+                assert inStream != null;
+                var fileContents = new String(inStream.readAllBytes());
+                assertEquals(fileContents, board.toString());
+            } catch (IOException e) {
+                System.out.println("Nonexistent file");
+            }
+        }
     }
 }
