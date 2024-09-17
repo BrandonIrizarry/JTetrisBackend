@@ -17,4 +17,8 @@ enum GridToken {
     public String toString() {
         return Character.toString(symbol);
     }
+
+    public boolean isCollisionToken() {
+        return this.equals(Wall) || this.equals(Ground);
+    }
 }

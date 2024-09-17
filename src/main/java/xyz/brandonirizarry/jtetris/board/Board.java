@@ -1,6 +1,7 @@
 package xyz.brandonirizarry.jtetris.board;
 
 import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
+import xyz.brandonirizarry.jtetris.recordtypes.Coordinate;
 
 import java.util.List;
 
@@ -62,8 +63,12 @@ public class Board {
     }
 
     private void translateCurrentPiece(int dr, int dc) {
-        this.currentPiece = this.currentPiece.translate(dr, dc);
-        this.update();
+        var candidatePiece = this.currentPiece.translate(dr, dc);
+
+        if (this.verify(candidatePiece)) {
+            this.currentPiece = candidatePiece;
+            this.update();
+        }
     }
 
     public void moveDown() {
@@ -73,6 +78,25 @@ public class Board {
     public void moveLeft() {
         translateCurrentPiece(0, -1);
     }
+
+    private boolean verify(Piece candidatePiece) {
+        var rotation = candidatePiece.getFirst();
+
+        for (var coordinate : rotation) {
+            var gridToken = this.query(coordinate);
+
+            if (gridToken.isCollisionToken()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private GridToken query(Coordinate coordinate) {
+        return board[coordinate.row()][coordinate.column()];
+    }
+
 
     private void update() {
         var currentRotation = currentPiece.getFirst();
