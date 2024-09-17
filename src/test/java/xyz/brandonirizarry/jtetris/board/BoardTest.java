@@ -85,5 +85,18 @@ public class BoardTest {
 
             checkBoardAgainstFileContents(BoardTest.this.board, "boardL_leftFlush.txt");
         }
+
+        @Test
+        @DisplayName("Check right wall collision")
+        @Order(5)
+        void checkRightWallCollision() {
+            board.introducePiece(newPiece);
+
+            for (var i = 0; i < 100; i++) {
+                board.moveRight();
+            }
+
+            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_rightFlush.txt");
+        }
     }
 }
