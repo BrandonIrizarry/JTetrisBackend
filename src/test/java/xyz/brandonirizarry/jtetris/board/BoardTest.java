@@ -13,34 +13,28 @@ import static org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 public class BoardTest {
     private final Board board = new Board(21, 12);
 
-    @Test
-    @DisplayName("Check empty 5x6 board printout")
-    void checkSmallEmptyBoardDisplay() {
-        var smallBoard = new Board(5, 6);
-
+    private void checkBoardAgainstFileContents(Board board, String filename) {
         try (var inStream = JTetris.class
                                     .getClassLoader()
-                                    .getResourceAsStream("emptyBoard5by6.txt")) {
-            assert inStream != null;
-            var fileContents = new String(inStream.readAllBytes());
-            assertEquals(fileContents, smallBoard.toString());
-        } catch (IOException e) {
-            System.out.println("Nonexistent file");
-        }
-    }
-
-    @Test
-    @DisplayName("Check empty 21x12 board printout")
-    void checkEmptyBoardDisplay() {
-        try (var inStream = JTetris.class
-                                            .getClassLoader()
-                                            .getResourceAsStream("emptyBoard21by12.txt")) {
+                                    .getResourceAsStream(filename)) {
             assert inStream != null;
             var fileContents = new String(inStream.readAllBytes());
             assertEquals(fileContents, board.toString());
         } catch (IOException e) {
             System.out.println("Nonexistent file");
         }
+    }
+
+    @Test
+    @DisplayName("Check empty 5x6 board printout")
+    void checkSmallEmptyBoardDisplay() {
+        checkBoardAgainstFileContents(new Board(5, 6), "emptyBoard5by6.txt");
+    }
+
+    @Test
+    @DisplayName("Check empty 21x12 board printout")
+    void checkEmptyBoardDisplay() {
+        checkBoardAgainstFileContents(this.board, "emptyBoard21by12.txt");
     }
 
     @Nested
@@ -55,15 +49,7 @@ public class BoardTest {
         void checkDisplayAfterIntroducingL() {
             board.introducePiece(newPiece);
 
-            try (var inStream = JTetris.class
-                                        .getClassLoader()
-                                        .getResourceAsStream("boardAfterIntroducingL.txt")) {
-                assert inStream != null;
-                var fileContents = new String(inStream.readAllBytes());
-                assertEquals(fileContents, board.toString());
-            } catch (IOException e) {
-                System.out.println("Nonexistent file");
-            }
+            checkBoardAgainstFileContents(BoardTest.this.board, "boardAfterIntroducingL.txt");
         }
 
         @Test
@@ -73,15 +59,7 @@ public class BoardTest {
             board.introducePiece(newPiece);
             board.moveDown();
 
-            try (var inStream = JTetris.class
-                                        .getClassLoader()
-                                        .getResourceAsStream("boardL_D1.txt")) {
-                assert inStream != null;
-                var fileContents = new String(inStream.readAllBytes());
-                assertEquals(fileContents, board.toString());
-            } catch (IOException e) {
-                System.out.println("Nonexistent file");
-            }
+            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_D1.txt");
         }
 
         @Test
@@ -92,15 +70,7 @@ public class BoardTest {
             board.moveDown();
             board.moveLeft();
 
-            try (var inStream = JTetris.class
-                                        .getClassLoader()
-                                        .getResourceAsStream("boardL_D1L1.txt")) {
-                assert inStream != null;
-                var fileContents = new String(inStream.readAllBytes());
-                assertEquals(fileContents, board.toString());
-            } catch (IOException e) {
-                System.out.println("Nonexistent file");
-            }
+            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_D1L1.txt");
         }
 
         @Test
@@ -113,15 +83,7 @@ public class BoardTest {
                 board.moveLeft();
             }
 
-            try (var inStream = JTetris.class
-                                        .getClassLoader()
-                                        .getResourceAsStream("boardL_leftFlush.txt")) {
-                assert inStream != null;
-                var fileContents = new String(inStream.readAllBytes());
-                assertEquals(fileContents, board.toString());
-            } catch (IOException e) {
-                System.out.println("Nonexistent file");
-            }
+            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_leftFlush.txt");
         }
     }
 }
