@@ -79,6 +79,10 @@ public class Board {
         translateCurrentPiece(0, -1);
     }
 
+    public void moveRight() {
+        translateCurrentPiece(0, 1);
+    }
+
     private boolean verify(Piece candidatePiece) {
         var rotation = candidatePiece.getFirst();
 
