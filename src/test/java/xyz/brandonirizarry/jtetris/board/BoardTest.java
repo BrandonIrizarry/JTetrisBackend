@@ -14,6 +14,22 @@ public class BoardTest {
     private final Board board = new Board(21, 12);
 
     @Test
+    @DisplayName("Check empty 5x6 board printout")
+    void checkSmallEmptyBoardDisplay() {
+        var smallBoard = new Board(5, 6);
+
+        try (var inStream = JTetris.class
+                                    .getClassLoader()
+                                    .getResourceAsStream("emptyBoard5by6.txt")) {
+            assert inStream != null;
+            var fileContents = new String(inStream.readAllBytes());
+            assertEquals(fileContents, smallBoard.toString());
+        } catch (IOException e) {
+            System.out.println("Nonexistent file");
+        }
+    }
+
+    @Test
     @DisplayName("Check empty 21x12 board printout")
     void checkEmptyBoardDisplay() {
         try (var inStream = JTetris.class
