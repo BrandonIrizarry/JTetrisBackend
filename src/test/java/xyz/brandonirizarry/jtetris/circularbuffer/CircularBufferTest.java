@@ -22,6 +22,17 @@ public class CircularBufferTest {
     }
 
     @Test
+    @DisplayName("Clockwise rotation presents correct first element")
+    void checkClockwiseRotation() {
+        var buffer = new CircularBuffer<>(1, 2, 3, 4);
+
+        for (var i = 4; i >= 1; i--) {
+            buffer.rotateClockwise();
+            assertEquals(i, buffer.getFirst());
+        }
+    }
+
+    @Test
     @DisplayName("Equality of two integer-based buffers")
     void checkSimpleEquality() {
         var buffer1 = new CircularBuffer<>(1, 2, 3);
