@@ -111,5 +111,20 @@ public class BoardTest {
 
             checkBoardAgainstFileContents(BoardTest.this.board, "boardL_floorFlush.txt");
         }
+
+        @Test
+        @DisplayName("Check that CCW rotation is blocked")
+        @Order(7)
+        void checkCCWRotationIsBlocked() {
+            board.introducePiece(newPiece);
+
+            for (var i = 0; i < 100; i++) {
+                board.moveLeft();
+            }
+
+            board.rotateCounterclockwise();
+
+            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_rotateCCWFlush.txt");
+        }
     }
 }
