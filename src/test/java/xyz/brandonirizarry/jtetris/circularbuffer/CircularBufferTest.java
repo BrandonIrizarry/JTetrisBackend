@@ -11,13 +11,13 @@ public class CircularBufferTest {
     void simpleTestWithIntegers() {
         var buffer = new CircularBuffer<>(1, 2, 3, 4);
         assertEquals(1, buffer.getFirst());
-        buffer.rotate();
+        buffer.rotateCounterclockwise();
         assertEquals(2, buffer.getFirst());
-        buffer.rotate();
+        buffer.rotateCounterclockwise();
         assertEquals(3, buffer.getFirst());
-        buffer.rotate();
+        buffer.rotateCounterclockwise();
         assertEquals(4, buffer.getFirst());
-        buffer.rotate();
+        buffer.rotateCounterclockwise();
         assertEquals(1, buffer.getFirst());
     }
 

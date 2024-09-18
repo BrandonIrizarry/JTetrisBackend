@@ -20,7 +20,7 @@ public class CircularBuffer<T> implements Iterable<T> {
         return buffer.getFirst();
     }
 
-    public void rotate() {
+    public void rotateCounterclockwise() {
         var tmp = buffer.pop();
         buffer.addLast(tmp);
     }
