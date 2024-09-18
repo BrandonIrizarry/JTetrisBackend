@@ -10,15 +10,11 @@ public class CircularBufferTest {
     @DisplayName("Rotation presents correct element")
     void simpleTestWithIntegers() {
         var buffer = new CircularBuffer<>(1, 2, 3, 4);
-        assertEquals(1, buffer.getFirst());
-        buffer.rotateCounterclockwise();
-        assertEquals(2, buffer.getFirst());
-        buffer.rotateCounterclockwise();
-        assertEquals(3, buffer.getFirst());
-        buffer.rotateCounterclockwise();
-        assertEquals(4, buffer.getFirst());
-        buffer.rotateCounterclockwise();
-        assertEquals(1, buffer.getFirst());
+
+        for (var i = 1; i <= 4; i++) {
+            assertEquals(i, buffer.getFirst());
+            buffer.rotateCounterclockwise();
+        }
     }
 
     @Test
