@@ -25,6 +25,11 @@ public class CircularBuffer<T> implements Iterable<T> {
         buffer.addLast(tmp);
     }
 
+    public void rotateClockwise() {
+        var tmp = buffer.removeLast();
+        buffer.addFirst(tmp);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
