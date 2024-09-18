@@ -100,19 +100,6 @@ public class BoardTest {
         }
 
         @Test
-        @DisplayName("Check floor collision")
-        @Order(6)
-        void checkFloorCollision() {
-            board.introducePiece(newPiece);
-
-            for (var i = 0; i < 100; i++) {
-                board.moveDown();
-            }
-
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_floorFlush.txt");
-        }
-
-        @Test
         @DisplayName("Check that CCW rotation is blocked")
         @Order(7)
         void checkCCWRotationIsBlocked() {
@@ -138,4 +125,20 @@ public class BoardTest {
             checkBoardAgainstFileContents(BoardTest.this.board, "boardL_validCCW.txt");
         }
     }
+
+    @Nested
+    @DisplayName("Check downward collisions")
+    class DownwardCollisions {
+        @Test
+        @DisplayName("Check simple downward collision of L-piece")
+        void checkSimpleDownwardCollisionL() {
+            var newPiece = Tetromino.L.getPiece().translate(0, 4);
+            board.introducePiece(newPiece);
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_floorFlush.txt");
+        }
 }
