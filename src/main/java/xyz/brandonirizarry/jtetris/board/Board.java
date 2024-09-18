@@ -73,6 +73,26 @@ public class Board {
 
     public void moveDown() {
         translateCurrentPiece(1, 0);
+
+        // Check for a downward collision.
+        var rotation = this.currentPiece.getFirst();
+        var bottom = rotation.getBottom();
+        var nextRowIndex = bottom.getFirst().row() + 1;
+
+        boolean downwardCollision = false;
+
+        for (var columnIndex : bottom.stream().map(Coordinate::column).toList()) {
+            if (board[nextRowIndex][columnIndex] == GridToken.Ground) {
+                downwardCollision = true;
+                break;
+            }
+        }
+
+        if (downwardCollision) {
+            for (var coordinate : rotation) {
+                board[coordinate.row()][coordinate.column()] = GridToken.Ground;
+            }
+        }
     }
 
     public void moveLeft() {
