@@ -83,6 +83,16 @@ public class Board {
         translateCurrentPiece(0, 1);
     }
 
+    public void rotateCounterclockwise() {
+        this.currentPiece.rotateCounterclockwise();
+
+        if (this.verify(this.currentPiece)) {
+            this.update();
+        } else {
+            this.currentPiece.rotateClockwise();
+        }
+    }
+
     private boolean verify(Piece candidatePiece) {
         var rotation = candidatePiece.getFirst();
 
