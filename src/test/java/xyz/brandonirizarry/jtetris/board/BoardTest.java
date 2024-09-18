@@ -38,9 +38,9 @@ public class BoardTest {
     }
 
     @Nested
-    @DisplayName("Check Board motions")
+    @DisplayName("Check L-tetromino motions")
     @TestMethodOrder(OrderAnnotation.class)
-    class Motions {
+    class MotionsL {
         private final Piece newPiece = Tetromino.L.getPiece().translate(0, 4);
 
         @Test
