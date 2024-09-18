@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CircularBufferTest {
     @Test
-    @DisplayName("Rotation presents correct element")
-    void simpleTestWithIntegers() {
+    @DisplayName("Counterclockwise rotation presents correct first element")
+    void checkCounterclockwiseRotation() {
         var buffer = new CircularBuffer<>(1, 2, 3, 4);
 
         for (var i = 1; i <= 4; i++) {
