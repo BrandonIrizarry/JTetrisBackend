@@ -126,5 +126,16 @@ public class BoardTest {
 
             checkBoardAgainstFileContents(BoardTest.this.board, "boardL_rotateCCWFlush.txt");
         }
+
+        @Test
+        @DisplayName("Check that valid CCW yields expected position")
+        @Order(8)
+        void checkValidCCW() {
+            board.introducePiece(newPiece);
+
+            board.rotateCounterclockwise();
+
+            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_validCCW.txt");
+        }
     }
 }
