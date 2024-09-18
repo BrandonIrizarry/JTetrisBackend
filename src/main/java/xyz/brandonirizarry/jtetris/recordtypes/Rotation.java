@@ -1,8 +1,10 @@
 package xyz.brandonirizarry.jtetris.recordtypes;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) implements Iterable<Coordinate> {
     public static Rotation fromList(List<Coordinate> list) {
@@ -54,5 +56,15 @@ public record Rotation(Coordinate a, Coordinate b, Coordinate c, Coordinate d) i
         }
 
         return false;
+    }
+
+    public List<Coordinate> getBottom() {
+        var coordinateBuffer = List.of(a(), b(), c(), d());
+        var maxRowIndex = Stream.of(a(), b(), c(), d())
+                                       .max(Comparator.comparingInt(Coordinate::row))
+                                       .get()
+                                       .row();
+
+        return coordinateBuffer.stream().filter(c -> c.row() == maxRowIndex).toList();
     }
 }
