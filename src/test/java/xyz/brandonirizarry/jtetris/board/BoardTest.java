@@ -141,4 +141,41 @@ public class BoardTest {
 
             checkBoardAgainstFileContents(BoardTest.this.board, "boardL_floorFlush.txt");
         }
+
+        @Test
+        @DisplayName("Check collision of 'O' on top of 'L'")
+        void checkOCollidesOnTopOfL() {
+            board.introducePiece(Tetromino.L.getPiece().translate(0, 4));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.introducePiece(Tetromino.O.getPiece().translate(0, 4));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            checkBoardAgainstFileContents(board, "boardO_fallOnL.txt");
+        }
+
+        @Test
+        @DisplayName("Check landing of 'O' alongside 'L'")
+        void checkOLandsAlongsideL() {
+            board.introducePiece(Tetromino.L.getPiece().translate(0, 4));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.introducePiece(Tetromino.O.getPiece());
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            checkBoardAgainstFileContents(board, "boardO_fallNextToL.txt");
+        }
+    }
 }
