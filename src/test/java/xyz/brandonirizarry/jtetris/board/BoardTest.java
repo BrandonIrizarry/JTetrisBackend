@@ -177,5 +177,37 @@ public class BoardTest {
 
             checkBoardAgainstFileContents(board, "boardO_fallNextToL.txt");
         }
+
+        @Test
+        @DisplayName("Right-side collision doesn't freeze current piece")
+        void rightSideCollisionDoesntFreezeCurrentPiece() {
+            // Use the same setup as in the previous test: an L is simply dropped on
+            // top of an O.
+            board.introducePiece(Tetromino.L.getPiece().translate(0, 4));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.introducePiece(Tetromino.O.getPiece().translate(0, 4));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            // Now send a J, and try to ram it from the side against
+            // the current stack of dead blocks.
+            board.introducePiece(Tetromino.J.getPiece().translate(0, 2));
+
+            for (var i = 0; i < 15; i++) {
+                board.moveDown();
+            }
+
+            for (var i = 0; i < 100; i++) {
+                board.moveRight();
+            }
+
+            checkBoardAgainstFileContents(board, "boardL_rightFlushDoesntFreeze.txt");
+        }
     }
 }
