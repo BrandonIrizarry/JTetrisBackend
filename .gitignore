@@ -1,6 +1,6 @@
 /test/
 /out/
-*.org
+/Org/
 *~
 /.idea/
 
