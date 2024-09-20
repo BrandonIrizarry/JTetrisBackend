@@ -117,7 +117,7 @@ public class Board {
         var rotation = candidatePiece.getFirst();
 
         for (var coordinate : rotation) {
-            var gridToken = this.query(coordinate);
+            var gridToken = board[coordinate.row()][coordinate.column()];
 
             if (gridToken.isCollisionToken()) {
                 return false;
@@ -126,11 +126,6 @@ public class Board {
 
         return true;
     }
-
-    private GridToken query(Coordinate coordinate) {
-        return board[coordinate.row()][coordinate.column()];
-    }
-
 
     private void update() {
         var currentRotation = currentPiece.getFirst();
