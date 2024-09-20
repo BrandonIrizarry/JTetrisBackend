@@ -25,22 +25,26 @@ public class BoardTest {
         }
     }
 
-    @Test
-    @DisplayName("Check empty 5x6 board printout")
-    void checkSmallEmptyBoardDisplay() {
-        checkBoardAgainstFileContents(new Board(5, 6), "emptyBoard5by6.txt");
-    }
+    @Nested
+    @DisplayName("Empty boards")
+    class EmptyBoards {
+        @Test
+        @DisplayName("Check empty 5x6 board printout")
+        void checkSmallEmptyBoardDisplay() {
+            checkBoardAgainstFileContents(new Board(5, 6), "emptyBoards/emptyBoard5by6.txt");
+        }
 
-    @Test
-    @DisplayName("Check empty 21x12 board printout")
-    void checkEmptyBoardDisplay() {
-        checkBoardAgainstFileContents(this.board, "emptyBoard21by12.txt");
+        @Test
+        @DisplayName("Check empty 21x12 board printout")
+        void checkEmptyBoardDisplay() {
+            checkBoardAgainstFileContents(board, "emptyBoards/emptyBoard21by12.txt");
+        }
     }
 
     @Nested
-    @DisplayName("Check L-tetromino motions")
+    @DisplayName("Check tetromino motions")
     @TestMethodOrder(OrderAnnotation.class)
-    class MotionsL {
+    class SimpleMotions {
         private final Piece newPiece = Tetromino.L.getPiece().translate(0, 4);
 
         @Test
@@ -49,7 +53,7 @@ public class BoardTest {
         void checkDisplayAfterIntroducingL() {
             board.introducePiece(newPiece);
 
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardAfterIntroducingL.txt");
+            checkBoardAgainstFileContents(BoardTest.this.board, "simpleMotions/boardAfterIntroducingL.txt");
         }
 
         @Test
@@ -59,7 +63,7 @@ public class BoardTest {
             board.introducePiece(newPiece);
             board.moveDown();
 
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_D1.txt");
+            checkBoardAgainstFileContents(BoardTest.this.board, "simpleMotions/boardL_D1.txt");
         }
 
         @Test
@@ -70,12 +74,27 @@ public class BoardTest {
             board.moveDown();
             board.moveLeft();
 
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_D1L1.txt");
+            checkBoardAgainstFileContents(BoardTest.this.board, "simpleMotions/boardL_D1L1.txt");
         }
 
         @Test
+        @DisplayName("Check that valid CCW yields expected position")
+        void checkValidCCW() {
+            board.introducePiece(newPiece);
+
+            board.rotateCounterclockwise();
+
+            checkBoardAgainstFileContents(BoardTest.this.board, "simpleMotions/boardL_validCCW.txt");
+        }
+    }
+
+    @Nested
+    @DisplayName("Out of bounds collisions")
+    class OutOfBounds {
+        private final Piece newPiece = Tetromino.L.getPiece().translate(0, 4);
+
+        @Test
         @DisplayName("Check left wall collision")
-        @Order(4)
         void checkLeftWallCollision() {
             board.introducePiece(newPiece);
 
@@ -83,12 +102,11 @@ public class BoardTest {
                 board.moveLeft();
             }
 
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_leftFlush.txt");
+            checkBoardAgainstFileContents(BoardTest.this.board, "outOfBounds/boardL_leftFlush.txt");
         }
 
         @Test
         @DisplayName("Check right wall collision")
-        @Order(5)
         void checkRightWallCollision() {
             board.introducePiece(newPiece);
 
@@ -96,12 +114,11 @@ public class BoardTest {
                 board.moveRight();
             }
 
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_rightFlush.txt");
+            checkBoardAgainstFileContents(BoardTest.this.board, "outOfBounds/boardL_rightFlush.txt");
         }
 
         @Test
         @DisplayName("Check that CCW rotation is blocked")
-        @Order(7)
         void checkCCWRotationIsBlocked() {
             board.introducePiece(newPiece);
 
@@ -111,18 +128,7 @@ public class BoardTest {
 
             board.rotateCounterclockwise();
 
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_rotateCCWFlush.txt");
-        }
-
-        @Test
-        @DisplayName("Check that valid CCW yields expected position")
-        @Order(8)
-        void checkValidCCW() {
-            board.introducePiece(newPiece);
-
-            board.rotateCounterclockwise();
-
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_validCCW.txt");
+            checkBoardAgainstFileContents(BoardTest.this.board, "outOfBounds/boardL_rotateCCWFlush.txt");
         }
     }
 
@@ -139,7 +145,7 @@ public class BoardTest {
                 board.moveDown();
             }
 
-            checkBoardAgainstFileContents(BoardTest.this.board, "boardL_floorFlush.txt");
+            checkBoardAgainstFileContents(BoardTest.this.board, "downwardCollisions/boardL_floorFlush.txt");
         }
 
         @Test
@@ -157,7 +163,7 @@ public class BoardTest {
                 board.moveDown();
             }
 
-            checkBoardAgainstFileContents(board, "boardO_fallOnL.txt");
+            checkBoardAgainstFileContents(board, "downwardCollisions/boardO_fallOnL.txt");
         }
 
         @Test
@@ -175,7 +181,7 @@ public class BoardTest {
                 board.moveDown();
             }
 
-            checkBoardAgainstFileContents(board, "boardO_fallNextToL.txt");
+            checkBoardAgainstFileContents(board, "downwardCollisions/boardO_fallNextToL.txt");
         }
 
         @Test
@@ -207,7 +213,7 @@ public class BoardTest {
                 board.moveRight();
             }
 
-            checkBoardAgainstFileContents(board, "boardL_rightFlushDoesntFreeze.txt");
+            checkBoardAgainstFileContents(board, "downwardCollisions/boardL_rightFlushDoesntFreeze.txt");
         }
     }
 
@@ -237,7 +243,7 @@ public class BoardTest {
 
             board.markFilledRowsForDeletion();
 
-            checkBoardAgainstFileContents(board, "board_singleCompletedRow.txt");
+            checkBoardAgainstFileContents(board, "lineBreaking/board_singleCompletedRow.txt");
         }
     }
 }
