@@ -68,9 +68,9 @@ public class Board {
 
         if (this.verify(candidatePiece)) {
             this.eraseRotation(this.currentPiece.getFirst());
-            this.paintRotation(candidatePiece.getFirst(), GridToken.Piece);
-
             this.currentPiece = candidatePiece;
+
+            this.paintCurrentRotationAsActive();
         }
     }
 
