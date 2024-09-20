@@ -103,9 +103,7 @@ public class Board {
         }
 
         if (downwardCollision) {
-            for (var coordinate : rotation) {
-                board[coordinate.row()][coordinate.column()] = GridToken.Ground;
-            }
+            this.paintRotation(this.currentPiece.getFirst(), GridToken.Ground);
         }
     }
 
