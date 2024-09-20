@@ -4,6 +4,7 @@ import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 import xyz.brandonirizarry.jtetris.recordtypes.Coordinate;
 import xyz.brandonirizarry.jtetris.recordtypes.Rotation;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Board {
@@ -157,5 +158,24 @@ public class Board {
 
     private void paintCurrentRotationAsFrozen() {
         this.paintRotation(this.currentPiece.getFirst(), GridToken.Ground);
+    }
+
+    // Use package visibility for testing.
+    void markFilledRowsForDeletion() {
+        // Skip the last row.
+        for (var rowIndex = 0; rowIndex < board.length - 1; rowIndex++) {
+            var numGroundTokens = 0;
+            var row = board[rowIndex];
+
+            for (var gridToken : row) {
+                if (gridToken == GridToken.Ground) numGroundTokens++;
+            }
+
+            // The following equality refers to the row being completely filled with
+            // ground cells, minus the two wall cells.
+            if (numGroundTokens == board[rowIndex].length - 2) {
+                Arrays.fill(board[rowIndex], 1, row.length - 1, GridToken.Cleared);
+            }
+        }
     }
 }

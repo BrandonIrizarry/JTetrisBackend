@@ -1,7 +1,7 @@
 package xyz.brandonirizarry.jtetris.board;
 
 enum GridToken {
-    Empty('-'), Piece('O'), Wall('W'), Ground('G');
+    Empty('-'), Piece('O'), Wall('W'), Ground('G'), Cleared('*');
 
     private final char symbol;
 
