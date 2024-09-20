@@ -210,4 +210,34 @@ public class BoardTest {
             checkBoardAgainstFileContents(board, "boardL_rightFlushDoesntFreeze.txt");
         }
     }
+
+    @Nested
+    @DisplayName("Line breaking tests")
+    class LineBreaking {
+        @Test
+        @DisplayName("Line break after I, I, and O")
+        void lineBreakAfterIIO() {
+            board.introducePiece(Tetromino.I.getPiece().translate(0, 1));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.introducePiece(Tetromino.I.getPiece().translate(0, 5));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.introducePiece(Tetromino.O.getPiece().translate(0, 8));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.markFilledRowsForDeletion();
+
+            checkBoardAgainstFileContents(board, "board_singleCompletedRow.txt");
+        }
+    }
 }
