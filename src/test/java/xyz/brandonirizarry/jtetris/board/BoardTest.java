@@ -245,6 +245,12 @@ public class BoardTest {
         @Test
         @DisplayName("Marking for deletion after achieving a tetris")
         void markingForDeletionAfterTetris() {
+            /*
+                We introduce a "dream lineup" of pieces to achieve a tetris:
+                eight O's, followed by two I's
+             */
+
+            // Introduce two O's, stacked one on top of the other.
             for (var i = 0; i < 2; i++) {
                 board.introducePiece(Tetromino.O.getPiece());
 
@@ -253,6 +259,7 @@ public class BoardTest {
                 }
             }
 
+            // Introduce two more stacked O's to the right.
             for (var i = 0; i < 2; i++) {
                 board.introducePiece(Tetromino.O.getPiece().translate(0, 2));
 
@@ -261,6 +268,7 @@ public class BoardTest {
                 }
             }
 
+            // Introduce two more stacked O's to the right.
             for (var i = 0; i < 2; i++) {
                 board.introducePiece(Tetromino.O.getPiece().translate(0, 4));
 
@@ -269,6 +277,7 @@ public class BoardTest {
                 }
             }
 
+            // Introduce two more stacked O's to the right.
             for (var i = 0; i < 2; i++) {
                 board.introducePiece(Tetromino.O.getPiece().translate(0, 6));
 
@@ -277,6 +286,7 @@ public class BoardTest {
                 }
             }
 
+            // Finally, introduce two vertical I's to complete the tetris.
             var iPiece = Tetromino.I.getPiece();
             iPiece.rotateCounterclockwise();
 
