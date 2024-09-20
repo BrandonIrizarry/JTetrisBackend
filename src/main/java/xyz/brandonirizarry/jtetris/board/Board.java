@@ -2,6 +2,7 @@ package xyz.brandonirizarry.jtetris.board;
 
 import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 import xyz.brandonirizarry.jtetris.recordtypes.Coordinate;
+import xyz.brandonirizarry.jtetris.recordtypes.Rotation;
 
 import java.util.List;
 
@@ -59,15 +60,17 @@ public class Board {
 
     public void introducePiece(Piece piece) {
         this.currentPiece = piece;
-        this.update();
+        this.paintRotation(piece.getFirst(), GridToken.Piece);
     }
 
     private void translateCurrentPiece(int dr, int dc) {
         var candidatePiece = this.currentPiece.translate(dr, dc);
 
         if (this.verify(candidatePiece)) {
+            this.eraseRotation(this.currentPiece.getFirst());
+            this.paintRotation(candidatePiece.getFirst(), GridToken.Piece);
+
             this.currentPiece = candidatePiece;
-            this.update();
         }
     }
 
@@ -115,10 +118,12 @@ public class Board {
     }
 
     public void rotateCounterclockwise() {
+        var previousRotation = this.currentPiece.getFirst();
         this.currentPiece.rotateCounterclockwise();
 
         if (this.verify(this.currentPiece)) {
-            this.update();
+            this.eraseRotation(previousRotation);
+            this.paintRotation(this.currentPiece.getFirst(), GridToken.Piece);
         } else {
             this.currentPiece.rotateClockwise();
         }
@@ -138,19 +143,13 @@ public class Board {
         return true;
     }
 
-    private void update() {
-        var currentRotation = currentPiece.getFirst();
-
-        for (var r = 0; r < board.length; r++) {
-            for (var c = 0; c < board[r].length; c++) {
-                if (board[r][c] == GridToken.Wall || board[r][c] == GridToken.Ground) continue;
-
-                if (currentRotation.hasMember(r, c)) {
-                    board[r][c] = GridToken.Piece;
-                } else {
-                    board[r][c] = GridToken.Empty;
-                }
-            }
+    private void paintRotation(Rotation rotation, GridToken icon) {
+        for (var coordinate : rotation) {
+            board[coordinate.row()][coordinate.column()] = icon;
         }
+    }
+
+    private void eraseRotation(Rotation rotation) {
+        paintRotation(rotation, GridToken.Empty);
     }
 }
