@@ -135,8 +135,7 @@ public class BoardTest {
         @Test
         @DisplayName("Check simple downward collision of L-piece")
         void checkSimpleDownwardCollisionL() {
-            var newPiece = Tetromino.L.getPiece().translate(0, 4);
-            board.introducePiece(newPiece);
+            board.introducePiece(Tetromino.L.getPiece().translate(0, 4));
 
             for (var i = 0; i < 100; i++) {
                 board.moveDown();
