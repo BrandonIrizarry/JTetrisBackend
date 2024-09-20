@@ -1,6 +1,8 @@
 package xyz.brandonirizarry.jtetris.board;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import xyz.brandonirizarry.jtetris.JTetris;
 import xyz.brandonirizarry.jtetris.Tetromino;
 import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
@@ -8,7 +10,6 @@ import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 public class BoardTest {
     private final Board board = new Board(21, 12);
@@ -43,13 +44,11 @@ public class BoardTest {
 
     @Nested
     @DisplayName("Check tetromino motions")
-    @TestMethodOrder(OrderAnnotation.class)
     class SimpleMotions {
         private final Piece newPiece = Tetromino.L.getPiece().translate(0, 4);
 
         @Test
         @DisplayName("Check display after introducing L")
-        @Order(1)
         void checkDisplayAfterIntroducingL() {
             board.introducePiece(newPiece);
 
@@ -58,7 +57,6 @@ public class BoardTest {
 
         @Test
         @DisplayName("Check L after moving down once")
-        @Order(2)
         void checkAfterMovingDownOnceL() {
             board.introducePiece(newPiece);
             board.moveDown();
@@ -68,7 +66,6 @@ public class BoardTest {
 
         @Test
         @DisplayName("Check L after D1 then L1")
-        @Order(3)
         void checkAfterD1ThenL1() {
             board.introducePiece(newPiece);
             board.moveDown();
