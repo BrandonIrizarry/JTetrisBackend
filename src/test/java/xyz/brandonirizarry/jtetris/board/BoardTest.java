@@ -306,5 +306,47 @@ public class BoardTest {
 
             checkBoardAgainstFileContents(board, "markingForDeletion/clearTetris.txt");
         }
+
+        @Test
+        @DisplayName("Uneven line clear: no game is perfect :)")
+        void unevenLineClear() {
+            var jPiece = Tetromino.J.getPiece();
+            jPiece.rotateCounterclockwise();
+            board.introducePiece(jPiece.translate(0, 1));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            // Note that this is the same rotation.
+            board.introducePiece(jPiece.translate(0, 4));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            var tPiece = Tetromino.T.getPiece();
+            tPiece.rotateCounterclockwise();
+            tPiece.rotateCounterclockwise();
+            board.introducePiece(tPiece.translate(0, 6));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            // Get back to the first rotation.
+            tPiece.rotateClockwise();
+            tPiece.rotateClockwise();
+
+            board.introducePiece(tPiece.translate(0, 8));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.markFilledRowsForDeletion();
+
+            checkBoardAgainstFileContents(board, "markingForDeletion/unevenLineClear.txt");
+        }
     }
 }
