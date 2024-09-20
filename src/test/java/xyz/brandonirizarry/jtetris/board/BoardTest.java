@@ -43,7 +43,7 @@ public class BoardTest {
     }
 
     @Nested
-    @DisplayName("Check tetromino motions")
+    @DisplayName("Basic tetromino motions")
     class SimpleMotions {
         private final Piece newPiece = Tetromino.L.getPiece().translate(0, 4);
 
