@@ -103,7 +103,7 @@ public class Board {
         }
 
         if (downwardCollision) {
-            this.paintRotation(this.currentPiece.getFirst(), GridToken.Ground);
+            this.paintCurrentRotationAsFrozen();
         }
     }
 
@@ -149,5 +149,8 @@ public class Board {
 
     private void eraseRotation(Rotation rotation) {
         paintRotation(rotation, GridToken.Empty);
+    }
+    private void paintCurrentRotationAsFrozen() {
+        this.paintRotation(this.currentPiece.getFirst(), GridToken.Ground);
     }
 }
