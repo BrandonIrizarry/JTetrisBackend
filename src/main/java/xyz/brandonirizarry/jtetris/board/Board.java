@@ -60,7 +60,7 @@ public class Board {
 
     public void introducePiece(Piece piece) {
         this.currentPiece = piece;
-        this.paintRotation(piece.getFirst(), GridToken.Piece);
+        this.paintCurrentRotationAsActive();
     }
 
     private void translateCurrentPiece(int dr, int dc) {
@@ -121,7 +121,7 @@ public class Board {
 
         if (this.verify(this.currentPiece)) {
             this.eraseRotation(previousRotation);
-            this.paintRotation(this.currentPiece.getFirst(), GridToken.Piece);
+            this.paintCurrentRotationAsActive();
         } else {
             this.currentPiece.rotateClockwise();
         }
@@ -150,6 +150,11 @@ public class Board {
     private void eraseRotation(Rotation rotation) {
         paintRotation(rotation, GridToken.Empty);
     }
+
+    private void paintCurrentRotationAsActive() {
+        this.paintRotation(this.currentPiece.getFirst(), GridToken.Piece);
+    }
+
     private void paintCurrentRotationAsFrozen() {
         this.paintRotation(this.currentPiece.getFirst(), GridToken.Ground);
     }
