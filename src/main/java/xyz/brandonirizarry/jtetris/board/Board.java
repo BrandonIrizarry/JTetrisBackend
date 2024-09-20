@@ -85,8 +85,9 @@ public class Board {
         var nextRowIndex = bottom.getFirst().row() + 1;
 
         boolean downwardCollision = false;
+        var bottomColumnIndices = bottom.stream().map(Coordinate::column).toList();
 
-        for (var columnIndex : bottom.stream().map(Coordinate::column).toList()) {
+        for (var columnIndex : bottomColumnIndices) {
             if (board[nextRowIndex][columnIndex] == GridToken.Ground) {
                 downwardCollision = true;
                 break;
