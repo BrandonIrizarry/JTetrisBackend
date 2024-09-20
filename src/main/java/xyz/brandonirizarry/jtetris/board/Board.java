@@ -74,7 +74,12 @@ public class Board {
     public void moveDown() {
         translateCurrentPiece(1, 0);
 
-        // Check for a downward collision.
+        // After having moved down, now check for a downward collision.
+        //
+        // This is achieved by checking if any cell beneath the piece
+        // is a ground cell.  To do this, we first need to isolate the
+        // piece's bottom, and check if anything below that is a
+        // ground cell.
         var rotation = this.currentPiece.getFirst();
         var bottom = rotation.getBottom();
         var nextRowIndex = bottom.getFirst().row() + 1;
