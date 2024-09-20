@@ -214,11 +214,11 @@ public class BoardTest {
     }
 
     @Nested
-    @DisplayName("Line breaking tests")
-    class LineBreaking {
+    @DisplayName("Marking for deletion")
+    class MarkingForDeletion {
         @Test
-        @DisplayName("Line break after I, I, and O")
-        void lineBreakAfterIIO() {
+        @DisplayName("Marking for deletion after I, I, and O")
+        void markingForDeletionAfterIIO() {
             board.introducePiece(Tetromino.I.getPiece().translate(0, 1));
 
             for (var i = 0; i < 100; i++) {
@@ -239,7 +239,7 @@ public class BoardTest {
 
             board.markFilledRowsForDeletion();
 
-            checkBoardAgainstFileContents(board, "lineBreaking/board_singleCompletedRow.txt");
+            checkBoardAgainstFileContents(board, "markingForDeletion/board_singleCompletedRow.txt");
         }
     }
 }
