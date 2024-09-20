@@ -310,6 +310,10 @@ public class BoardTest {
         @Test
         @DisplayName("Uneven line clear: no game is perfect :)")
         void unevenLineClear() {
+            /*
+                We introduce a janky lineup that no player would employ purposefully,
+                to demonstrate an uneven line break: send two J's, followed by two T's.
+             */
             var jPiece = Tetromino.J.getPiece();
             jPiece.rotateCounterclockwise();
             board.introducePiece(jPiece.translate(0, 1));
