@@ -241,5 +241,60 @@ public class BoardTest {
 
             checkBoardAgainstFileContents(board, "markingForDeletion/board_singleCompletedRow.txt");
         }
+
+        @Test
+        @DisplayName("Marking for deletion after achieving a tetris")
+        void markingForDeletionAfterTetris() {
+            for (var i = 0; i < 2; i++) {
+                board.introducePiece(Tetromino.O.getPiece());
+
+                for (var j = 0; j < 100; j++) {
+                    board.moveDown();
+                }
+            }
+
+            for (var i = 0; i < 2; i++) {
+                board.introducePiece(Tetromino.O.getPiece().translate(0, 2));
+
+                for (var j = 0; j < 100; j++) {
+                    board.moveDown();
+                }
+            }
+
+            for (var i = 0; i < 2; i++) {
+                board.introducePiece(Tetromino.O.getPiece().translate(0, 4));
+
+                for (var j = 0; j < 100; j++) {
+                    board.moveDown();
+                }
+            }
+
+            for (var i = 0; i < 2; i++) {
+                board.introducePiece(Tetromino.O.getPiece().translate(0, 6));
+
+                for (var j = 0; j < 100; j++) {
+                    board.moveDown();
+                }
+            }
+
+            var iPiece = Tetromino.I.getPiece();
+            iPiece.rotateCounterclockwise();
+
+            board.introducePiece(iPiece.translate(0, 8));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.introducePiece(iPiece.translate(0, 9));
+
+            for (var i = 0; i < 100; i++) {
+                board.moveDown();
+            }
+
+            board.markFilledRowsForDeletion();
+
+            checkBoardAgainstFileContents(board, "markingForDeletion/clearTetris.txt");
+        }
     }
 }
