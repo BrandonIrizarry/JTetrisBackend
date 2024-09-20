@@ -82,6 +82,11 @@ public class Board {
         // ground cell.
         var rotation = this.currentPiece.getFirst();
         var bottom = rotation.getBottom();
+
+        // There should only be one row index for every coordinate in 'bottom'.
+        assert bottom.stream().map(Coordinate::row).distinct().count() == 1
+                : "Uneven bottom: %s".formatted(bottom);
+
         var nextRowIndex = bottom.getFirst().row() + 1;
 
         boolean downwardCollision = false;
