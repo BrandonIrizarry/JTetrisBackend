@@ -47,12 +47,4 @@ public class Piece extends CircularBuffer<Rotation> {
 
         return piece;
     }
-
-    public int getRowOffset() {
-        return rowOffset;
-    }
-
-    public int getColumnOffset() {
-        return columnOffset;
-    }
 }
