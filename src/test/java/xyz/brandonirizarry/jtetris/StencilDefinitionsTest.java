@@ -60,7 +60,7 @@ public class StencilDefinitionsTest {
     @BeforeAll
     public static void populatePieceMap() {
         for (var pieceName : pieceMap.keySet()) {
-            var dir = JTetris.class.getClassLoader().getResource("stencilDefinitions/" + pieceName);
+            var dir = StencilDefinitionsTest.class.getClassLoader().getResource("stencilDefinitions/" + pieceName);
             assert dir != null;
 
             var rotations = pieceMap.get(pieceName);

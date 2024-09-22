@@ -3,7 +3,6 @@ package xyz.brandonirizarry.jtetris.board;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import xyz.brandonirizarry.jtetris.JTetris;
 import xyz.brandonirizarry.jtetris.Tetromino;
 import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 
@@ -15,7 +14,7 @@ public class BoardTest {
     private final Board board = new Board(21, 12);
 
     private void checkBoardAgainstFileContents(Board board, String filename) {
-        try (var inStream = JTetris.class
+        try (var inStream = BoardTest.class
                                     .getClassLoader()
                                     .getResourceAsStream(filename)) {
             assert inStream != null;
