@@ -5,7 +5,7 @@ import com.google.common.collect.Iterables;
 import java.util.*;
 
 public class CircularBuffer<T> implements Iterable<T> {
-    final Deque<T> buffer;
+    protected final Deque<T> buffer;
 
     @SafeVarargs
     public CircularBuffer(T... elements) {
