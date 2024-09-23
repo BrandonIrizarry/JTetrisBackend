@@ -12,24 +12,6 @@ public class CircularBuffer<T> implements Iterable<T> {
         buffer = new ArrayDeque<>(Arrays.asList(elements));
     }
 
-    public void add(T newElement) {
-        buffer.addLast(newElement);
-    }
-
-    public T getFirst() {
-        return buffer.getFirst();
-    }
-
-    public void rotateCounterclockwise() {
-        var tmp = buffer.pop();
-        buffer.addLast(tmp);
-    }
-
-    public void rotateClockwise() {
-        var tmp = buffer.removeLast();
-        buffer.addFirst(tmp);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,5 +33,23 @@ public class CircularBuffer<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return buffer.iterator();
+    }
+
+    public void add(T newElement) {
+        buffer.addLast(newElement);
+    }
+
+    public T getFirst() {
+        return buffer.getFirst();
+    }
+
+    public void rotateCounterclockwise() {
+        var tmp = buffer.pop();
+        buffer.addLast(tmp);
+    }
+
+    public void rotateClockwise() {
+        var tmp = buffer.removeLast();
+        buffer.addFirst(tmp);
     }
 }
