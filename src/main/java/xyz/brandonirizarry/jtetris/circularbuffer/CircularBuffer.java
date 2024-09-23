@@ -43,12 +43,12 @@ public class CircularBuffer<T> implements Iterable<T> {
         return buffer.getFirst();
     }
 
-    public void rotateCounterclockwise() {
+    void shiftRight() {
         var tmp = buffer.pop();
         buffer.addLast(tmp);
     }
 
-    public void rotateClockwise() {
+    void shiftLeft() {
         var tmp = buffer.removeLast();
         buffer.addFirst(tmp);
     }

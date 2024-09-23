@@ -117,14 +117,13 @@ public class Board {
     }
 
     public void rotateCounterclockwise() {
-        var previousRotation = this.currentPiece.getFirst();
-        this.currentPiece.rotateCounterclockwise();
+        var candidatePiece = this.currentPiece.rotateCounterclockwise();
 
-        if (this.verify(this.currentPiece)) {
-            this.eraseRotation(previousRotation);
+        if (this.verify(candidatePiece)) {
+            this.eraseRotation(this.currentPiece.getFirst());
+            this.currentPiece = candidatePiece;
+
             this.paintCurrentRotationAsActive();
-        } else {
-            this.currentPiece.rotateClockwise();
         }
     }
 

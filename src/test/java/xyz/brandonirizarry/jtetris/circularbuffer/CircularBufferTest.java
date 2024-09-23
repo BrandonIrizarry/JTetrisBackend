@@ -7,23 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CircularBufferTest {
     @Test
-    @DisplayName("Counterclockwise rotation presents correct first element")
-    void checkCounterclockwiseRotation() {
+    @DisplayName("Shifting right presents correct first element")
+    void checkShiftRight() {
         var buffer = new CircularBuffer<>(1, 2, 3, 4);
 
         for (var i = 1; i <= 4; i++) {
             assertEquals(i, buffer.getFirst());
-            buffer.rotateCounterclockwise();
+            buffer.shiftRight();
         }
     }
 
     @Test
-    @DisplayName("Clockwise rotation presents correct first element")
-    void checkClockwiseRotation() {
+    @DisplayName("Shifting left presents correct first element")
+    void checkShiftLeft() {
         var buffer = new CircularBuffer<>(1, 2, 3, 4);
 
         for (var i = 4; i >= 1; i--) {
-            buffer.rotateClockwise();
+            buffer.shiftLeft();
             assertEquals(i, buffer.getFirst());
         }
     }

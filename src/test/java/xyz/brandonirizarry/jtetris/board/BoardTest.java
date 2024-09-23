@@ -76,9 +76,7 @@ public class BoardTest {
         @Test
         @DisplayName("Check that valid CCW yields expected position")
         void checkValidCCW() {
-            board.introducePiece(newPiece);
-
-            board.rotateCounterclockwise();
+            board.introducePiece(newPiece.rotateCounterclockwise());
 
             checkBoardAgainstFileContents(BoardTest.this.board, "simpleMotions/boardL_validCCW.txt");
         }
@@ -287,15 +285,14 @@ public class BoardTest {
 
             // Finally, introduce two vertical I's to complete the tetris.
             var iPiece = Tetromino.I.getPiece();
-            iPiece.rotateCounterclockwise();
 
-            board.introducePiece(iPiece.translate(0, 8));
+            board.introducePiece(iPiece.translate(0, 8).rotateCounterclockwise());
 
             for (var i = 0; i < 100; i++) {
                 board.moveDown();
             }
 
-            board.introducePiece(iPiece.translate(0, 9));
+            board.introducePiece(iPiece.translate(0, 9).rotateClockwise());
 
             for (var i = 0; i < 100; i++) {
                 board.moveDown();
@@ -314,32 +311,24 @@ public class BoardTest {
                 to demonstrate an uneven line break: send two J's, followed by two T's.
              */
             var jPiece = Tetromino.J.getPiece();
-            jPiece.rotateCounterclockwise();
-            board.introducePiece(jPiece.translate(0, 1));
+            board.introducePiece(jPiece.translate(0, 1).rotateCounterclockwise());
 
             for (var i = 0; i < 100; i++) {
                 board.moveDown();
             }
 
-            // Note that this is the same rotation.
-            board.introducePiece(jPiece.translate(0, 4));
+            board.introducePiece(jPiece.translate(0, 4).rotateCounterclockwise());
 
             for (var i = 0; i < 100; i++) {
                 board.moveDown();
             }
 
             var tPiece = Tetromino.T.getPiece();
-            tPiece.rotateCounterclockwise();
-            tPiece.rotateCounterclockwise();
-            board.introducePiece(tPiece.translate(0, 6));
+            board.introducePiece(tPiece.translate(0, 6).rotateCounterclockwise(2));
 
             for (var i = 0; i < 100; i++) {
                 board.moveDown();
             }
-
-            // Get back to the first rotation.
-            tPiece.rotateClockwise();
-            tPiece.rotateClockwise();
 
             board.introducePiece(tPiece.translate(0, 8));
 

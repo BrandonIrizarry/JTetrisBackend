@@ -23,8 +23,7 @@ public class RotationGetBottomTest {
     @Test
     @DisplayName("Check bottom of I-piece")
     void checkIPieceBottom() {
-        var I = Tetromino.I.getPiece();
-        I.rotateCounterclockwise();
+        var I = Tetromino.I.getPiece().rotateCounterclockwise();
         var iFirst = I.getFirst();
 
         assertEquals(

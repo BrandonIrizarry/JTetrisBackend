@@ -47,4 +47,32 @@ public class Piece extends CircularBuffer<Rotation> {
 
         return piece;
     }
+
+    public Piece rotateCounterclockwise(int times) {
+        var copy = this.getCopy();
+
+        for (var i = 0; i < times; i++) {
+            copy.shiftRight();
+        }
+
+        return copy;
+    }
+
+    public Piece rotateCounterclockwise() {
+        return rotateCounterclockwise(1);
+    }
+
+    public Piece rotateClockwise(int times) {
+        var copy = this.getCopy();
+
+        for (var i = 0; i < times; i++) {
+            copy.shiftLeft();
+        }
+
+        return copy;
+    }
+
+    public Piece rotateClockwise() {
+        return rotateClockwise(1);
+    }
 }
