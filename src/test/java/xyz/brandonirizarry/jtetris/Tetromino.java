@@ -154,6 +154,6 @@ public enum Tetromino {
     }
 
     public Piece getPiece() {
-        return piece.copy();
+        return piece.getCopy();
     }
 }

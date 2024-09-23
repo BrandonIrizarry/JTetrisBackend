@@ -38,7 +38,7 @@ public class Piece extends CircularBuffer<Rotation> {
         return translatedPiece;
     }
 
-    public Piece copy() {
+    public Piece getCopy() {
         var piece = new Piece();
 
         for (var rotation : buffer) {
