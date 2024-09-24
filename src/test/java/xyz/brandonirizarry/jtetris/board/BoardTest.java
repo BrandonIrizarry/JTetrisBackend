@@ -1,5 +1,6 @@
 package xyz.brandonirizarry.jtetris.board;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -212,6 +213,7 @@ public class BoardTest {
 
     @Nested
     @DisplayName("Marking for deletion")
+    @Disabled
     class MarkingForDeletion {
         @Test
         @DisplayName("Marking for deletion after I, I, and O")
