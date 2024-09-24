@@ -91,6 +91,8 @@ public class Board {
         assert bottom.stream().map(Coordinate::row).distinct().count() == 1
                 : "Uneven bottom: %s".formatted(bottom);
 
+        // Perform collision detection. If a collision is detected,
+        // update the piece's appearance.
         var nextRowIndex = bottom.getFirst().row() + 1;
 
         boolean downwardCollision = false;
