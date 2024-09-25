@@ -6,24 +6,10 @@ import org.junit.jupiter.api.Test;
 import xyz.brandonirizarry.jtetris.Tetromino;
 import xyz.brandonirizarry.jtetris.circularbuffer.Piece;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static xyz.brandonirizarry.jtetris.board.BoardTestUtils.checkBoardAgainstFileContents;
 
 public class BoardTest {
     private final Board board = new Board(21, 12);
-
-    private void checkBoardAgainstFileContents(Board board, String filename) {
-        try (var inStream = BoardTest.class
-                                    .getClassLoader()
-                                    .getResourceAsStream(filename)) {
-            assert inStream != null;
-            var fileContents = new String(inStream.readAllBytes());
-            assertEquals(fileContents, board.toString());
-        } catch (IOException e) {
-            System.out.println("Nonexistent file");
-        }
-    }
 
     @Nested
     @DisplayName("Empty boards")
