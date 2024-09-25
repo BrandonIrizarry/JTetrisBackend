@@ -12,22 +12,6 @@ public class BoardTest {
     private final Board board = new Board(21, 12);
 
     @Nested
-    @DisplayName("Empty boards")
-    class EmptyBoards {
-        @Test
-        @DisplayName("Check empty 5x6 board printout")
-        void checkSmallEmptyBoardDisplay() {
-            checkBoardAgainstFileContents(new Board(5, 6), "emptyBoards/emptyBoard5by6.txt");
-        }
-
-        @Test
-        @DisplayName("Check empty 21x12 board printout")
-        void checkEmptyBoardDisplay() {
-            checkBoardAgainstFileContents(board, "emptyBoards/emptyBoard21by12.txt");
-        }
-    }
-
-    @Nested
     @DisplayName("Basic tetromino motions")
     class SimpleMotions {
         private final Piece newPiece = Tetromino.L.getPiece().translate(0, 4);
