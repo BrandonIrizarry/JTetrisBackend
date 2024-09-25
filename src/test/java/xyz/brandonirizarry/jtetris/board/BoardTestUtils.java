@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BoardTestUtils {
     static void checkBoardAgainstFileContents(Board board, String filename) {
-        try (var inStream = BoardTest.class
+        try (var inStream = BoardTestUtils.class
                                     .getClassLoader()
                                     .getResourceAsStream(filename)) {
             assert inStream != null;
