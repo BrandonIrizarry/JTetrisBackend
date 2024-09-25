@@ -179,4 +179,37 @@ public class Board {
             }
         }
     }
+
+    void eliminateClearedChars() {
+        while (true) {
+            boolean foundEmptyChar = false;
+
+            for (int rowIndex = 0; rowIndex < board.length; rowIndex++) {
+                for (int columnIndex = 0; columnIndex < board[rowIndex].length; columnIndex++) {
+                    if (board[rowIndex][columnIndex] == GridToken.Cleared) {
+                        foundEmptyChar = true;
+
+                        if (rowIndex == 0) {
+                            board[rowIndex][columnIndex] = GridToken.Empty;
+                        } else {
+                            switch (board[rowIndex - 1][columnIndex]) {
+                                case Empty -> board[rowIndex][columnIndex] = GridToken.Empty;
+                                case Piece -> throw new IllegalStateException("Found Piece token");
+                                case Wall, Cleared -> { }
+                                case GridToken.Ground -> {
+                                    var tmp = board[rowIndex - 1][columnIndex];
+                                    board[rowIndex - 1][columnIndex] = board[rowIndex][columnIndex];
+                                    board[rowIndex][columnIndex] = tmp;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!foundEmptyChar) {
+                break;
+            }
+        }
+    }
 }
