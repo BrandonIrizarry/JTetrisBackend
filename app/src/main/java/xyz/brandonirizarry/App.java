@@ -3,8 +3,10 @@
  */
 package xyz.brandonirizarry;
 
+import xyz.brandonirizarry.matrix.Matrix;
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        new Matrix(20, 10);
     }
 }
