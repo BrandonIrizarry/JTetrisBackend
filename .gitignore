@@ -1,7 +1,8 @@
 /test/
 /build/
 /out/
-/Org/
+/Org/*
+!/Org/devlog.org
 /.idea/
 
 # Ignore Gradle project-specific cache directory
