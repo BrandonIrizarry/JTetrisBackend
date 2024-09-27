@@ -7,6 +7,6 @@ import xyz.brandonirizarry.matrix.Matrix;
 
 public class App {
     public static void main(String[] args) {
-        new Matrix(20, 10);
+        System.out.println(new Matrix(20, 10));
     }
 }
