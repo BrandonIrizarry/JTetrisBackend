@@ -3,10 +3,181 @@
  */
 package xyz.brandonirizarry;
 
-import xyz.brandonirizarry.matrix.Matrix;
+import xyz.brandonirizarry.primitives.Delta;
+import xyz.brandonirizarry.primitives.Point;
+import xyz.brandonirizarry.primitives.Rotation;
+import xyz.brandonirizarry.tetrisboard.TetrisBoard;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
-        System.out.println(new Matrix(20, 10));
+        var J1 = List.of(new Delta(1, 0),
+                new Delta(2, -1),
+                new Delta(2, 0));
+
+        var J2 = List.of(new Delta(0, 1),
+                new Delta(0, 2),
+                new Delta(1, 2));
+
+        var J3 = List.of(new Delta(0, 1),
+                new Delta(1, 0),
+                new Delta(2, 0));
+
+        var J4 = List.of(new Delta(1, 0),
+                new Delta(1, 1),
+                new Delta(1, 2));
+
+        Map<List<Delta>, Rotation> rotationTable = Map.of(J1, new Rotation(J2, new Delta(0, -2)),
+                J2, new Rotation(J3, new Delta(0, 1)),
+                J3, new Rotation(J4, new Delta(0, 0)),
+                J4, new Rotation(J1, new Delta(0, 1)));
+
+        // Let's make a reverse table to enable clockwise rotation.
+        Map<List<Delta>, Rotation> tmp = new HashMap<>();
+
+        for (var entry : rotationTable.entrySet()) {
+            var tetromino = entry.getKey();
+            var rotation = entry.getValue();
+            var nextTetromino = rotation.tetromino();
+            var originDelta = rotation.originDelta();
+
+            tmp.put(nextTetromino, new Rotation(tetromino, new Delta(-originDelta.dr(),
+                    -originDelta.dc())));
+        }
+
+        Map<List<Delta>, Rotation> reverseRotationTable = Map.copyOf(tmp);
+
+        // Let's use a smaller board for the purposes of this demonstration.
+        var tetrisBoard = new TetrisBoard(6, 6);
+
+        tetrisBoard.drawTetromino(new Point(0, 3), J1);
+
+        System.out.println("Board after introducing J:");
+        System.out.println(tetrisBoard);
+
+        // This is where it gets interesting: I want the rotationTable
+        // to kick in now.
+        //
+        // Note that the board is stateless over what the current
+        // tetromino is. We'll find out what the current tetromino is
+        // using the following code.
+
+        List<Point> pieceCells = new ArrayList<>();
+
+        for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+            for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+                if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+                    pieceCells.add(new Point(rowIndex, columnIndex));
+                }
+            }
+        }
+
+        var tetromino = Point.convertPointsToDeltas(pieceCells);
+        System.out.println("We found a J tetromino: " + tetromino);
+
+        // Now that we've found the tetromino, we can erase it in
+        // preparation for drawing its next rotation.
+        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+
+        var nextRotation = rotationTable.get(tetromino);
+        var nextTetromino = nextRotation.tetromino();
+        var originDelta = nextRotation.originDelta();
+
+        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+
+        System.out.println();
+        System.out.println("Board after rotation J once counterclockwise:");
+        System.out.println(tetrisBoard);
+
+        // Now, let's see if we can translate the piece downward one
+        // space.
+        //
+        // We should eventually have this tetromino-finding code in
+        // its own method.
+
+        pieceCells = new ArrayList<>();
+
+        for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+            for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+                if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+                    pieceCells.add(new Point(rowIndex, columnIndex));
+                }
+            }
+        }
+
+        // What's amazing about this is that we don't need new logic
+        // to handle translation: we simply treat it as a "degenerate
+        // case" of a rotation.
+        tetromino = Point.convertPointsToDeltas(pieceCells);
+        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), new Delta(1, 0)), tetromino);
+
+        System.out.println();
+        System.out.println("Board after moving J down one space:");
+        System.out.println(tetrisBoard);
+
+        // Let's rotate it again.
+        pieceCells = new ArrayList<>();
+
+        for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+            for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+                if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+                    pieceCells.add(new Point(rowIndex, columnIndex));
+                }
+            }
+        }
+
+        tetromino = Point.convertPointsToDeltas(pieceCells);
+        System.out.println("We found a J tetromino: " + tetromino);
+
+        // Now that we've found the tetromino, we can erase it in
+        // preparation for drawing its next rotation.
+        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+
+
+        nextRotation = rotationTable.get(tetromino);
+        nextTetromino = nextRotation.tetromino();
+        originDelta = nextRotation.originDelta();
+
+        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+
+        System.out.println();
+        System.out.println("Board after another rotation of J:");
+        System.out.println(tetrisBoard);
+
+        // Finally, let's attempt a clockwise rotation back to the
+        // previous orientation.
+
+        pieceCells = new ArrayList<>();
+
+        for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+            for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+                if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+                    pieceCells.add(new Point(rowIndex, columnIndex));
+                }
+            }
+        }
+
+        tetromino = Point.convertPointsToDeltas(pieceCells);
+        System.out.println("We found a J tetromino: " + tetromino);
+
+        // Now that we've found the tetromino, we can erase it in
+        // preparation for drawing its next rotation.
+        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+
+
+        nextRotation = reverseRotationTable.get(tetromino);
+        nextTetromino = nextRotation.tetromino();
+        originDelta = nextRotation.originDelta();
+
+        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+
+        System.out.println();
+        System.out.println("Board after rotating clockwise to previous orientation:");
+        System.out.println(tetrisBoard);
     }
 }
