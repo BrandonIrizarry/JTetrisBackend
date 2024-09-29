@@ -83,55 +83,83 @@ ending up with the seven pieces used in Tetris:
 
 ***** Implementing one-sided tetrominos in Java
 
-****** What is a tetromino in Java
-In our particular implementation of Tetris, tetrominos are represented
-as lists of deltas. A /Delta/ is a simply a record consisting of two
-ints, that describe the spatial distance between two points. In
-particular, applying the delta to a given point yields another
-point. Our application defines a /Point/ also as a simple record-pair
-of integers. While structually identical, "point" and "delta" are
-given different designations to clarify the different roles they
-fulfill.
+****** Points and deltas
 
-Let's examine more closely the J tetromino in the previous graphic,
-considering it as fixed. Previous experience in attempting to model
-Tetris informs us that such a tetromino will inhabit a two-dimensional
-grid of some sort - a grid of points. We model this grid as a
+Our application does indeed define a /Point/ as a record consisting of
+a pair of integers, namely, the row and column indices of the
+point. We could readily represent a tetromino as an aggregate of these
+points. However, since it's constantly changing its position inside
+the playfield, we represent them rather as lists of deltas. A /Delta/
+is a simply a record that describe the spatial distance between two
+points in terms of a row delta and column delta.
+
+Let's see how this applies in the case of, say, the J tetromino in the
+previous graphic. Such a tetromino will inhabit a two-dimensional grid
+of some sort - a grid of points. We can model this grid as a
 two-dimensional array of primitive integers. At the same time, we can
 index into this array with the help of our Point record, as well as
 describe distances between array cells with our Delta record.
 
-We can also search the array in a "lexicographic" fashion, that is,
+****** Lexicographic search and well-ordering
+
+We can also search the array in a /lexicographic/ fashion, that is,
 from left to right, top to bottom, using a double for-loop. This
 aspect introduces a crucial property of fixed tetrominos: the set
-comprising their cells is well-ordered. Continuing with J as an
-example, it should become evident upon reflection that the first cell
-encountered in a search of the board would be the topmost one,
-followed by the one beneath it, followed by the bottom-left cell,
-followed by the bottom-right cell. We then refer to the first cell as
-the /origin/ of the fixed tetromino. Every other point along the
-tetromino, then, has a certain distance, or delta, from the
-origin. Since there is a one-to-one correspondence between a point and
-its distance from the origin, the set of these distances can itself be
-considered well-ordered, which leads us to modeling such a set as a
-*list* of three deltas. In the case of the above J tetromino, it could
-look something like this:
+comprising their cells is well-ordered, insofar as a lexicographic
+search always encounters the tetromino's cells in the same order. The
+first cell that such a search finds is referred to as the tetromino's
+/origin/. Every other point along the tetromino, then, has a certain
+distance, or /delta/, from the origin, which is invariant with respect
+to the whatever the absolute position of the origin is at the
+moment. Furthermore, since there is a one-to-one correspondence
+between the points themselves and their deltas from the origin:
+
+1. The collection of deltas is also well-ordered, and can be therefore
+   represented as a list.
+
+2. The collection of deltas preserves the uniqueness of the original
+   set of points. We can, in fact omit the trivial origin delta of
+   (0,0), since the second delta, if anything, tells us how to
+   reconstruct the origin. We refer to this unique description based
+   on deltas as the /shape uniqueness property/, since the deltas
+   effectively describe the shape of the tetromino.
+   
+Given these observations, we can now formulate a unique
+representation of the J tetromino shown above:
 
 #+begin_src java
+  record Delta(int deltaRow, int deltaColumn) { }
+  
   var J = List.of(new Delta(1, 0),
                   new Delta(2, -1),
                   new Delta(2, 0));
 #+end_src
 
-Note that the origin isn't a part of the tetromino's
-representation. Since two fixed tetrominos are equal if and only if
-they coincide at most after a translation, the three deltas from the
-origin are sufficient to uniquely identify this fixed tetromino. That
-is, all we need to identify a tetromino is its shape. We can refer to
-this therefore as the /shape uniqueness property/. The origin gets
-reintroduced later, as we'll see.
+***** Operations on tetrominos
 
-****** Modeling rotations
+****** How the board manages state
+
+One goal of the current implementation is to do away with managing a
+separate reference to the current tetromino. In my previous attempt,
+confusion often arose between the buffer holding the various rotations
+(which was the actual reference to the current tetromino), and the
+actual rotation being displayed at the moment. It was manageable, but
+I wanted something better.
+
+A tetromino is marked on the board with -1. That is, every point
+belonging to the tetromino is assigned a value of -1 to the
+corresponding row-column cell in the underlying two-dimensional
+array. Empty cells are marked with 0. Later, we'll represent /garbage/
+(cells left over from pieces that have fallen to the ground) using the
+integer 1.
+
+The tetromino, as it's situated in the playfield, can either move
+down, left, right, or else rotate clockwise, or counterclockwise. It
+turns out that translations can be handled as a special, degenerate
+case of rotations, where we simply don't use any of the rotation
+tables.
+
+****** Rotation
 
 Our application works with fixed tetrominos. It maintains a Map,
 sending each fixed tetromino to what happens to be its
@@ -207,7 +235,7 @@ completely arbitrary. The map then looks as in the following:
 
 #+end_src
 
-Note that we still use the "Ji" definitions introduced previously,
+Note that we still use the "J_i" definitions introduced previously,
 only that now the client code can reference how to actually *draw* the
 next rotation, using a point of origin (defined relative to the point
 of origin of the previous rotation, which the client code manages, as
@@ -223,100 +251,18 @@ differently, the notion of a one-sided tetromino is implemented as a
 loose abstraction on top of the set of fixed tetrominos, by simply
 organizing the latter a certain way.
 
-****** How the board manages state
+****** Translation
 
-One goal of the current implementation is to do away with managing a
-separate reference to the current tetromino. In my previous attempt,
-confusion often arose between the buffer holding the various rotations
-(which was the actual reference to the current tetromino), and the
-actual rotation being displayed at the moment. It was manageable, but
-I wanted something better.
+Translation arises almost automatically from the rotation
+implementation, since, instead of drawing the next rotation under the
+required origin-shift, we simply draw the same rotation with an
+origin-shift of (1,0) when moving down, (0, -1) when moving left and
+(0, 1) when moving right.
 
-A tetromino is marked on the board with -1. That is, every point
-belonging to the tetromino is assigned a value of -1 to the
-corresponding row-column cell in the underlying two-dimensional
-array. Empty cells are marked with 0. Later, we'll represent /garbage/
-(cells left over from pieces that have fallen to the ground) using the
-integer 1.
+***** The whole thing so far
 
-The tetromino, as it's situated in the playfield, can either move
-down, left, right, or else rotate clockwise, or counterclockwise. It
-turns out that translations can be handled as a special, degenerate
-case of rotations, where we simply don't use any of the rotation
-tables.
-
-****** Effecting a rotation 
-
-This being the case, a method for rotating a piece in our board could
-be based on code found in the following snippet. To reiterate, the
-board is stateless: the code merely examines what's drawn there so
-far, and figures out the rest. Note that there are a bunch of concepts
-and methods introduced here; the complete code listing, with a
-completed method implementations and such, is found at the end of this
-document.
-
-#+begin_src java
-
-  // Find the points belonging to the tetromino.
-  List<Point> pieceCells = new ArrayList<>();
-      
-  for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
-          if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
-              pieceCells.add(new Point(rowIndex, columnIndex));
-          }
-      }
-  }
-
-  // We've found the tetromino!
-  var tetromino = Point.convertPointsToDeltas(pieceCells);
-
-  // Now that we've found it, we can erase it in preparation for drawing
-  // its next rotation.
-  //
-  // Note how drawing and erasing need an origin point in addition to
-  // the tetromino itself.
-  tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-
-  var nextRotation = rotationTable.get(tetromino);
-  var nextTetromino = nextRotation.tetromino();
-  var originDelta = nextRotation.originDelta();
-
-  var nextOrigin = Point.add(pieceCells.getFirst(), originDelta);
-
-  tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
-
-#+end_src
-
-****** Archived remarks: Translation
-
-Ironically, once we implement things to simplify rotations as much as
-possible, this operation now becomes a bit tricky to implement. We
-need to be able to tell when a tetromino at an arbitary position in
-the Tetris board equals a key in our hash table. That is, a piece will
-have undergone an arbitrary set of translations (a series of down,
-left, and right moves); if we implement a tetromino as a static set of
-coordinates reflecting its position on the board, these must by
-necessity be updated with each translation, ruining our equality
-scheme.
-
-We could record all translations that have been played so far, and use
-those to revert the piece back to its point of origin. We would then
-compute the rotation, and replay the translations back to derive the
-correct current state of the piece.
-
-Another possibility, one that looks preferable for being simpler, is
-to represent each piece instead as a /path/. This leads into the board
-representation we'll be using: a simple two-dimensional array of
-integers. Since paths don't change under translation, we no
-longer need an extra buffer recording previous translations. Also,
-finding the beginning of a piece is relatively simple: give its
-/lexically first/ cell a value of, say, -2. The other piece-cells
-would have a value of -1. (These peculiar negative values will be
-explained in due time.) There would be a resulting collection of
-negative values; deltas would be computed from the -2 cell to the
-remaining ones, which are used to derived the set used to index into
-the rotation hash-table.
+Here is the complete code listing, demonstrating that our approach, in
+fact, works:
 
 #+begin_src java :classname Main
   import java.util.*;
