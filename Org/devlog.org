@@ -1,2 +1,622 @@
 #+STARTUP: lognotedone
+#+STARTUP: inlineimages
+
+* 2024
+** 2024-09 September
+*** 2024-09-27 Friday
+**** An observation about tetrominos
+DEADLINE: <2024-09-28 Sat>
+
+When implementing Tetris, the primary object of interest is a
+/one-sided tetromino/. Wikipedia [fn:1] tells us:
+
+#+begin_quote
+A tetromino is a geometric shape composed of four squares,
+connected orthogonally (i.e. at the edges and not the corners)
+#+end_quote
+
+That is, a tetromino is formed by concatenating four unit squares
+along their edges. It turns out there are 19 such /fixed tetrominos/,
+shown here:
+
+[[./fixed_tetrominos.png]]
+
+Despite the appellation of "fixed," we may postulate that these shapes
+may be /translated/, that is, "slid" across a single two-dimensional
+plane they collectively inhabit.
+
+***** Coincidence
+
+We say that two fixed tetrominos are /coincident/ when
+their respective unit squares overlap. We can loosely think of this as
+them "sharing the same four coordinates." In fact, this intuition
+directly translates into code in a very nice way, as we'll inevitably
+see soon enough.
+
+We then observe that *no two fixed tetrominos are coincident under
+translation*. Admittedly, this is by construction, but we reiterate it
+nonetheless. In fact, this becomes crucial when we later implement a
+scheme for modeling piece rotations in our actual Java Tetris game,
+but more on that later.
+
+This observation, incidentally, is that upon which the title of this
+post is based on. 😏
+
+***** Free tetrominos
+
+Looking at the above diagram, one can't resist but to notice that many
+of these are the same "shape", just in different
+orientations. (Especially if you're used to playing a lot of Tetris!)
+And so enters the concept of a /free tetromino/: one which is allowed
+to be rotated and reflected, as well as translated.
+
+***** Congruence
+
+Hence two free tetrominoes are /congruent/ when there exists some
+series of rotations, reflections, and translations applicable to one
+of them (without loss of generality) that will make it conincide with
+the second one.
+
+Modulo congruence, we now derive the following subset of fixed
+tetrominos, one that effectively describes the free tetrominos:
+
+[[./free_tetrominos.png]]
+
+Note how these are given bespoke, descriptive names.
+
+***** One-sided tetrominos
+
+Tetris, as a game, concerns itself in particular with a subset of the
+fixed tetronimos called /one-sided tetrominos/. These are like free
+tetrominos, except that the definition of congruence now only allows
+for rotation and translation; reflection is disallowed for this
+particular subset of fixed tetrominos. The term "one-sided" refers to
+the tetromino now choosing and commiting to one of its two possible
+reflections; it now becomes "left-" or "right-handed," so to
+speak. When a given tetromino has two identical reflections, one is
+discarded.
+
+As always, we derive the one-sided tetrominos modulo congruence,
+ending up with the seven pieces used in Tetris:
+
+[[./one_sided_tetrominos.png]]
+
+***** Implementing one-sided tetrominos in Java
+
+****** What is a tetromino in Java
+In our particular implementation of Tetris, tetrominos are represented
+as lists of deltas. A /Delta/ is a simply a record consisting of two
+ints, that describe the spatial distance between two points. In
+particular, applying the delta to a given point yields another
+point. Our application defines a /Point/ also as a simple record-pair
+of integers. While structually identical, "point" and "delta" are
+given different designations to clarify the different roles they
+fulfill.
+
+Let's examine more closely the J tetromino in the previous graphic,
+considering it as fixed. Previous experience in attempting to model
+Tetris informs us that such a tetromino will inhabit a two-dimensional
+grid of some sort - a grid of points. We model this grid as a
+two-dimensional array of primitive integers. At the same time, we can
+index into this array with the help of our Point record, as well as
+describe distances between array cells with our Delta record.
+
+We can also search the array in a "lexicographic" fashion, that is,
+from left to right, top to bottom, using a double for-loop. This
+aspect introduces a crucial property of fixed tetrominos: the set
+comprising their cells is well-ordered. Continuing with J as an
+example, it should become evident upon reflection that the first cell
+encountered in a search of the board would be the topmost one,
+followed by the one beneath it, followed by the bottom-left cell,
+followed by the bottom-right cell. We then refer to the first cell as
+the /origin/ of the fixed tetromino. Every other point along the
+tetromino, then, has a certain distance, or delta, from the
+origin. Since there is a one-to-one correspondence between a point and
+its distance from the origin, the set of these distances can itself be
+considered well-ordered, which leads us to modeling such a set as a
+*list* of three deltas. In the case of the above J tetromino, it could
+look something like this:
+
+#+begin_src java
+  var J = List.of(new Delta(1, 0),
+                  new Delta(2, -1),
+                  new Delta(2, 0));
+#+end_src
+
+Note that the origin isn't a part of the tetromino's
+representation. Since two fixed tetrominos are equal if and only if
+they coincide at most after a translation, the three deltas from the
+origin are sufficient to uniquely identify this fixed tetromino. That
+is, all we need to identify a tetromino is its shape. We can refer to
+this therefore as the /shape uniqueness property/. The origin gets
+reintroduced later, as we'll see.
+
+****** Modeling rotations
+
+Our application works with fixed tetrominos. It maintains a Map,
+sending each fixed tetromino to what happens to be its
+counterclockwise rotation, paired with a Delta showing how to
+translate the origin. Some observations about this table:
+
+1. Equality, as required by the Java Map, is based on the shape
+   uniqueness property.
+
+2. The set of keys, and counterclockwise rotations, are equal; one
+   fixed tetromino can only map to another fixed tetromino, every
+   tetromino has a mapping, and every tetromino is mapped to. Because
+   of this, we can traverse the complete rotations of a given
+   tetromino by finding the value associated with a given key, and
+   then using the tetromino found in the value as a key to find
+   another value, and so on.
+   
+3. No two fixed tetrominos are coincident. Therefore, referring back
+   to (1), we don't need to worry, for example, that by
+   "dereferencing" hash table keys, we'll somehow end up in another
+   one-sided tetromino's rotation cycle. If this had been true, we
+   would've had to group tetrominos by congruence under rotation. On
+   the one hand, we could've done this, say, using a
+   custom-implemented circular buffer (backed, for example, by an
+   ArrayDeque.) Admittedly, this is an obvious and amenable first
+   strategy; but it ends up being (IMO) something that we're forced to
+   do because of the arbitrary nature of rotations, and, while
+   workable, feels aesthetically less pleasing than the current
+   approach.
+
+4. Tetris-piece rotations (as far as I can tell) follow an arbitrarily
+   established set of patterns; they aren't based on pure mathematical
+   functions. Hence, the rotations obligatorily need to be explicitly
+   written out.
+   
+When attempting to implement Tetris previously, I drew out the set of
+rotations for each piece. It turns out such drawings come in perfectly
+handy for the present implementation rotations. The set of four
+rotations for J might look something like this:
+
+#+begin_src java
+  var J1 = List.of(new Delta(1, 0),
+                   new Delta(2, -1),
+                   new Delta(2, 0));
+
+  var J2 = List.of(new Delta(0, 1),
+                   new Delta(0, 2),
+                   new Delta(1, 2));
+
+  var J3 = List.of(new Delta(0, 1),
+                   new Delta(1, 0),
+                   new Delta(2, 0));
+
+  var J4 = List.of(new Delta(1, 0),
+                   new Delta(1, 1),
+                   new Delta(1, 2));
+  
+#+end_src
+
+I initially had the idea of using a Map<List<Delta>, List<Delta>> to
+model rotations. For example, J1 would map to J2 in the above
+example. While this is close, one more thing is needed: where to place
+the *origin* of the next rotation! That is, we need to first anchor
+where our application of deltas should begin, since, as we've noted
+earlier, this start position isn't determined mathematically; it's
+completely arbitrary. The map then looks as in the following:
+
+#+begin_src java
+  Map<List<Delta>, Rotation> rotationTable = Map.of(J1, new Rotation(J2, new Delta(0, -2)),
+                                                    J2, new Rotation(J3, new Delta(0, 1)),
+                                                    J3, new Rotation(J4, new Delta(0, 0)),
+                                                    J4, new Rotation(J1, new Delta(0, 1)));
+
+#+end_src
+
+Note that we still use the "Ji" definitions introduced previously,
+only that now the client code can reference how to actually *draw* the
+next rotation, using a point of origin (defined relative to the point
+of origin of the previous rotation, which the client code manages, as
+we'll see in the next code listing.)
+
+In a similar manner, we would introduce entries for the remaining 15
+fixed tetrominos. Constructing a reverse table that handles clockwise
+rotations is a relatively simple task.
+
+Again, one nice property of this representation is that we don't need
+to group the tetrominos by congruence under rotation. Stated
+differently, the notion of a one-sided tetromino is implemented as a
+loose abstraction on top of the set of fixed tetrominos, by simply
+organizing the latter a certain way.
+
+****** How the board manages state
+
+One goal of the current implementation is to do away with managing a
+separate reference to the current tetromino. In my previous attempt,
+confusion often arose between the buffer holding the various rotations
+(which was the actual reference to the current tetromino), and the
+actual rotation being displayed at the moment. It was manageable, but
+I wanted something better.
+
+A tetromino is marked on the board with -1. That is, every point
+belonging to the tetromino is assigned a value of -1 to the
+corresponding row-column cell in the underlying two-dimensional
+array. Empty cells are marked with 0. Later, we'll represent /garbage/
+(cells left over from pieces that have fallen to the ground) using the
+integer 1.
+
+The tetromino, as it's situated in the playfield, can either move
+down, left, right, or else rotate clockwise, or counterclockwise. It
+turns out that translations can be handled as a special, degenerate
+case of rotations, where we simply don't use any of the rotation
+tables.
+
+****** Effecting a rotation 
+
+This being the case, a method for rotating a piece in our board could
+be based on code found in the following snippet. To reiterate, the
+board is stateless: the code merely examines what's drawn there so
+far, and figures out the rest. Note that there are a bunch of concepts
+and methods introduced here; the complete code listing, with a
+completed method implementations and such, is found at the end of this
+document.
+
+#+begin_src java
+
+  // Find the points belonging to the tetromino.
+  List<Point> pieceCells = new ArrayList<>();
+      
+  for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+          if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+              pieceCells.add(new Point(rowIndex, columnIndex));
+          }
+      }
+  }
+
+  // We've found the tetromino!
+  var tetromino = Point.convertPointsToDeltas(pieceCells);
+
+  // Now that we've found it, we can erase it in preparation for drawing
+  // its next rotation.
+  //
+  // Note how drawing and erasing need an origin point in addition to
+  // the tetromino itself.
+  tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+
+  var nextRotation = rotationTable.get(tetromino);
+  var nextTetromino = nextRotation.tetromino();
+  var originDelta = nextRotation.originDelta();
+
+  var nextOrigin = Point.add(pieceCells.getFirst(), originDelta);
+
+  tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
+
+#+end_src
+
+****** Archived remarks: Translation
+
+Ironically, once we implement things to simplify rotations as much as
+possible, this operation now becomes a bit tricky to implement. We
+need to be able to tell when a tetromino at an arbitary position in
+the Tetris board equals a key in our hash table. That is, a piece will
+have undergone an arbitrary set of translations (a series of down,
+left, and right moves); if we implement a tetromino as a static set of
+coordinates reflecting its position on the board, these must by
+necessity be updated with each translation, ruining our equality
+scheme.
+
+We could record all translations that have been played so far, and use
+those to revert the piece back to its point of origin. We would then
+compute the rotation, and replay the translations back to derive the
+correct current state of the piece.
+
+Another possibility, one that looks preferable for being simpler, is
+to represent each piece instead as a /path/. This leads into the board
+representation we'll be using: a simple two-dimensional array of
+integers. Since paths don't change under translation, we no
+longer need an extra buffer recording previous translations. Also,
+finding the beginning of a piece is relatively simple: give its
+/lexically first/ cell a value of, say, -2. The other piece-cells
+would have a value of -1. (These peculiar negative values will be
+explained in due time.) There would be a resulting collection of
+negative values; deltas would be computed from the -2 cell to the
+remaining ones, which are used to derived the set used to index into
+the rotation hash-table.
+
+#+begin_src java :classname Main
+  import java.util.*;
+
+  // Name these two things differently for legibility.
+  record Delta(int dr, int dc) { }
+
+  record Point(int row, int column) {
+      public static Point add(Point point, Delta delta) {
+          return new Point(point.row() + delta.dr(), point.column() + delta.dc());
+      }
+
+      public static Delta difference(Point end, Point start) {
+          return new Delta(end.row() - start.row(), end.column() - start.column());
+      }
+
+      // List<Delta> == Tetromino
+      public static List<Delta> convertPointsToDeltas(List<Point> points) {
+          List<Delta> tetromino = new ArrayList<>();
+
+          for (var i = 1; i < points.size(); i++) {
+              tetromino.add(Point.difference(points.get(i), points.getFirst()));
+          }
+
+          return tetromino;
+      }
+  }
+
+  record Rotation(List<Delta> tetromino, Delta originDelta) { }
+
+  class TetrisBoard {
+      public final int numRows;
+      public final int numColumns;
+
+      private int[][] board;
+
+      public TetrisBoard(int numRows, int numColumns) {
+          board = new int[numRows][numColumns];
+          this.numRows = numRows;
+          this.numColumns = numColumns;
+      }
+
+      @Override
+      public String toString() {
+          var builder = new StringBuilder();
+           
+          for (var row : board) {
+              for (var cell : row) {
+                  builder.append(" %2d".formatted(cell));
+              }
+
+              builder.append('\n');
+          }
+
+          return builder.toString();
+      }
+
+      public boolean isTetrominoCell(int rowIndex, int columnIndex) {
+          return board[rowIndex][columnIndex] == -1;
+      }
+
+      public void drawTetromino(Point origin, List<Delta> tetromino) {
+          writeTetromino(origin, tetromino, -1);
+      }
+
+      public void eraseTetromino(Point origin, List<Delta> tetromino) {
+          writeTetromino(origin, tetromino, 0);
+      }
+
+      private void writeTetromino(Point origin, List<Delta> tetromino, int value) {
+          board[origin.row()][origin.column()] = value;
+          
+          for (var delta : tetromino) {
+              var currentPoint = Point.add(origin, delta);
+              board[currentPoint.row()][currentPoint.column()] = value;
+          }
+      }
+  }
+
+  class Main {
+      public static void main(String[] args) {
+          var J1 = List.of(new Delta(1, 0),
+                           new Delta(2, -1),
+                           new Delta(2, 0));
+
+          var J2 = List.of(new Delta(0, 1),
+                           new Delta(0, 2),
+                           new Delta(1, 2));
+
+          var J3 = List.of(new Delta(0, 1),
+                           new Delta(1, 0),
+                           new Delta(2, 0));
+
+          var J4 = List.of(new Delta(1, 0),
+                           new Delta(1, 1),
+                           new Delta(1, 2));
+          
+          Map<List<Delta>, Rotation> rotationTable = Map.of(J1, new Rotation(J2, new Delta(0, -2)),
+                                                            J2, new Rotation(J3, new Delta(0, 1)),
+                                                            J3, new Rotation(J4, new Delta(0, 0)),
+                                                            J4, new Rotation(J1, new Delta(0, 1)));
+
+          // Let's make a reverse table to enable clockwise rotation.
+          Map<List<Delta>, Rotation> tmp = new HashMap<>();
+
+          for (var entry : rotationTable.entrySet()) {
+              var tetromino = entry.getKey();
+              var rotation = entry.getValue();
+              var nextTetromino = rotation.tetromino();
+              var originDelta = rotation.originDelta();
+
+              tmp.put(nextTetromino, new Rotation(tetromino, new Delta(-originDelta.dr(),
+                                                                       -originDelta.dc())));
+          }
+
+          Map<List<Delta>, Rotation> reverseRotationTable = Map.copyOf(tmp);
+          
+          // Let's use a smaller board for the purposes of this demonstration.
+          var tetrisBoard = new TetrisBoard(6, 6);
+
+          tetrisBoard.drawTetromino(new Point(0, 3), J1);
+
+          System.out.println("Board after introducing J:");
+          System.out.println(tetrisBoard);
+
+          // This is where it gets interesting: I want the rotationTable
+          // to kick in now.
+          //
+          // Note that the board is stateless over what the current
+          // tetromino is. We'll find out what the current tetromino is
+          // using the following code.
+
+          List<Point> pieceCells = new ArrayList<>();
+          
+          for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+              for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+                  if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+                      pieceCells.add(new Point(rowIndex, columnIndex));
+                  }
+              }
+          }
+
+          var tetromino = Point.convertPointsToDeltas(pieceCells);
+          System.out.println("We found a J tetromino: " + tetromino);
+
+          // Now that we've found the tetromino, we can erase it in
+          // preparation for drawing its next rotation.
+          tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+
+          var nextRotation = rotationTable.get(tetromino);
+          var nextTetromino = nextRotation.tetromino();
+          var originDelta = nextRotation.originDelta(); 
+
+          tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+
+          System.out.println();
+          System.out.println("Board after rotation J once counterclockwise:");
+          System.out.println(tetrisBoard);
+
+          // Now, let's see if we can translate the piece downward one
+          // space.
+          //
+          // We should eventually have this tetromino-finding code in
+          // its own method.
+
+          pieceCells = new ArrayList<>();
+
+          for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+              for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+                  if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+                      pieceCells.add(new Point(rowIndex, columnIndex));
+                  }
+              }
+          }
+
+          // What's amazing about this is that we don't need new logic
+          // to handle translation: we simply treat it as a "degenerate
+          // case" of a rotation.
+          tetromino = Point.convertPointsToDeltas(pieceCells);
+          tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+          tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), new Delta(1, 0)), tetromino);
+
+          System.out.println();
+          System.out.println("Board after moving J down one space:");
+          System.out.println(tetrisBoard);
+
+          // Let's rotate it again.
+          pieceCells = new ArrayList<>();
+
+          for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+              for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+                  if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+                      pieceCells.add(new Point(rowIndex, columnIndex));
+                  }
+              }
+          }
+
+          tetromino = Point.convertPointsToDeltas(pieceCells);
+          System.out.println("We found a J tetromino: " + tetromino);
+
+          // Now that we've found the tetromino, we can erase it in
+          // preparation for drawing its next rotation.
+          tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+
+
+          nextRotation = rotationTable.get(tetromino);
+          nextTetromino = nextRotation.tetromino();
+          originDelta = nextRotation.originDelta(); 
+
+          tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+
+          System.out.println();
+          System.out.println("Board after another rotation of J:");
+          System.out.println(tetrisBoard);
+
+          // Finally, let's attempt a clockwise rotation back to the
+          // previous orientation.
+          
+          pieceCells = new ArrayList<>();
+
+          for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
+              for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
+                  if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
+                      pieceCells.add(new Point(rowIndex, columnIndex));
+                  }
+              }
+          }
+
+          tetromino = Point.convertPointsToDeltas(pieceCells);
+          System.out.println("We found a J tetromino: " + tetromino);
+
+          // Now that we've found the tetromino, we can erase it in
+          // preparation for drawing its next rotation.
+          tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+
+
+          nextRotation = reverseRotationTable.get(tetromino);
+          nextTetromino = nextRotation.tetromino();
+          originDelta = nextRotation.originDelta(); 
+
+          tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+
+          System.out.println();
+          System.out.println("Board after rotating clockwise to previous orientation:");
+          System.out.println(tetrisBoard);
+      }
+  }
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Board after introducing J:
+  0  0  0 -1  0  0
+  0  0  0 -1  0  0
+  0  0 -1 -1  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+
+We found a J tetromino: [Delta[dr=1, dc=0], Delta[dr=2, dc=-1], Delta[dr=2, dc=0]]
+
+Board after rotation J once counterclockwise:
+  0 -1 -1 -1  0  0
+  0  0  0 -1  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+
+
+Board after moving J down one space:
+  0  0  0  0  0  0
+  0 -1 -1 -1  0  0
+  0  0  0 -1  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+
+We found a J tetromino: [Delta[dr=0, dc=1], Delta[dr=0, dc=2], Delta[dr=1, dc=2]]
+
+Board after another rotation of J:
+  0  0  0  0  0  0
+  0  0 -1 -1  0  0
+  0  0 -1  0  0  0
+  0  0 -1  0  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+
+We found a J tetromino: [Delta[dr=0, dc=1], Delta[dr=1, dc=0], Delta[dr=2, dc=0]]
+
+Board after rotating clockwise to previous orientation:
+  0  0  0  0  0  0
+  0 -1 -1 -1  0  0
+  0  0  0 -1  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+  0  0  0  0  0  0
+
+#+end_example
+
+* Footnotes
+[fn:1] [[https://en.wikipedia.org/wiki/Tetromino]['Tetromino' on Wikipedia]] 
 
