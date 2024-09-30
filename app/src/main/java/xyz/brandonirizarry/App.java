@@ -11,8 +11,8 @@ import xyz.brandonirizarry.tetromino.Tetromino;
 import java.util.ArrayList;
 import java.util.List;
 
-import static xyz.brandonirizarry.tetromino.Tetromino.reverseRotationTable;
-import static xyz.brandonirizarry.tetromino.Tetromino.rotationTable;
+import static xyz.brandonirizarry.tetromino.Tetromino.clockwiseTable;
+import static xyz.brandonirizarry.tetromino.Tetromino.counterclockwiseTable;
 
 public class App {
     public static void main(String[] args) {
@@ -50,7 +50,7 @@ public class App {
         // preparation for drawing its next rotation.
         tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
 
-        var nextRotation = rotationTable.get(tetromino);
+        var nextRotation = counterclockwiseTable.get(tetromino);
         var nextTetromino = nextRotation.tetromino();
         var originDelta = nextRotation.originDelta();
 
@@ -106,7 +106,7 @@ public class App {
         tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
 
 
-        nextRotation = rotationTable.get(tetromino);
+        nextRotation = counterclockwiseTable.get(tetromino);
         nextTetromino = nextRotation.tetromino();
         originDelta = nextRotation.originDelta();
 
@@ -137,7 +137,7 @@ public class App {
         tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
 
 
-        nextRotation = reverseRotationTable.get(tetromino);
+        nextRotation = clockwiseTable.get(tetromino);
         nextTetromino = nextRotation.tetromino();
         originDelta = nextRotation.originDelta();
 

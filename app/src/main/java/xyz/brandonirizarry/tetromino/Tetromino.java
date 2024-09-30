@@ -33,7 +33,7 @@ public class Tetromino {
                     .put("Z2", List.of(new Delta(1, -1), new Delta(1, 0), new Delta(2, -1)))
                     .build();
 
-    public static final ImmutableMap<List<Delta>, Rotation> rotationTable =
+    public static final ImmutableMap<List<Delta>, Rotation> counterclockwiseTable =
             new ImmutableMap.Builder<List<Delta>, Rotation>()
                     .put(aliased("J1"), new Rotation(aliased("J2"), new Delta(0, -2)))
                     .put(aliased("J2"), new Rotation(aliased("J3"), new Delta(0, 1)))
@@ -41,13 +41,13 @@ public class Tetromino {
                     .put(aliased("J4"), new Rotation(aliased("J1"), new Delta(0, 1)))
                     .build();
 
-    public static final ImmutableMap<List<Delta>, Rotation> reverseRotationTable;
+    public static final ImmutableMap<List<Delta>, Rotation> clockwiseTable;
 
     // Initialize 'reverseRotationTable' here.
     static {
         Map<List<Delta>, Rotation> tmp = new HashMap<>();
 
-        for (var entry : rotationTable.entrySet()) {
+        for (var entry : counterclockwiseTable.entrySet()) {
             var tetromino = entry.getKey();
             var rotation = entry.getValue();
             var nextTetromino = rotation.tetromino();
@@ -57,7 +57,7 @@ public class Tetromino {
             tmp.put(nextTetromino, clockwiseRotation);
         }
 
-        reverseRotationTable = ImmutableMap.copyOf(tmp);
+        clockwiseTable = ImmutableMap.copyOf(tmp);
     }
 
     public static List<Delta> aliased(String alias) {
