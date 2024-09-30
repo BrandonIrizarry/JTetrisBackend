@@ -3,6 +3,7 @@
  */
 package xyz.brandonirizarry;
 
+import xyz.brandonirizarry.controller.Controller;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 

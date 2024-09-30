@@ -1,4 +1,4 @@
-package xyz.brandonirizarry;
+package xyz.brandonirizarry.controller;
 
 import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.primitives.Point;
