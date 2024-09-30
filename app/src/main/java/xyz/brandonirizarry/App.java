@@ -7,29 +7,16 @@ import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.primitives.Point;
 import xyz.brandonirizarry.primitives.Rotation;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
+import xyz.brandonirizarry.tetromino.Tetromino;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class App {
     public static void main(String[] args) {
-        var J1 = List.of(new Delta(1, 0),
-                new Delta(2, -1),
-                new Delta(2, 0));
-
-        var J2 = List.of(new Delta(0, 1),
-                new Delta(0, 2),
-                new Delta(1, 2));
-
-        var J3 = List.of(new Delta(0, 1),
-                new Delta(1, 0),
-                new Delta(2, 0));
-
-        var J4 = List.of(new Delta(1, 0),
-                new Delta(1, 1),
-                new Delta(1, 2));
+        var J1 = Tetromino.aliased("J1");
+        var J2 = Tetromino.aliased("J2");
+        var J3 = Tetromino.aliased("J3");
+        var J4 = Tetromino.aliased("J4");
 
         Map<List<Delta>, Rotation> rotationTable = Map.of(J1, new Rotation(J2, new Delta(0, -2)),
                 J2, new Rotation(J3, new Delta(0, 1)),
