@@ -5,38 +5,18 @@ package xyz.brandonirizarry;
 
 import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.primitives.Point;
-import xyz.brandonirizarry.primitives.Rotation;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static xyz.brandonirizarry.tetromino.Tetromino.reverseRotationTable;
+import static xyz.brandonirizarry.tetromino.Tetromino.rotationTable;
 
 public class App {
     public static void main(String[] args) {
         var J1 = Tetromino.aliased("J1");
-        var J2 = Tetromino.aliased("J2");
-        var J3 = Tetromino.aliased("J3");
-        var J4 = Tetromino.aliased("J4");
-
-        Map<List<Delta>, Rotation> rotationTable = Map.of(J1, new Rotation(J2, new Delta(0, -2)),
-                J2, new Rotation(J3, new Delta(0, 1)),
-                J3, new Rotation(J4, new Delta(0, 0)),
-                J4, new Rotation(J1, new Delta(0, 1)));
-
-        // Let's make a reverse table to enable clockwise rotation.
-        Map<List<Delta>, Rotation> tmp = new HashMap<>();
-
-        for (var entry : rotationTable.entrySet()) {
-            var tetromino = entry.getKey();
-            var rotation = entry.getValue();
-            var nextTetromino = rotation.tetromino();
-            var originDelta = rotation.originDelta();
-
-            tmp.put(nextTetromino, new Rotation(tetromino, new Delta(-originDelta.dr(),
-                    -originDelta.dc())));
-        }
-
-        Map<List<Delta>, Rotation> reverseRotationTable = Map.copyOf(tmp);
 
         // Let's use a smaller board for the purposes of this demonstration.
         var tetrisBoard = new TetrisBoard(6, 6);
