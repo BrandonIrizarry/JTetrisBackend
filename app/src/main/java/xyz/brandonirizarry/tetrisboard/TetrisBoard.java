@@ -24,7 +24,7 @@ public class TetrisBoard {
 
         for (var row : board) {
             for (var cell : row) {
-                builder.append(" %2d".formatted(cell));
+                builder.append("%2d".formatted(cell));
             }
 
             builder.append('\n');
