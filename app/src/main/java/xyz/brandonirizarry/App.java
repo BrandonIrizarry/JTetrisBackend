@@ -8,9 +8,6 @@ import xyz.brandonirizarry.primitives.Point;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class App {
     public static void main(String[] args) {
         var J1 = Tetromino.aliased("J1");
@@ -30,16 +27,7 @@ public class App {
         // tetromino is. We'll find out what the current tetromino is
         // using the following code.
 
-        List<Point> pieceCells = new ArrayList<>();
-
-        for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
-            for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
-                if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
-                    pieceCells.add(new Point(rowIndex, columnIndex));
-                }
-            }
-        }
-
+        var pieceCells = tetrisBoard.findTetromino();
         var tetromino = Point.convertPointsToDeltas(pieceCells);
         System.out.println("We found a J tetromino: " + tetromino);
 
@@ -63,15 +51,7 @@ public class App {
         // We should eventually have this tetromino-finding code in
         // its own method.
 
-        pieceCells = new ArrayList<>();
-
-        for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
-            for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
-                if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
-                    pieceCells.add(new Point(rowIndex, columnIndex));
-                }
-            }
-        }
+        pieceCells = tetrisBoard.findTetromino();
 
         // What's amazing about this is that we don't need new logic
         // to handle translation: we simply treat it as a "degenerate
@@ -85,16 +65,7 @@ public class App {
         System.out.println(tetrisBoard);
 
         // Let's rotate it again.
-        pieceCells = new ArrayList<>();
-
-        for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
-            for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
-                if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
-                    pieceCells.add(new Point(rowIndex, columnIndex));
-                }
-            }
-        }
-
+        pieceCells = tetrisBoard.findTetromino();
         tetromino = Point.convertPointsToDeltas(pieceCells);
         System.out.println("We found a J tetromino: " + tetromino);
 
@@ -116,16 +87,7 @@ public class App {
         // Finally, let's attempt a clockwise rotation back to the
         // previous orientation.
 
-        pieceCells = new ArrayList<>();
-
-        for (var rowIndex = 0; rowIndex < tetrisBoard.numRows; rowIndex++) {
-            for (var columnIndex = 0; columnIndex < tetrisBoard.numColumns; columnIndex++) {
-                if (tetrisBoard.isTetrominoCell(rowIndex, columnIndex)) {
-                    pieceCells.add(new Point(rowIndex, columnIndex));
-                }
-            }
-        }
-
+        pieceCells = tetrisBoard.findTetromino();
         tetromino = Point.convertPointsToDeltas(pieceCells);
         System.out.println("We found a J tetromino: " + tetromino);
 

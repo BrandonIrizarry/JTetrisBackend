@@ -3,6 +3,7 @@ package xyz.brandonirizarry.tetrisboard;
 import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.primitives.Point;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TetrisBoard {
@@ -42,6 +43,20 @@ public class TetrisBoard {
 
     public void eraseTetromino(Point origin, List<Delta> tetromino) {
         writeTetromino(origin, tetromino, 0);
+    }
+
+    public List<Point> findTetromino() {
+        List<Point> pieceCells = new ArrayList<>();
+
+        for (var rowIndex = 0; rowIndex < this.numRows; rowIndex++) {
+            for (var columnIndex = 0; columnIndex < this.numColumns; columnIndex++) {
+                if (this.isTetrominoCell(rowIndex, columnIndex)) {
+                    pieceCells.add(new Point(rowIndex, columnIndex));
+                }
+            }
+        }
+
+        return pieceCells;
     }
 
     private void writeTetromino(Point origin, List<Delta> tetromino, int value) {
