@@ -3,43 +3,18 @@
  */
 package xyz.brandonirizarry;
 
-import xyz.brandonirizarry.primitives.Delta;
-import xyz.brandonirizarry.primitives.Point;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
 public class App {
     public static void main(String[] args) {
-        var J1 = Tetromino.aliased("J1");
-
         // Let's use a smaller board for the purposes of this demonstration.
         var tetrisBoard = new TetrisBoard(6, 6);
+        var controller = new Controller(tetrisBoard);
 
-        tetrisBoard.drawTetromino(new Point(0, 3), J1);
-
-        System.out.println("Board after introducing J:");
-        System.out.println(tetrisBoard);
-
-        // This is where it gets interesting: I want the rotationTable
-        // to kick in now.
-        //
-        // Note that the board is stateless over what the current
-        // tetromino is. We'll find out what the current tetromino is
-        // using the following code.
-
-        var pieceCells = tetrisBoard.findTetromino();
-        var tetromino = Point.convertPointsToDeltas(pieceCells);
-        System.out.println("We found a J tetromino: " + tetromino);
-
-        // Now that we've found the tetromino, we can erase it in
-        // preparation for drawing its next rotation.
-        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-
-        var nextRotation = Tetromino.getNextCounterclockwiseRotation(tetromino);
-        var nextTetromino = nextRotation.tetromino();
-        var originDelta = nextRotation.originDelta();
-
-        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+        var J1 = Tetromino.aliased("J1");
+        controller.startPiece(J1);
+        controller.rotateCounterclockwise();
 
         System.out.println();
         System.out.println("Board after rotation J once counterclockwise:");
@@ -51,34 +26,14 @@ public class App {
         // We should eventually have this tetromino-finding code in
         // its own method.
 
-        pieceCells = tetrisBoard.findTetromino();
-
-        // What's amazing about this is that we don't need new logic
-        // to handle translation: we simply treat it as a "degenerate
-        // case" of a rotation.
-        tetromino = Point.convertPointsToDeltas(pieceCells);
-        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), new Delta(1, 0)), tetromino);
+        controller.moveDown();
 
         System.out.println();
         System.out.println("Board after moving J down one space:");
         System.out.println(tetrisBoard);
 
         // Let's rotate it again.
-        pieceCells = tetrisBoard.findTetromino();
-        tetromino = Point.convertPointsToDeltas(pieceCells);
-        System.out.println("We found a J tetromino: " + tetromino);
-
-        // Now that we've found the tetromino, we can erase it in
-        // preparation for drawing its next rotation.
-        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-
-
-        nextRotation = Tetromino.getNextCounterclockwiseRotation(tetromino);
-        nextTetromino = nextRotation.tetromino();
-        originDelta = nextRotation.originDelta();
-
-        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+        controller.rotateCounterclockwise();
 
         System.out.println();
         System.out.println("Board after another rotation of J:");
@@ -86,20 +41,7 @@ public class App {
 
         // Finally, let's attempt a clockwise rotation back to the
         // previous orientation.
-
-        pieceCells = tetrisBoard.findTetromino();
-        tetromino = Point.convertPointsToDeltas(pieceCells);
-        System.out.println("We found a J tetromino: " + tetromino);
-
-        // Now that we've found the tetromino, we can erase it in
-        // preparation for drawing its next rotation.
-        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-
-        nextRotation = Tetromino.getNextClockwiseRotation(tetromino);
-        nextTetromino = nextRotation.tetromino();
-        originDelta = nextRotation.originDelta();
-
-        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+        controller.rotateClockwise();
 
         System.out.println();
         System.out.println("Board after rotating clockwise to previous orientation:");
