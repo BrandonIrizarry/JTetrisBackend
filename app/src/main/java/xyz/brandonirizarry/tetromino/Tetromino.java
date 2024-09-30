@@ -63,4 +63,12 @@ public class Tetromino {
     public static List<Delta> aliased(String alias) {
         return Objects.requireNonNull(aliases.get(alias));
     }
+
+    public static Rotation getNextCounterclockwiseRotation(List<Delta> tetromino) {
+        return Objects.requireNonNull(counterclockwiseTable.get(tetromino));
+    }
+
+    public static Rotation getNextClockwiseRotation(List<Delta> tetromino) {
+        return Objects.requireNonNull(clockwiseTable.get(tetromino));
+    }
 }
