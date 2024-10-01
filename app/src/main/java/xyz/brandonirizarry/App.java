@@ -3,49 +3,8 @@
  */
 package xyz.brandonirizarry;
 
-import xyz.brandonirizarry.controller.Controller;
-import xyz.brandonirizarry.tetrisboard.TetrisBoard;
-import xyz.brandonirizarry.tetromino.Tetromino;
-
 public class App {
     public static void main(String[] args) {
-        // Let's use a smaller board for the purposes of this demonstration.
-        var tetrisBoard = new TetrisBoard(6, 6);
-        var controller = new Controller(tetrisBoard);
 
-        var J1 = Tetromino.aliased("J1");
-        controller.startPiece(J1);
-        controller.rotateCounterclockwise();
-
-        System.out.println();
-        System.out.println("Board after rotation J once counterclockwise:");
-        System.out.println(tetrisBoard);
-
-        // Now, let's see if we can translate the piece downward one
-        // space.
-        //
-        // We should eventually have this tetromino-finding code in
-        // its own method.
-
-        controller.moveDown();
-
-        System.out.println();
-        System.out.println("Board after moving J down one space:");
-        System.out.println(tetrisBoard);
-
-        // Let's rotate it again.
-        controller.rotateCounterclockwise();
-
-        System.out.println();
-        System.out.println("Board after another rotation of J:");
-        System.out.println(tetrisBoard);
-
-        // Finally, let's attempt a clockwise rotation back to the
-        // previous orientation.
-        controller.rotateClockwise();
-
-        System.out.println();
-        System.out.println("Board after rotating clockwise to previous orientation:");
-        System.out.println(tetrisBoard);
     }
 }
