@@ -78,7 +78,10 @@ public class Controller {
         var points = Point.derivePoints(tetromino, origin);
 
         for (var point : points) {
-            if (point.row() < 0 || point.column() < 0) {
+            if (point.row() < 0
+                        || point.column() < 0
+                        || point.row() >= tetrisBoard.numRows
+                        || point.column() >= tetrisBoard.numColumns) {
                 return false;
             }
         }
