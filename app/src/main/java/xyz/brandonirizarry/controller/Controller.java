@@ -22,31 +22,29 @@ public class Controller {
     public void rotateCounterclockwise() {
         var pieceCells = tetrisBoard.findTetromino();
         var tetromino = Point.convertPointsToDeltas(pieceCells);
-
-        // Now that we've found the tetromino, we can erase it in
-        // preparation for drawing its next rotation.
-        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-
         var nextRotation = Tetromino.getNextCounterclockwiseRotation(tetromino);
         var nextTetromino = nextRotation.tetromino();
         var originDelta = nextRotation.originDelta();
+        var nextOrigin = Point.add(pieceCells.getFirst(), originDelta);
 
-        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+        if (isInBounds(nextTetromino, nextOrigin)) {
+            tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+            tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
+        }
     }
 
     public void rotateClockwise() {
         var pieceCells = tetrisBoard.findTetromino();
         var tetromino = Point.convertPointsToDeltas(pieceCells);
-
-        // Now that we've found the tetromino, we can erase it in
-        // preparation for drawing its next rotation.
-        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-
         var nextRotation = Tetromino.getNextClockwiseRotation(tetromino);
         var nextTetromino = nextRotation.tetromino();
         var originDelta = nextRotation.originDelta();
+        var nextOrigin = Point.add(pieceCells.getFirst(), originDelta);
 
-        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), originDelta), nextTetromino);
+        if (isInBounds(nextTetromino, nextOrigin)) {
+            tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+            tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
+        }
     }
 
     public void moveDown() {
@@ -68,7 +66,23 @@ public class Controller {
 
         var pieceCells = tetrisBoard.findTetromino();
         var tetromino = Point.convertPointsToDeltas(pieceCells);
-        tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), delta), tetromino);
+        var nextOrigin = Point.add(pieceCells.getFirst(), delta);
+
+        if (isInBounds(tetromino, nextOrigin)) {
+            tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+            tetrisBoard.drawTetromino(nextOrigin, tetromino);
+        }
+    }
+
+    private boolean isInBounds(List<Delta> tetromino, Point origin) {
+        var points = Point.derivePoints(tetromino, origin);
+
+        for (var point : points) {
+            if (point.row() < 0 || point.column() < 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
