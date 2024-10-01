@@ -2,7 +2,6 @@
 /build/
 /out/
 /Org/*
-!/Org/devlog/
 /.idea/
 
 # Ignore Gradle project-specific cache directory
