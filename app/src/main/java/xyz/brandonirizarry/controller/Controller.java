@@ -2,10 +2,12 @@ package xyz.brandonirizarry.controller;
 
 import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.primitives.Point;
+import xyz.brandonirizarry.primitives.Rotation;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class Controller {
     private static final Point ORIGIN = new Point(0, 3);
@@ -20,31 +22,11 @@ public class Controller {
     }
 
     public void rotateCounterclockwise() {
-        var pieceCells = tetrisBoard.findTetromino();
-        var tetromino = Point.convertPointsToDeltas(pieceCells);
-        var nextRotation = Tetromino.getNextCounterclockwiseRotation(tetromino);
-        var nextTetromino = nextRotation.tetromino();
-        var originDelta = nextRotation.originDelta();
-        var nextOrigin = Point.add(pieceCells.getFirst(), originDelta);
-
-        if (isInBounds(nextTetromino, nextOrigin)) {
-            tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-            tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
-        }
+        rotate(Tetromino::getNextCounterclockwiseRotation);
     }
 
     public void rotateClockwise() {
-        var pieceCells = tetrisBoard.findTetromino();
-        var tetromino = Point.convertPointsToDeltas(pieceCells);
-        var nextRotation = Tetromino.getNextClockwiseRotation(tetromino);
-        var nextTetromino = nextRotation.tetromino();
-        var originDelta = nextRotation.originDelta();
-        var nextOrigin = Point.add(pieceCells.getFirst(), originDelta);
-
-        if (isInBounds(nextTetromino, nextOrigin)) {
-            tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-            tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
-        }
+        rotate(Tetromino::getNextClockwiseRotation);
     }
 
     public void moveDown() {
@@ -57,6 +39,20 @@ public class Controller {
 
     public void moveRight() {
         translateByDelta(new Delta(0, 1));
+    }
+
+    private void rotate(Function<List<Delta>, Rotation> getNextRotation) {
+        var pieceCells = tetrisBoard.findTetromino();
+        var tetromino = Point.convertPointsToDeltas(pieceCells);
+        var nextRotation = getNextRotation.apply(tetromino);
+        var nextTetromino = nextRotation.tetromino();
+        var originDelta = nextRotation.originDelta();
+        var nextOrigin = Point.add(pieceCells.getFirst(), originDelta);
+
+        if (isInBounds(nextTetromino, nextOrigin)) {
+            tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+            tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
+        }
     }
 
     private void translateByDelta(Delta delta) {
