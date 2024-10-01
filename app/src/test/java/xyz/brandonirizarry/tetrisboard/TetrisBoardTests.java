@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static xyz.brandonirizarry.TestUtils.checkBoardAgainstFileContents;
 
-public class TetrisBoardTest {
+public class TetrisBoardTests {
     @Test
     @DisplayName("Empty 6x6 board")
     void confirmAppearanceOfEmpty6x6Board() {
