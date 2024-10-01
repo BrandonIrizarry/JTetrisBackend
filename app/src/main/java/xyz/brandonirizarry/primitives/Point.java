@@ -22,4 +22,16 @@ public record Point(int row, int column) {
 
         return tetromino;
     }
+
+    public static List<Point> derivePoints(List<Delta> tetromino, Point origin) {
+        List<Point> points = new ArrayList<>();
+        points.add(origin);
+
+        for (var delta : tetromino) {
+            var currentPoint = Point.add(origin, delta);
+            points.add(currentPoint);
+        }
+
+        return points;
+    }
 }
