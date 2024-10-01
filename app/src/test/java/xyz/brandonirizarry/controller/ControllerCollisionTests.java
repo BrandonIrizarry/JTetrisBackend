@@ -22,4 +22,14 @@ public class ControllerCollisionTests {
     void startingConfigurationWithT() {
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/1_startT.txt");
     }
+
+    @Test
+    @DisplayName("2. Move down, then left")
+    @Order(2)
+    void moveDownThenLeft() {
+        controller.moveDown();
+        controller.moveLeft();
+
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/2_downThenLeft.txt");
+    }
 }
