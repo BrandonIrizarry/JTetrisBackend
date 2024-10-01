@@ -11,3 +11,5 @@
 - [X] Organize test files into directory per class that uses them
 - [ ] Implement wall collision detection
 - [X] Implement moveLeft and moveRight
+- [ ] Refactor rotations to use only one private helper method
+- [ ] Introduce origin variable in rotation code
