@@ -32,4 +32,15 @@ public class ControllerCollisionTests {
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/2_downThenLeft.txt");
     }
+
+    @Test
+    @DisplayName("3. Move left three times, third time is a collision")
+    @Order(3)
+    void moveLeftThreeTimesToCollide() {
+        controller.moveLeft();
+        controller.moveLeft();
+        controller.moveLeft();
+
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/3_threeLeftToCollide.txt");
+    }
 }
