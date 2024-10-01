@@ -47,4 +47,21 @@ public class ControllerBasicTests {
         controller.rotateClockwise();
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerBasicTests/4_cwRotation.txt");
     }
+
+    @Test
+    @DisplayName("5. Move left")
+    @Order(5)
+    void fifthMoveIsMoveLeft() {
+        controller.moveLeft();
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerBasicTests/5_moveLeft.txt");
+    }
+
+    @Test
+    @DisplayName("6. Move down, then right")
+    @Order(6)
+    void sixthMoveIsDownThenRight() {
+        controller.moveDown();
+        controller.moveRight();
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerBasicTests/6_downThenRight.txt");
+    }
 }
