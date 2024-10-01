@@ -16,6 +16,6 @@ public class ControllerStartTest {
         var J1 = Tetromino.aliased("J1");
         controller.startPiece(J1);
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "startJ.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerStartTest/startJ.txt");
     }
 }

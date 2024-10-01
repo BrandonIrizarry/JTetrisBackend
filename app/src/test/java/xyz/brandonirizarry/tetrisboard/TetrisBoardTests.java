@@ -10,6 +10,6 @@ public class TetrisBoardTests {
     void confirmAppearanceOfEmpty6x6Board() {
         var tetrisBoard = new TetrisBoard(6, 6);
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "empty6x6board.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "tetrisBoardTests/empty6x6board.txt");
     }
 }

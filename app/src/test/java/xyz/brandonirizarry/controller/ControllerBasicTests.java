@@ -21,7 +21,7 @@ public class ControllerBasicTests {
     @Order(1)
     void firstMoveIsCounterclockwiseRotation() {
         controller.rotateCounterclockwise();
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "1_ccwRotation.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerBasicTests/1_ccwRotation.txt");
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ControllerBasicTests {
     @Order(2)
     void secondMoveIsMoveDown() {
         controller.moveDown();
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "2_moveDown.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerBasicTests/2_moveDown.txt");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ControllerBasicTests {
     @Order(3)
     void thirdMoveIsCounterclockwiseRotation() {
         controller.rotateCounterclockwise();
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "3_ccwRotation.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerBasicTests/3_ccwRotation.txt");
     }
 
     @Test
@@ -45,6 +45,6 @@ public class ControllerBasicTests {
     @Order(4)
     void fourthMoveIsClockwiseRotation() {
         controller.rotateClockwise();
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "4_cwRotation.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerBasicTests/4_cwRotation.txt");
     }
 }
