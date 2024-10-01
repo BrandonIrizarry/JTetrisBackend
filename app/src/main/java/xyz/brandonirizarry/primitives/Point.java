@@ -12,7 +12,6 @@ public record Point(int row, int column) {
         return new Delta(end.row() - start.row(), end.column() - start.column());
     }
 
-    // List<Delta> == Tetromino
     public static List<Delta> convertPointsToDeltas(List<Point> points) {
         List<Delta> tetromino = new ArrayList<>();
 
