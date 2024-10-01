@@ -53,6 +53,14 @@ public class Controller {
         translateByDelta(new Delta(1, 0));
     }
 
+    public void moveLeft() {
+       translateByDelta(new Delta(0, -1));
+    }
+
+    public void moveRight() {
+        translateByDelta(new Delta(0, 1));
+    }
+
     private void translateByDelta(Delta delta) {
         // What's amazing about this is that we don't need new logic
         // to handle translation: we simply treat it as a "degenerate
