@@ -43,4 +43,15 @@ public class ControllerCollisionTests {
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/3_threeLeftToCollide.txt");
     }
+
+    @Test
+    @DisplayName("4. Move right multiple times to collide")
+    @Order(4)
+    void moveRightMultipleTimesToCollide() {
+        for (var i = 0; i < 20; i++) {
+            controller.moveRight();
+        }
+
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/4_rightToCollide.txt");
+    }
 }
