@@ -21,7 +21,7 @@ public class ControllerRotationTranslationTests {
     @Order(1)
     void firstMoveIsCounterclockwiseRotation() {
         controller.rotateCounterclockwise();
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "ccwRotation.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "1_ccwRotation.txt");
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ControllerRotationTranslationTests {
     @Order(2)
     void secondMoveIsMoveDown() {
         controller.moveDown();
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "moveDown.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "2_moveDown.txt");
     }
 
     @Test
