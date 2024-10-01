@@ -6,7 +6,7 @@ import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ControllerRotationTranslationTests {
+public class ControllerBasicTests {
     private static Controller controller;
     private static final TetrisBoard tetrisBoard = new TetrisBoard(6, 6);
 
