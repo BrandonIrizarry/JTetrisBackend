@@ -50,6 +50,10 @@ public class Controller {
     }
 
     public void moveDown() {
+        translateByDelta(new Delta(1, 0));
+    }
+
+    private void translateByDelta(Delta delta) {
         // What's amazing about this is that we don't need new logic
         // to handle translation: we simply treat it as a "degenerate
         // case" of a rotation.
@@ -57,6 +61,6 @@ public class Controller {
         var pieceCells = tetrisBoard.findTetromino();
         var tetromino = Point.convertPointsToDeltas(pieceCells);
         tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
-        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), new Delta(1, 0)), tetromino);
+        tetrisBoard.drawTetromino(Point.add(pieceCells.getFirst(), delta), tetromino);
     }
 }
