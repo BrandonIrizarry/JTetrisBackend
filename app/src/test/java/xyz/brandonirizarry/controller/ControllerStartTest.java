@@ -2,10 +2,9 @@ package xyz.brandonirizarry.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import xyz.brandonirizarry.TestUtils;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
-
-import static xyz.brandonirizarry.TestUtils.checkBoardAgainstFileContents;
 
 public class ControllerStartTest {
     @Test
@@ -17,6 +16,6 @@ public class ControllerStartTest {
         var J1 = Tetromino.aliased("J1");
         controller.startPiece(J1);
 
-        checkBoardAgainstFileContents(tetrisBoard, "startJ.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "startJ.txt");
     }
 }
