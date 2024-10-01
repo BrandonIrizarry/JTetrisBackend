@@ -17,7 +17,7 @@ public class ControllerBasicTests {
     }
 
     @Test
-    @DisplayName("First move is counterclockwise rotation")
+    @DisplayName("1. Counterclockwise rotation")
     @Order(1)
     void firstMoveIsCounterclockwiseRotation() {
         controller.rotateCounterclockwise();
@@ -25,7 +25,7 @@ public class ControllerBasicTests {
     }
 
     @Test
-    @DisplayName("Second move is moveDown")
+    @DisplayName("2. Move down")
     @Order(2)
     void secondMoveIsMoveDown() {
         controller.moveDown();
@@ -33,7 +33,7 @@ public class ControllerBasicTests {
     }
 
     @Test
-    @DisplayName("Third move is counterclockwise rotation")
+    @DisplayName("3. Counterclockwise rotation")
     @Order(3)
     void thirdMoveIsCounterclockwiseRotation() {
         controller.rotateCounterclockwise();
@@ -41,7 +41,7 @@ public class ControllerBasicTests {
     }
 
     @Test
-    @DisplayName("Fourth move is clockwise rotation")
+    @DisplayName("4. Clockwise rotation")
     @Order(4)
     void fourthMoveIsClockwiseRotation() {
         controller.rotateClockwise();
