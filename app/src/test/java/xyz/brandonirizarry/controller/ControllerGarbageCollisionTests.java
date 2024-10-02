@@ -34,6 +34,19 @@ public class ControllerGarbageCollisionTests {
     }
 
     @Test
+    @DisplayName("Standing I on top of two stacked flat I's")
+    void standingIOnTopOfTwoStackedFlatIs() {
+        var controller = makeTwoFlatI();
+
+        controller.startPiece(Tetromino.aliased("I2"));
+
+        controller.moveDown();
+        controller.moveDown();
+
+        TestUtils.checkBoardAgainstFileContents(controller.tetrisBoard, "controllerGarbageCollisionTests/threeIs.txt");
+    }
+
+    @Test
     @DisplayName("Left-collide O against frozen I")
     void leftCollideOAgainstFrozenI() {
         var tetrisBoard = new TetrisBoard(6, 8);
