@@ -63,6 +63,10 @@ public class TetrisBoard {
         return pieceCells;
     }
 
+    public int valueAt(Point point) {
+        return board[point.row()][point.column()];
+    }
+
     private void writeTetromino(Point origin, List<Delta> tetromino, int value) {
         board[origin.row()][origin.column()] = value;
 
