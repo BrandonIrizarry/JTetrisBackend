@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 public class Controller {
     private static final Point ORIGIN = new Point(0, 3);
-    private final TetrisBoard tetrisBoard;
+    final TetrisBoard tetrisBoard;
 
     public Controller(TetrisBoard tetrisBoard) {
         this.tetrisBoard = tetrisBoard;
