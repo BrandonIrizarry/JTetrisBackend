@@ -62,7 +62,7 @@ public class Controller {
         var originDelta = nextRotation.originDelta();
         var nextOrigin = Point.add(origin, originDelta);
 
-        if (isInBounds(nextTetromino, nextOrigin)) {
+        if (isInBounds(nextTetromino, nextOrigin) && !isInsideGarbage(nextTetromino, nextOrigin)) {
             tetrisBoard.eraseTetromino(origin, tetromino);
             tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
         }
@@ -83,7 +83,7 @@ public class Controller {
         var tetromino = Point.convertPointsToDeltas(pieceCells);
         var nextOrigin = Point.add(pieceCells.getFirst(), delta);
 
-        if (isInBounds(tetromino, nextOrigin)) {
+        if (isInBounds(tetromino, nextOrigin) && !isInsideGarbage(tetromino, nextOrigin)) {
             tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
             tetrisBoard.drawTetromino(nextOrigin, tetromino);
 
@@ -106,5 +106,17 @@ public class Controller {
         }
 
         return true;
+    }
+
+    private boolean isInsideGarbage(List<Delta> tetromino, Point origin) {
+        var points = Point.derivePoints(tetromino, origin);
+
+        for (var point : points) {
+            if (tetrisBoard.valueAt(point) == 1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
