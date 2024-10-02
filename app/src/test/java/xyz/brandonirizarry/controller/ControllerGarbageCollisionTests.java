@@ -24,7 +24,7 @@ public class ControllerGarbageCollisionTests {
             controller.moveDown();
         }
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/LonL.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/IonI.txt");
     }
 
     @Test
