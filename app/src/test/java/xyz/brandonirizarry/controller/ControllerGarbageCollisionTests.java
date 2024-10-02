@@ -26,7 +26,7 @@ public class ControllerGarbageCollisionTests {
     }
 
     @Test
-    @DisplayName("L frozen on top of L-garbage")
+    @DisplayName("I frozen on top of I-garbage")
     void sendLOnTopOfL() {
         var controller = makeTwoFlatI();
 
