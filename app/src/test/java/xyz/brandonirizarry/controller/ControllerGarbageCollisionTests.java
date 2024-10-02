@@ -7,9 +7,7 @@ import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
 public class ControllerGarbageCollisionTests {
-    @Test
-    @DisplayName("L frozen on top of L-garbage")
-    void sendLOnTopOfL() {
+    private Controller makeTwoFlatI() {
         var tetrisBoard = new TetrisBoard(6, 8);
         var controller = new Controller(tetrisBoard);
         controller.startPiece(Tetromino.aliased("I1"));
@@ -24,7 +22,15 @@ public class ControllerGarbageCollisionTests {
             controller.moveDown();
         }
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/IonI.txt");
+        return controller;
+    }
+
+    @Test
+    @DisplayName("L frozen on top of L-garbage")
+    void sendLOnTopOfL() {
+        var controller = makeTwoFlatI();
+
+        TestUtils.checkBoardAgainstFileContents(controller.tetrisBoard, "controllerGarbageCollisionTests/IonI.txt");
     }
 
     @Test
