@@ -7,7 +7,7 @@ import xyz.brandonirizarry.TestUtils;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
-public class ControllerGarbageTests {
+public class ControllerGarbageCollisionTests {
     private static Controller controller;
     private static final TetrisBoard tetrisBoard = new TetrisBoard(6, 8);
 
@@ -31,6 +31,6 @@ public class ControllerGarbageTests {
             controller.moveDown();
         }
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageTests/LonL.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/LonL.txt");
     }
 }
