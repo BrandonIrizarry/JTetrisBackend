@@ -1,5 +1,6 @@
 package xyz.brandonirizarry.controller;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import xyz.brandonirizarry.TestUtils;
@@ -7,9 +8,10 @@ import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
 public class ControllerGarbageCollisionTests {
+    private TetrisBoard tetrisBoard;
+    private Controller controller;
+
     private Controller makeTwoFlatI() {
-        var tetrisBoard = new TetrisBoard(6, 8);
-        var controller = new Controller(tetrisBoard);
         controller.startPiece(Tetromino.aliased("I1"));
 
         for (var i = 0; i < 20; i++) {
@@ -23,6 +25,12 @@ public class ControllerGarbageCollisionTests {
         }
 
         return controller;
+    }
+
+    @BeforeEach
+    void setupController() {
+        tetrisBoard = new TetrisBoard(6, 8);
+        controller = new Controller(tetrisBoard);
     }
 
     @Test
@@ -63,8 +71,6 @@ public class ControllerGarbageCollisionTests {
     @Test
     @DisplayName("Left-collide O against frozen I")
     void leftCollideOAgainstFrozenI() {
-        var tetrisBoard = new TetrisBoard(6, 8);
-        var controller = new Controller(tetrisBoard);
         controller.startPiece(Tetromino.aliased("I2"));
 
         // Note that freezing is only triggered when an attempt is made to
@@ -85,9 +91,6 @@ public class ControllerGarbageCollisionTests {
     @Test
     @DisplayName("Left-collide O against frozen I (I1)")
     void leftCollideOAgainstFrozenI_I1() {
-        var tetrisBoard = new TetrisBoard(6, 8);
-        var controller = new Controller(tetrisBoard);
-
         // This test is included to illustrate a subtlety that arises
         // based on which rotation you start out with. Rotating
         // effectively changes the location of a tetromino's origin,
@@ -115,9 +118,6 @@ public class ControllerGarbageCollisionTests {
     @Test
     @DisplayName("CCW Rotation against garbage is blocked")
     void rotationAgainstGarbage() {
-        var tetrisBoard = new TetrisBoard(6, 8);
-        var controller = new Controller(tetrisBoard);
-
         controller.startPiece(Tetromino.aliased("I2"));
 
         controller.moveLeft();
@@ -141,9 +141,6 @@ public class ControllerGarbageCollisionTests {
     @Test
     @DisplayName("Seemingly blocked CW rotation is permissible")
     void permissibleCWRotation() {
-        var tetrisBoard = new TetrisBoard(6, 8);
-        var controller = new Controller(tetrisBoard);
-
         controller.startPiece(Tetromino.aliased("I2"));
 
         controller.moveLeft();
@@ -167,9 +164,6 @@ public class ControllerGarbageCollisionTests {
     @Test
     @DisplayName("moveRight against garbage is blocked")
     void moveRightAgainstGarbageIsBlocked() {
-        var tetrisBoard = new TetrisBoard(6, 8);
-        var controller = new Controller(tetrisBoard);
-
         controller.startPiece(Tetromino.aliased("S2"));
 
         for (var i = 0; i < 10; i++) {
