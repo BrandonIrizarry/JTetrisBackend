@@ -43,6 +43,9 @@ public class Controller {
 
     private void rotate(Function<List<Delta>, Rotation> getNextRotation) {
         var pieceCells = tetrisBoard.findTetromino();
+
+        if (pieceCells.isEmpty()) return;
+
         var tetromino = Point.convertPointsToDeltas(pieceCells);
         var origin = pieceCells.getFirst();
 
@@ -59,6 +62,9 @@ public class Controller {
 
     private void translateByDelta(Delta delta) {
         var pieceCells = tetrisBoard.findTetromino();
+
+        if (pieceCells.isEmpty()) return;
+
         var tetromino = Point.convertPointsToDeltas(pieceCells);
         var nextOrigin = Point.add(pieceCells.getFirst(), delta);
 
