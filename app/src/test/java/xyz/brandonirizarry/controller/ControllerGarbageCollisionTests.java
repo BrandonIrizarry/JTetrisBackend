@@ -1,6 +1,5 @@
 package xyz.brandonirizarry.controller;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import xyz.brandonirizarry.TestUtils;
@@ -8,17 +7,11 @@ import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
 public class ControllerGarbageCollisionTests {
-    private static Controller controller;
-    private static final TetrisBoard tetrisBoard = new TetrisBoard(6, 8);
-
-    @BeforeAll
-    public static void setup() {
-        controller = new Controller(tetrisBoard);
-    }
-
     @Test
     @DisplayName("L frozen on top of L-garbage")
     void sendLOnTopOfL() {
+        var tetrisBoard = new TetrisBoard(6, 8);
+        var controller = new Controller(tetrisBoard);
         controller.startPiece(Tetromino.aliased("I1"));
 
         for (var i = 0; i < 20; i++) {
@@ -32,5 +25,27 @@ public class ControllerGarbageCollisionTests {
         }
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/LonL.txt");
+    }
+
+    @Test
+    @DisplayName("Left-collide O against frozen I")
+    void leftCollideOAgainstFrozenI() {
+        var tetrisBoard = new TetrisBoard(6, 8);
+        var controller = new Controller(tetrisBoard);
+        controller.startPiece(Tetromino.aliased("I2"));
+
+        // Note that freezing is only triggered when an attempt is made to
+        // cross the bottom border, not merely when it becomes adjacent.
+        // Hence the correct upper bound to use here is 3, not 2.
+        for (var i = 0; i < 3; i++) {
+            controller.moveDown();
+        }
+
+        controller.startPiece(Tetromino.aliased("O1"));
+        controller.moveRight();
+        controller.moveDown();
+        controller.moveLeft();
+
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/OtoIFromLeft.txt");
     }
 }
