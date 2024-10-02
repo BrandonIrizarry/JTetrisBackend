@@ -163,4 +163,31 @@ public class ControllerGarbageCollisionTests {
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/permissibleCW.txt");
     }
+
+    @Test
+    @DisplayName("moveRight against garbage is blocked")
+    void moveRightAgainstGarbageIsBlocked() {
+        var tetrisBoard = new TetrisBoard(6, 8);
+        var controller = new Controller(tetrisBoard);
+
+        controller.startPiece(Tetromino.aliased("S2"));
+
+        for (var i = 0; i < 10; i++) {
+            controller.moveDown();
+        }
+
+        controller.startPiece(Tetromino.aliased("T2"));
+
+        controller.moveLeft();
+        controller.moveLeft();
+        controller.moveDown();
+        controller.moveDown();
+
+        // Make sure we're colliding into something
+        for (var i = 0; i < 10; i++) {
+            controller.moveRight();
+        }
+
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/TintoSfromLeft.txt");
+    }
 }
