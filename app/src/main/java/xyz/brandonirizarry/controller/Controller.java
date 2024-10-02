@@ -30,7 +30,15 @@ public class Controller {
     }
 
     public void moveDown() {
-        translateByDelta(new Delta(1, 0));
+        var collisionHappened = translateByDelta(new Delta(1, 0));
+
+        if (!collisionHappened) return;
+
+        var pieceCells = tetrisBoard.findTetromino();
+        var tetromino = Point.convertPointsToDeltas(pieceCells);
+        var origin = pieceCells.getFirst();
+
+        tetrisBoard.freezeTetromino(origin, tetromino);
     }
 
     public void moveLeft() {
@@ -60,10 +68,17 @@ public class Controller {
         }
     }
 
-    private void translateByDelta(Delta delta) {
+    /**
+     * Translate current active tetromino by given delta.
+     * @param delta The given delta.
+     * @return Whether the translation resulted in a collision.<br><br>
+     * This is used by 'moveDown' to determine whether the piece should
+     * be frozen (converted to garbage.)
+     */
+    private boolean translateByDelta(Delta delta) {
         var pieceCells = tetrisBoard.findTetromino();
 
-        if (pieceCells.isEmpty()) return;
+        if (pieceCells.isEmpty()) return false;
 
         var tetromino = Point.convertPointsToDeltas(pieceCells);
         var nextOrigin = Point.add(pieceCells.getFirst(), delta);
@@ -71,7 +86,11 @@ public class Controller {
         if (isInBounds(tetromino, nextOrigin)) {
             tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
             tetrisBoard.drawTetromino(nextOrigin, tetromino);
+
+            return false;
         }
+
+        return true;
     }
 
     private boolean isInBounds(List<Delta> tetromino, Point origin) {

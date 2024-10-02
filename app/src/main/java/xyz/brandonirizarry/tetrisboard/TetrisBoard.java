@@ -45,6 +45,10 @@ public class TetrisBoard {
         writeTetromino(origin, tetromino, 0);
     }
 
+    public void freezeTetromino(Point origin, List<Delta> tetromino) {
+        writeTetromino(origin, tetromino, 1);
+    }
+
     public List<Point> findTetromino() {
         List<Point> pieceCells = new ArrayList<>();
 
