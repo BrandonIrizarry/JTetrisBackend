@@ -137,4 +137,30 @@ public class ControllerGarbageCollisionTests {
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/blockedTCCW.txt");
     }
+
+    @Test
+    @DisplayName("Seemingly blocked CW rotation is permissible")
+    void permissibleCWRotation() {
+        var tetrisBoard = new TetrisBoard(6, 8);
+        var controller = new Controller(tetrisBoard);
+
+        controller.startPiece(Tetromino.aliased("I2"));
+
+        controller.moveLeft();
+        controller.moveLeft();
+        controller.moveLeft();
+
+        for (var i = 0; i < 3; i++) {
+            controller.moveDown();
+        }
+
+        controller.startPiece(Tetromino.aliased("T1"));
+
+        controller.moveLeft();
+        controller.moveLeft();
+        controller.moveDown();
+        controller.rotateClockwise();
+
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerGarbageCollisionTests/permissibleCW.txt");
+    }
 }
