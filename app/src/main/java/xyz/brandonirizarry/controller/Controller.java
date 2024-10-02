@@ -44,13 +44,15 @@ public class Controller {
     private void rotate(Function<List<Delta>, Rotation> getNextRotation) {
         var pieceCells = tetrisBoard.findTetromino();
         var tetromino = Point.convertPointsToDeltas(pieceCells);
+        var origin = pieceCells.getFirst();
+
         var nextRotation = getNextRotation.apply(tetromino);
         var nextTetromino = nextRotation.tetromino();
         var originDelta = nextRotation.originDelta();
-        var nextOrigin = Point.add(pieceCells.getFirst(), originDelta);
+        var nextOrigin = Point.add(origin, originDelta);
 
         if (isInBounds(nextTetromino, nextOrigin)) {
-            tetrisBoard.eraseTetromino(pieceCells.getFirst(), tetromino);
+            tetrisBoard.eraseTetromino(origin, tetromino);
             tetrisBoard.drawTetromino(nextOrigin, nextTetromino);
         }
     }
