@@ -6,7 +6,7 @@ import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ControllerCollisionTests {
+public class ControllerOutOfBoundsTests {
     private static Controller controller;
     private static final TetrisBoard tetrisBoard = new TetrisBoard(6, 6);
 
@@ -20,7 +20,7 @@ public class ControllerCollisionTests {
     @DisplayName("1. Starting configuration with T")
     @Order(1)
     void startingConfigurationWithT() {
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/1_startT.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerOutOfBoundsTests/1_startT.txt");
     }
 
     @Test
@@ -30,7 +30,7 @@ public class ControllerCollisionTests {
         controller.moveDown();
         controller.moveLeft();
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/2_downThenLeft.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerOutOfBoundsTests/2_downThenLeft.txt");
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ControllerCollisionTests {
         controller.moveLeft();
         controller.moveLeft();
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/3_threeLeftToCollide.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerOutOfBoundsTests/3_threeLeftToCollide.txt");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ControllerCollisionTests {
             controller.moveRight();
         }
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/4_rightToCollide.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerOutOfBoundsTests/4_rightToCollide.txt");
     }
 
     @Test
@@ -63,6 +63,6 @@ public class ControllerCollisionTests {
             controller.moveDown();
         }
 
-        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/5_downwardCollision.txt");
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerOutOfBoundsTests/5_downwardCollision.txt");
     }
 }
