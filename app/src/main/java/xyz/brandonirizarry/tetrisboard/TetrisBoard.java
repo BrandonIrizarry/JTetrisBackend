@@ -56,6 +56,15 @@ public class TetrisBoard {
             }
         }
 
+        var size = pieceCells.size();
+
+        // A size of 0 means there is no active tetromino present on the board, which
+        // happens for example before a game starts, or else after a piece has landed and
+        // no new piece has been introduced yet.
+        if (size != 0 && size != 4) {
+            throw new IllegalStateException("Illegal polyomino of size %d".formatted(size));
+        }
+
         return pieceCells;
     }
 
