@@ -18,6 +18,14 @@ public class Controller {
     }
 
     public void startPiece(List<Delta> tetromino) {
+        // Check whether we don't already have active tetromino cells
+        // present from the previous call to 'startPiece'.
+        var pieceCells = tetrisBoard.findTetromino();
+
+        if (!pieceCells.isEmpty()) {
+            throw new IllegalStateException("Premature invocation of 'startPiece'");
+        }
+
         tetrisBoard.drawTetromino(ORIGIN, tetromino);
     }
 
