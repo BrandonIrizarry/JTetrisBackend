@@ -33,10 +33,6 @@ public class TetrisBoard {
         return builder.toString();
     }
 
-    public boolean isTetrominoCell(int rowIndex, int columnIndex) {
-        return board[rowIndex][columnIndex] == -1;
-    }
-
     public void drawTetromino(Point origin, List<Delta> tetromino) {
         writeTetromino(origin, tetromino, -1);
     }
@@ -54,7 +50,7 @@ public class TetrisBoard {
 
         for (var rowIndex = 0; rowIndex < this.numRows; rowIndex++) {
             for (var columnIndex = 0; columnIndex < this.numColumns; columnIndex++) {
-                if (this.isTetrominoCell(rowIndex, columnIndex)) {
+                if (board[rowIndex][columnIndex] == -1) {
                     pieceCells.add(new Point(rowIndex, columnIndex));
                 }
             }
