@@ -54,4 +54,15 @@ public class ControllerCollisionTests {
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/4_rightToCollide.txt");
     }
+
+    @Test
+    @DisplayName("5. Move down multiple times to collide and become garbage")
+    @Order(5)
+    void moveDownMultipleTimesToCollide() {
+        for (var i = 0; i < 20; i++) {
+            controller.moveDown();
+        }
+
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerCollisionTests/5_downwardCollision.txt");
+    }
 }
