@@ -4,6 +4,7 @@ import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.primitives.Point;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TetrisBoard {
@@ -73,6 +74,12 @@ public class TetrisBoard {
         for (var delta : tetromino) {
             var currentPoint = Point.add(origin, delta);
             board[currentPoint.row()][currentPoint.column()] = value;
+        }
+    }
+
+    public void clear() {
+        for (var row : board) {
+            Arrays.fill(row, CLEAR);
         }
     }
 }
