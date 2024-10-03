@@ -49,6 +49,12 @@ public class Controller {
         tetrisBoard.freezeTetromino(origin, tetromino);
     }
 
+    public void hardDrop() {
+        for (var i = 0; i < tetrisBoard.numRows; i++) {
+            moveDown();
+        }
+    }
+
     public void moveLeft() {
        translateByDelta(new Delta(0, -1));
     }
