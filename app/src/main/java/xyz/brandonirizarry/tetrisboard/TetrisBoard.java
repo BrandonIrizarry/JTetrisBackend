@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TetrisBoard {
+    public static final int TETROMINO = -1;
+    public static final int CLEAR = 0;
+    public static final int GARBAGE = 1;
+
     public final int numRows;
     public final int numColumns;
 
@@ -34,15 +38,15 @@ public class TetrisBoard {
     }
 
     public void drawTetromino(Point origin, List<Delta> tetromino) {
-        writeTetromino(origin, tetromino, -1);
+        writeTetromino(origin, tetromino, TETROMINO);
     }
 
     public void eraseTetromino(Point origin, List<Delta> tetromino) {
-        writeTetromino(origin, tetromino, 0);
+        writeTetromino(origin, tetromino, CLEAR);
     }
 
     public void freezeTetromino(Point origin, List<Delta> tetromino) {
-        writeTetromino(origin, tetromino, 1);
+        writeTetromino(origin, tetromino, GARBAGE);
     }
 
     public List<Point> findTetromino() {
@@ -50,7 +54,7 @@ public class TetrisBoard {
 
         for (var rowIndex = 0; rowIndex < this.numRows; rowIndex++) {
             for (var columnIndex = 0; columnIndex < this.numColumns; columnIndex++) {
-                if (board[rowIndex][columnIndex] == -1) {
+                if (board[rowIndex][columnIndex] == TETROMINO) {
                     pieceCells.add(new Point(rowIndex, columnIndex));
                 }
             }

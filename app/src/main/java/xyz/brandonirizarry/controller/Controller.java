@@ -120,7 +120,7 @@ public class Controller {
         var points = Point.derivePoints(tetromino, origin);
 
         for (var point : points) {
-            if (tetrisBoard.valueAt(point) == 1) {
+            if (tetrisBoard.valueAt(point) == TetrisBoard.GARBAGE) {
                 return true;
             }
         }
