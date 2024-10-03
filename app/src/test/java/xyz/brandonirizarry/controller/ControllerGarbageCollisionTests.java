@@ -13,16 +13,10 @@ public class ControllerGarbageCollisionTests {
 
     private Controller makeTwoFlatI() {
         controller.startPiece(Tetromino.aliased("I1"));
-
-        for (var i = 0; i < 20; i++) {
-            controller.moveDown();
-        }
+        controller.hardDrop();
 
         controller.startPiece(Tetromino.aliased("I1"));
-
-        for (var i = 0; i < 20; i++) {
-            controller.moveDown();
-        }
+        controller.hardDrop();
 
         return controller;
     }
@@ -72,13 +66,7 @@ public class ControllerGarbageCollisionTests {
     @DisplayName("Left-collide O against frozen I")
     void leftCollideOAgainstFrozenI() {
         controller.startPiece(Tetromino.aliased("I2"));
-
-        // Note that freezing is only triggered when an attempt is made to
-        // cross the bottom border, not merely when it becomes adjacent.
-        // Hence the correct upper bound to use here is 3, not 2.
-        for (var i = 0; i < 3; i++) {
-            controller.moveDown();
-        }
+        controller.hardDrop();
 
         controller.startPiece(Tetromino.aliased("O1"));
         controller.moveRight();
@@ -102,10 +90,7 @@ public class ControllerGarbageCollisionTests {
 
         controller.rotateCounterclockwise();
         controller.moveLeft();
-
-        for (var i = 0; i < 3; i++) {
-            controller.moveDown();
-        }
+        controller.hardDrop();
 
         controller.startPiece(Tetromino.aliased("O1"));
         controller.moveRight();
@@ -123,10 +108,7 @@ public class ControllerGarbageCollisionTests {
         controller.moveLeft();
         controller.moveLeft();
         controller.moveLeft();
-
-        for (var i = 0; i < 3; i++) {
-            controller.moveDown();
-        }
+        controller.hardDrop();
 
         controller.startPiece(Tetromino.aliased("T1"));
 
@@ -146,10 +128,7 @@ public class ControllerGarbageCollisionTests {
         controller.moveLeft();
         controller.moveLeft();
         controller.moveLeft();
-
-        for (var i = 0; i < 3; i++) {
-            controller.moveDown();
-        }
+        controller.hardDrop();
 
         controller.startPiece(Tetromino.aliased("T1"));
 
@@ -165,10 +144,7 @@ public class ControllerGarbageCollisionTests {
     @DisplayName("moveRight against garbage is blocked")
     void moveRightAgainstGarbageIsBlocked() {
         controller.startPiece(Tetromino.aliased("S2"));
-
-        for (var i = 0; i < 10; i++) {
-            controller.moveDown();
-        }
+        controller.hardDrop();
 
         controller.startPiece(Tetromino.aliased("T2"));
 

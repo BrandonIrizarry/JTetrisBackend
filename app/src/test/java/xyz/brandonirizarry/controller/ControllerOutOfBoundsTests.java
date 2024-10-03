@@ -59,9 +59,7 @@ public class ControllerOutOfBoundsTests {
     @DisplayName("5. Move down multiple times to collide and become garbage")
     @Order(5)
     void moveDownMultipleTimesToCollide() {
-        for (var i = 0; i < 20; i++) {
-            controller.moveDown();
-        }
+        controller.hardDrop();
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "controllerOutOfBoundsTests/5_downwardCollision.txt");
     }
