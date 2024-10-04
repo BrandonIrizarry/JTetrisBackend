@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Tetromino {
-    private static final ImmutableMap<String, List<Delta>> aliases =
+    public static final ImmutableMap<String, List<Delta>> aliases =
             new ImmutableMap.Builder<String, List<Delta>>()
                     .put("I1", List.of(new Delta(0, 1), new Delta(0, 2), new Delta(0, 3)))
                     .put("I2", List.of(new Delta(1, 0), new Delta(2, 0), new Delta(3, 0)))
