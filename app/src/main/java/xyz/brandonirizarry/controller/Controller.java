@@ -47,6 +47,7 @@ public class Controller {
         var origin = pieceCells.getFirst();
 
         tetrisBoard.freezeTetromino(origin, tetromino);
+        tetrisBoard.collapse();
     }
 
     public void hardDrop() {

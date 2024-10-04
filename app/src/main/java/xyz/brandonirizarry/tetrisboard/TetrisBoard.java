@@ -15,7 +15,7 @@ public class TetrisBoard {
     public final int numRows;
     public final int numColumns;
 
-    private final int[][] board;
+    private int[][] board;
 
     public TetrisBoard(int numRows, int numColumns) {
         board = new int[numRows][numColumns];
@@ -66,6 +66,42 @@ public class TetrisBoard {
 
     public int valueAt(Point point) {
         return board[point.row()][point.column()];
+    }
+
+    public void collapse() {
+        // Clear all filled rows.
+        boolean performedClear = false;
+
+        for (var row : board) {
+            if (isFull(row)) {
+                Arrays.fill(row, CLEAR);
+                performedClear = true;
+            }
+        }
+
+        if (performedClear) {
+            // Copy all non-empty rows into a new 2D array, and make this
+            // the new 'this.board'.
+            var boardCopy = new int[numRows][numColumns];
+            var destinationRowIndex = numRows - 1;
+
+            for (var rowIndex = numRows - 1; rowIndex >= 0; rowIndex--) {
+                if (!isEmpty(board[rowIndex])) {
+                    System.arraycopy(board, rowIndex, boardCopy, destinationRowIndex, board[rowIndex].length);
+                    destinationRowIndex--;
+                }
+            }
+
+            board = boardCopy;
+        }
+    }
+
+    private boolean isEmpty(int[] row) {
+        return Arrays.stream(row).allMatch(x -> x == CLEAR);
+    }
+
+    private boolean isFull(int[] row) {
+        return Arrays.stream(row).allMatch(x -> x == GARBAGE);
     }
 
     private void writeTetromino(Point origin, List<Delta> tetromino, int value) {
