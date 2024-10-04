@@ -96,6 +96,12 @@ public class TetrisBoard {
         }
     }
 
+    public void clearAll() {
+        for (var row : board) {
+            Arrays.fill(row, CLEAR);
+        }
+    }
+
     private boolean isEmpty(int[] row) {
         return Arrays.stream(row).allMatch(x -> x == CLEAR);
     }
@@ -110,12 +116,6 @@ public class TetrisBoard {
         for (var delta : tetromino) {
             var currentPoint = Point.add(origin, delta);
             board[currentPoint.row()][currentPoint.column()] = value;
-        }
-    }
-
-    public void clearAll() {
-        for (var row : board) {
-            Arrays.fill(row, CLEAR);
         }
     }
 }
