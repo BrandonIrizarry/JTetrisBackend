@@ -86,4 +86,40 @@ public class LineClearingTests {
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "lineClearingTests/complexCollapse1.txt");
     }
+
+    @Test
+    @DisplayName("Collapse with prior garbageless line clear")
+    void collapseWithPriorCleanClear() {
+        controller.startPiece(T1);
+        controller.moveLeft();
+        controller.moveLeft();
+        controller.moveLeft();
+        controller.hardDrop();
+
+        controller.startPiece(T1);
+        controller.moveLeft();
+        controller.hardDrop();
+
+        controller.startPiece(T1);
+        controller.moveRight();
+        controller.hardDrop();
+
+        controller.startPiece(I1);
+        controller.moveLeft();
+        controller.moveLeft();
+        controller.moveLeft();
+        controller.hardDrop();
+
+        controller.startPiece(I1);
+        controller.moveRight();
+        controller.hardDrop(); // line clear
+
+        controller.startPiece(T1);
+        controller.moveRight();
+        controller.moveRight();
+        controller.moveRight();
+        controller.hardDrop();
+
+        TestUtils.checkBoardAgainstFileContents(tetrisBoard, "lineClearingTests/complexCollapse2.txt");
+    }
 }
