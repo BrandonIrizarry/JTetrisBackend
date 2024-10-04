@@ -49,7 +49,7 @@ public class Tetromino {
 
     public static final ImmutableMap<List<Delta>, Rotation> clockwiseTable;
 
-    // Initialize 'reverseRotationTable' here.
+    // Initialize 'clockwiseTable' here.
     static {
         Map<List<Delta>, Rotation> tmp = new HashMap<>();
 
