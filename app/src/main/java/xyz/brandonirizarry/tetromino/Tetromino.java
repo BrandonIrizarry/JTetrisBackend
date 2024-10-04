@@ -45,6 +45,15 @@ public class Tetromino {
                     .put(aliased("T2"), new Rotation(aliased("T3"), new Delta(0, 1)))
                     .put(aliased("T3"), new Rotation(aliased("T4"), new Delta(0, -1)))
                     .put(aliased("T4"), new Rotation(aliased("T1"), new Delta(0, 0)))
+                    .put(aliased("S1"), new Rotation(aliased("S2"), new Delta(0, 0)))
+                    .put(aliased("S2"), new Rotation(aliased("S1"), new Delta(0, 0)))
+                    .put(aliased("Z1"), new Rotation(aliased("Z2"), new Delta(0, 1)))
+                    .put(aliased("Z2"), new Rotation(aliased("Z1"), new Delta(0, -1)))
+                    .put(aliased("L1"), new Rotation(aliased("L2"), new Delta(0, 1)))
+                    .put(aliased("L2"), new Rotation(aliased("L3"), new Delta(0, -1)))
+                    .put(aliased("L3"), new Rotation(aliased("L4"), new Delta(0, 0)))
+                    .put(aliased("L4"), new Rotation(aliased("L1"), new Delta(0, 0)))
+                    .put(aliased("O1"), new Rotation(aliased("O1"), new Delta(0, 0)))
                     .build();
 
     public static final ImmutableMap<List<Delta>, Rotation> clockwiseTable;
