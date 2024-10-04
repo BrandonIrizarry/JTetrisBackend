@@ -50,6 +50,7 @@ public class Game {
             var input = scanner.nextLine().trim();
             var command = Objects.requireNonNullElse(commandMap.get(input), (controller) -> System.out.println(commandMap.keySet()));
             command.accept(controller);
+            controller.moveDown();
             System.out.println(tetrisBoard);
         }
     }
