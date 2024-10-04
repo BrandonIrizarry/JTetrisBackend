@@ -113,7 +113,7 @@ public class TetrisBoard {
         }
     }
 
-    public void clear() {
+    public void clearAll() {
         for (var row : board) {
             Arrays.fill(row, CLEAR);
         }

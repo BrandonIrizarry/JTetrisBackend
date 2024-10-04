@@ -22,7 +22,7 @@ public class TetrisBoardTests {
         var controller = new Controller(tetrisBoard);
 
         controller.startPiece(Tetromino.aliased("L1"));
-        tetrisBoard.clear();
+        tetrisBoard.clearAll();
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "tetrisBoardTests/empty6x6board.txt");
     }
