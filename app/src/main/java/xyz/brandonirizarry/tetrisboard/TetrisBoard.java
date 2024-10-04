@@ -87,7 +87,7 @@ public class TetrisBoard {
 
             for (var rowIndex = numRows - 1; rowIndex >= 0; rowIndex--) {
                 if (!isEmpty(board[rowIndex])) {
-                    System.arraycopy(board, rowIndex, boardCopy, destinationRowIndex, board[rowIndex].length);
+                    System.arraycopy(board[rowIndex], 0, boardCopy[destinationRowIndex], 0, numColumns);
                     destinationRowIndex--;
                 }
             }
