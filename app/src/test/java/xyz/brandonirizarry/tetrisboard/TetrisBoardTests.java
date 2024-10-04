@@ -3,7 +3,7 @@ package xyz.brandonirizarry.tetrisboard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import xyz.brandonirizarry.TestUtils;
-import xyz.brandonirizarry.controller.Controller;
+import xyz.brandonirizarry.primitives.Point;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
 public class TetrisBoardTests {
@@ -19,9 +19,8 @@ public class TetrisBoardTests {
     @DisplayName("Clear a board")
     void boardCleared() {
         var tetrisBoard = new TetrisBoard(6, 6);
-        var controller = new Controller(tetrisBoard);
 
-        controller.startPiece(Tetromino.aliased("L1"));
+        tetrisBoard.drawTetromino(new Point(0, 3), Tetromino.aliased("J1"));
         tetrisBoard.clearAll();
 
         TestUtils.checkBoardAgainstFileContents(tetrisBoard, "tetrisBoardTests/empty6x6board.txt");
