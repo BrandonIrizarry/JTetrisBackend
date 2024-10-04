@@ -47,7 +47,7 @@ public class Game {
         var scanner = new Scanner(System.in);
 
         while (scanner.hasNextLine()) {
-            var input = scanner.nextLine();
+            var input = scanner.nextLine().trim();
             var command = Objects.requireNonNullElse(commandMap.get(input), (controller) -> System.out.println(commandMap.keySet()));
             command.accept(controller);
             System.out.println(tetrisBoard);
