@@ -5,9 +5,13 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.10/userguide/building_java_projects.html in the Gradle documentation.
  */
 
+group = "xyz.brandonirizarry"
+version = "SNAPSHOT"
+
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    `maven-publish`
 }
 
 repositories {
@@ -33,8 +37,25 @@ java {
 }
 
 application {
-    // Define the main class for the application.
-    mainClass = "xyz.brandonirizarry.App"
+    mainModule = "xyz.brandonirizarry.JTetrisBackend"
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            artifactId = "jtetris-backend"
+        }
+    }
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/BrandonIrizarry/JTetrisBackend")
+            credentials {
+                username = System.getenv("GITHUB_USER")
+                password = System.getenv("GITHUB_PAT")
+            }
+        }
+    }
 }
 
 tasks.named<Test>("test") {
