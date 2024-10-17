@@ -106,6 +106,16 @@ public class TetrisBoard {
         }
     }
 
+    public Cell[][] export() {
+        var copy = new Cell[this.numRows][this.numColumns];
+
+        for (var rowIndex = 0; rowIndex < this.numRows; rowIndex++) {
+            System.arraycopy(this.board[rowIndex], 0, copy[rowIndex], 0, this.numColumns);
+        }
+
+        return copy;
+    }
+
     private boolean isEmpty(Cell[] row) {
         return Arrays.stream(row).allMatch(x -> x == Cell.Empty);
     }
