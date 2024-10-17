@@ -1,5 +1,6 @@
 package xyz.brandonirizarry.controller;
 
+import xyz.brandonirizarry.game.Cell;
 import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.primitives.Point;
 import xyz.brandonirizarry.primitives.Rotation;
@@ -127,7 +128,7 @@ public class Controller {
         var points = Point.derivePoints(tetromino, origin);
 
         for (var point : points) {
-            if (tetrisBoard.valueAt(point) == TetrisBoard.GARBAGE) {
+            if (tetrisBoard.valueAt(point) == Cell.Garbage) {
                 return true;
             }
         }
