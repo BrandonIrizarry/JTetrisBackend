@@ -18,7 +18,7 @@ public class Controller {
         this.tetrisBoard = tetrisBoard;
     }
 
-    public void startPiece(List<Delta> tetromino) {
+    public boolean startPiece(List<Delta> tetromino) {
         // Check whether we don't already have active tetromino cells
         // present from the previous call to 'startPiece'.
         var pieceCells = tetrisBoard.findTetromino();
@@ -27,7 +27,12 @@ public class Controller {
             throw new IllegalStateException("Premature invocation of 'startPiece'");
         }
 
-        tetrisBoard.drawTetromino(ORIGIN, tetromino);
+        if (isInsideGarbage(tetromino, ORIGIN)) {
+            return true;
+        } else {
+            tetrisBoard.drawTetromino(ORIGIN, tetromino);
+            return false;
+        }
     }
 
     public void rotateCounterclockwise() {
