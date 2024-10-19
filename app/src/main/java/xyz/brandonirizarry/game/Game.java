@@ -39,10 +39,12 @@ public class Game {
         controller.hardDrop();
     }
 
-    public void sendNextPiece() {
-        var tetrominoAliases = Tetromino.aliases.keySet().asList();
-        var tetromino = Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
-        controller.startPiece(tetromino);
+    public void sendNextPieceIfReady() {
+        if (tetrisBoard.findTetromino().isEmpty()) {
+            var tetrominoAliases = Tetromino.aliases.keySet().asList();
+            var tetromino = Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
+            controller.startPiece(tetromino);
+        }
     }
 
     public Cell[][] export() {
