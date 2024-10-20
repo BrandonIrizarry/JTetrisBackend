@@ -27,6 +27,11 @@ public class Controller {
             throw new IllegalStateException("Premature invocation of 'startPiece'");
         }
 
+        // Note that the drawing code needs to be repeated for both if-branches,
+        // due to how 'isInsideGarbage' works (which see.)
+        //
+        // In particular, we want to show the player the malformed piece that triggered
+        // the loss of the game.
         if (isInsideGarbage(tetromino, ORIGIN)) {
             tetrisBoard.drawTetromino(ORIGIN, tetromino);
             return true;
@@ -91,11 +96,12 @@ public class Controller {
     }
 
     /**
-     * Translate current active tetromino by given delta.
+     * Translate current active tetromino by given delta.<br><br>
+     *
+     * The method returns whether there was a collision, which signals to 'moveDown'
+     * that the piece should be frozen (converted to garbage.)
      * @param delta The given delta.
      * @return Whether the translation resulted in a collision.<br><br>
-     * This is used by 'moveDown' to determine whether the piece should
-     * be frozen (converted to garbage.)
      */
     private boolean translateByDelta(Delta delta) {
         var pieceCells = tetrisBoard.findTetromino();
@@ -130,6 +136,17 @@ public class Controller {
         return true;
     }
 
+    /**
+     * Check whether the proposed tetromino, starting at the given origin,
+     * would, if drawn, occupy spaces already taken up by garbage.<br><br>
+     *
+     * This method only works when the tetromino hasn't been drawn yet. To the
+     * contrary, since the tetromino has been drawn, those cells are no longer
+     * garbage, and so the tetromino would no longer be "inside garbage."
+     * @param tetromino The list of deltas representing the desired tetromino.
+     * @param origin The origin used to locate the tetromino for drawing on the board.
+     * @return Whether the proposed tetromino would be drawn on top of garbage.
+     */
     private boolean isInsideGarbage(List<Delta> tetromino, Point origin) {
         var points = Point.derivePoints(tetromino, origin);
 
