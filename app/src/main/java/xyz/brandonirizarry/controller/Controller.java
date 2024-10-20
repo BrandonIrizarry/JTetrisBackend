@@ -28,6 +28,7 @@ public class Controller {
         }
 
         if (isInsideGarbage(tetromino, ORIGIN)) {
+            tetrisBoard.drawTetromino(ORIGIN, tetromino);
             return true;
         } else {
             tetrisBoard.drawTetromino(ORIGIN, tetromino);
