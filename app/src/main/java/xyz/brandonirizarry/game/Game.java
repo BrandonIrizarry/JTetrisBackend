@@ -15,8 +15,23 @@ public class Game {
         this.controller = new Controller(this.tetrisBoard);
     }
 
-    public void moveDown() {
-        controller.moveDown();
+    public DownwardCollisionType moveDown() {
+        var tentativeCollisionType = controller.moveDown();
+
+        if (tentativeCollisionType != DownwardCollisionType.FreeFall) {
+            var tetrominoAliases = Tetromino.aliases.keySet().asList();
+            var tetromino = Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
+
+            // Start a new piece. If it spawns inside garbage, the player has lost,
+            // so we report this to the frontend.
+            var spawnedInsideGarbage = controller.startPiece(tetromino);
+
+            if (spawnedInsideGarbage) {
+                return DownwardCollisionType.GameLost;
+            }
+        }
+
+        return tentativeCollisionType;
     }
 
     public void moveLeft() {
@@ -37,16 +52,6 @@ public class Game {
 
     public void hardDrop() {
         controller.hardDrop();
-    }
-
-    public boolean sendNextPieceIfReady() {
-        if (tetrisBoard.findTetromino().isEmpty()) {
-            var tetrominoAliases = Tetromino.aliases.keySet().asList();
-            var tetromino = Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
-            return controller.startPiece(tetromino);
-        }
-
-        return false;
     }
 
     public Cell[][] export() {

@@ -1,6 +1,7 @@
 package xyz.brandonirizarry.controller;
 
 import xyz.brandonirizarry.game.Cell;
+import xyz.brandonirizarry.game.DownwardCollisionType;
 import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.primitives.Point;
 import xyz.brandonirizarry.primitives.Rotation;
@@ -49,17 +50,28 @@ public class Controller {
         rotate(Tetromino::getNextClockwiseRotation);
     }
 
-    public void moveDown() {
+    public DownwardCollisionType moveDown() {
         var collisionHappened = translateByDelta(new Delta(1, 0));
 
-        if (!collisionHappened) return;
+        if (!collisionHappened) return DownwardCollisionType.FreeFall;
 
         var pieceCells = tetrisBoard.findTetromino();
         var tetromino = Point.convertPointsToDeltas(pieceCells);
         var origin = pieceCells.getFirst();
 
         tetrisBoard.freezeTetromino(origin, tetromino);
-        tetrisBoard.collapse();
+        var numLinesCleared = tetrisBoard.collapse();
+
+        return switch (numLinesCleared) {
+            case 0 -> DownwardCollisionType.Drop;
+            case 1 -> DownwardCollisionType.LineClear;
+            case 2 -> DownwardCollisionType.DoubleLineClear;
+            case 3 -> DownwardCollisionType.TripleLineClear;
+            case 4 -> DownwardCollisionType.Tetris;
+            default -> throw new IllegalStateException(
+                    "Illegal number of lines cleared: %d".formatted(numLinesCleared)
+            );
+        };
     }
 
     public void hardDrop() {

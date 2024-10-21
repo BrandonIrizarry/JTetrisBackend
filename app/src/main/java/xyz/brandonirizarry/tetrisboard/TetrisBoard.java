@@ -72,18 +72,18 @@ public class TetrisBoard {
         return board[point.row()][point.column()];
     }
 
-    public void collapse() {
+    public int collapse() {
         // Clear all filled rows.
-        boolean performedClear = false;
+        int numLinesCleared = 0;
 
         for (var row : board) {
             if (isFull(row)) {
                 Arrays.fill(row, Cell.Empty);
-                performedClear = true;
+                numLinesCleared++;
             }
         }
 
-        if (performedClear) {
+        if (numLinesCleared > 0) {
             // Copy all non-empty rows into a new 2D array, and make this
             // the new 'this.board'.
             var boardCopy = makeInternalCopy(this.numRows, this.numColumns);
@@ -98,6 +98,9 @@ public class TetrisBoard {
 
             board = boardCopy;
         }
+
+        // Report this value to 'moveDown'.
+        return numLinesCleared;
     }
 
     public void clearAll() {
