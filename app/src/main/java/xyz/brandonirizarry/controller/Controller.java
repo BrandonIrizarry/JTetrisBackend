@@ -74,10 +74,20 @@ public class Controller {
         };
     }
 
-    public void hardDrop() {
+    public DownwardCollisionType hardDrop() {
+        DownwardCollisionType lastCollision = null;
+
         for (var i = 0; i < tetrisBoard.numRows; i++) {
-            moveDown();
+            lastCollision = moveDown();
         }
+
+        if (lastCollision == DownwardCollisionType.FreeFall) {
+            throw new IllegalStateException("Hard drop can't end with free fall");
+        } else if (lastCollision == null) {
+            throw new NullPointerException("'lastCollision' inexplicably null");
+        }
+
+        return lastCollision;
     }
 
     public void moveLeft() {

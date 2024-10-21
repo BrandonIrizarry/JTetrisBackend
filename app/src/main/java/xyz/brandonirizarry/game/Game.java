@@ -63,8 +63,21 @@ public class Game {
         controller.rotateClockwise();
     }
 
-    public void hardDrop() {
-        controller.hardDrop();
+    public DownwardCollisionType hardDrop() {
+        var tentativeCollisionType = controller.hardDrop();
+
+        var tetrominoAliases = Tetromino.aliases.keySet().asList();
+        var tetromino = Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
+
+        // Start a new piece. If it spawns inside garbage, the player has lost,
+        // so we report this to the frontend.
+        var spawnedInsideGarbage = controller.startPiece(tetromino);
+
+        if (spawnedInsideGarbage) {
+            return DownwardCollisionType.GameLost;
+        }
+
+        return tentativeCollisionType;
     }
 
     public Cell[][] export() {
