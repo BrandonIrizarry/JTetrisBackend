@@ -15,6 +15,19 @@ public class Game {
         this.controller = new Controller(this.tetrisBoard);
     }
 
+    public void start() {
+        var tetrominoAliases = Tetromino.aliases.keySet().asList();
+        var tetromino = Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
+
+        // Start a new piece. If it spawns inside garbage, the player has lost,
+        // so we report this to the frontend.
+        var spawnedInsideGarbage = controller.startPiece(tetromino);
+
+        if (spawnedInsideGarbage) {
+            throw new IllegalStateException("Piece spawned in garbage at start of game");
+        }
+    }
+
     public DownwardCollisionType moveDown() {
         var tentativeCollisionType = controller.moveDown();
 
