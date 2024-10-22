@@ -64,3 +64,7 @@ tasks.named<Test>("test") {
 tasks.named<JavaExec>("run") {
     standardInput = System.`in`
 }
+
+tasks.named<Jar>("jar") {
+    archiveFileName.set("JTetrisBackend.jar")
+}
