@@ -6,7 +6,7 @@
  */
 
 group = "xyz.brandonirizarry"
-version = "1.0"
+version = "1.0-SNAPSHOT"
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
