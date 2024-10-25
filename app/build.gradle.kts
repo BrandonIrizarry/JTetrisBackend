@@ -6,6 +6,7 @@
  */
 
 group = "xyz.brandonirizarry"
+version = "1.0"
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
@@ -48,10 +49,11 @@ publishing {
     }
     repositories {
         maven {
-            url = uri("https://maven.pkg.github.com/BrandonIrizarry/JTetrisBackend")
+            name = "maven"
+            url = uri("https://brandonirizarry.xyz/maven")
             credentials {
-                username = System.getenv("GITHUB_USER")
-                password = System.getenv("GITHUB_PAT")
+                username = System.getenv("MAVEN_USER")
+                password = System.getenv("MAVEN_PASSWORD")
             }
         }
     }
