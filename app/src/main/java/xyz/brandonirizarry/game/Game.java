@@ -1,9 +1,11 @@
 package xyz.brandonirizarry.game;
 
 import xyz.brandonirizarry.controller.Controller;
+import xyz.brandonirizarry.primitives.Delta;
 import xyz.brandonirizarry.tetrisboard.TetrisBoard;
 import xyz.brandonirizarry.tetromino.Tetromino;
 
+import java.util.List;
 import java.util.Random;
 
 public class Game {
@@ -16,8 +18,7 @@ public class Game {
     }
 
     public void start() {
-        var tetrominoAliases = Tetromino.aliases.keySet().asList();
-        var tetromino = Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
+        var tetromino = getNextTetromino();
 
         // Start a new piece. If it spawns inside garbage, the player has lost,
         // so we report this to the frontend.
@@ -32,8 +33,7 @@ public class Game {
         var tentativeCollisionType = controller.moveDown();
 
         if (tentativeCollisionType != DownwardCollisionType.FreeFall) {
-            var tetrominoAliases = Tetromino.aliases.keySet().asList();
-            var tetromino = Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
+            var tetromino = getNextTetromino();
 
             // Start a new piece. If it spawns inside garbage, the player has lost,
             // so we report this to the frontend.
@@ -65,5 +65,10 @@ public class Game {
 
     public Cell[][] export() {
         return this.tetrisBoard.export();
+    }
+
+    private List<Delta> getNextTetromino() {
+        var tetrominoAliases = Tetromino.aliases.keySet().asList();
+        return Tetromino.aliased(tetrominoAliases.get(new Random().nextInt(tetrominoAliases.size())));
     }
 }
