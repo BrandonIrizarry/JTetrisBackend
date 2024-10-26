@@ -63,10 +63,6 @@ public class Game {
         controller.rotateClockwise();
     }
 
-    public void hardDrop() {
-        controller.hardDrop();
-    }
-
     public Cell[][] export() {
         return this.tetrisBoard.export();
     }

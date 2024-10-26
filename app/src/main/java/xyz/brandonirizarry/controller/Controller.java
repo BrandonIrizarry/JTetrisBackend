@@ -74,7 +74,7 @@ public class Controller {
         };
     }
 
-    public void hardDrop() {
+    void hardDrop() {
         for (var i = 0; i < tetrisBoard.numRows; i++) {
             moveDown();
         }
