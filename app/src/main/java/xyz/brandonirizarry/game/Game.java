@@ -8,10 +8,14 @@ public class Game {
     private final Controller controller;
     private final GameState gameState;
 
-    public Game(int numRows, int numColumns) {
+    public Game(int numRows, int numColumns, int startLevel) {
         this.tetrisBoard = new TetrisBoard(numRows, numColumns);
         this.controller = new Controller(this.tetrisBoard);
-        this.gameState = new GameState();
+        this.gameState = new GameState(startLevel);
+    }
+
+    public Game(int numRows, int numColumns) {
+        this(numRows, numColumns, 0);
     }
 
     public void start() {
@@ -41,6 +45,7 @@ public class Game {
             }
         }
 
+        gameState.update(tentativeCollisionType);
         return tentativeCollisionType;
     }
 
@@ -62,5 +67,13 @@ public class Game {
 
     public Cell[][] export() {
         return this.tetrisBoard.export();
+    }
+
+    public int getScore() {
+        return gameState.getScore();
+    }
+
+    public int getLevel() {
+        return gameState.getLevel();
     }
 }
