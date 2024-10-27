@@ -76,4 +76,8 @@ public class Game {
     public int getLevel() {
         return gameState.getLevel();
     }
+
+    public int getNumLinesCleared() {
+        return gameState.getNumLinesCleared();
+    }
 }

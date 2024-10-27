@@ -42,6 +42,10 @@ class GameState {
         return this.level;
     }
 
+    int getNumLinesCleared() {
+        return this.numLinesCleared;
+    }
+
     void update(DownwardCollisionType collisionType) {
         updateScore(collisionType);
         updateLevel(collisionType);
