@@ -6,6 +6,15 @@ import xyz.brandonirizarry.tetromino.Tetromino;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A class to manage Tetris metadata: current score, number of lines
+ * cleared, current level, and the identity of the next piece. In sum,
+ * what is normally displayed on the side panel in a frontend GUI
+ * implementation of the game.<br><br>
+ *
+ * In fact, the Game class (which owns an instance of GameState) uses
+ * the next-piece preview feature to fetch the next piece.
+ */
 class GameState {
     private int score = 0;
     private int level;
