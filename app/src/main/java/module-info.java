@@ -1,5 +1,5 @@
 open module xyz.brandonirizarry.JTetrisBackend {
     requires com.google.common;
 
-    exports xyz.brandonirizarry.game;
+    exports xyz.brandonirizarry.jtetris.game;
 }

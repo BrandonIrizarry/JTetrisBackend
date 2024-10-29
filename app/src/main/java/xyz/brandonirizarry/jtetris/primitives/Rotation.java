@@ -1,4 +1,4 @@
-package xyz.brandonirizarry.primitives;
+package xyz.brandonirizarry.jtetris.primitives;
 
 import java.util.List;
 

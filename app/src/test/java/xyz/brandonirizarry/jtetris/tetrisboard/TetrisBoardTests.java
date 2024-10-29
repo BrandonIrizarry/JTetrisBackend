@@ -1,10 +1,10 @@
-package xyz.brandonirizarry.tetrisboard;
+package xyz.brandonirizarry.jtetris.tetrisboard;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.brandonirizarry.TestUtils;
-import xyz.brandonirizarry.primitives.Point;
-import xyz.brandonirizarry.tetromino.Tetromino;
+import xyz.brandonirizarry.jtetris.TestUtils;
+import xyz.brandonirizarry.jtetris.primitives.Point;
+import xyz.brandonirizarry.jtetris.tetromino.Tetromino;
 
 public class TetrisBoardTests {
     @Test

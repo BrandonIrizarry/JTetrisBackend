@@ -1,8 +1,8 @@
-package xyz.brandonirizarry.tetromino;
+package xyz.brandonirizarry.jtetris.tetromino;
 
 import com.google.common.collect.ImmutableMap;
-import xyz.brandonirizarry.primitives.Delta;
-import xyz.brandonirizarry.primitives.Rotation;
+import xyz.brandonirizarry.jtetris.primitives.Delta;
+import xyz.brandonirizarry.jtetris.primitives.Rotation;
 
 import java.util.HashMap;
 import java.util.List;

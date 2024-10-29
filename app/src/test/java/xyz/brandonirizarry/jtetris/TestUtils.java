@@ -1,6 +1,6 @@
-package xyz.brandonirizarry;
+package xyz.brandonirizarry.jtetris;
 
-import xyz.brandonirizarry.tetrisboard.TetrisBoard;
+import xyz.brandonirizarry.jtetris.tetrisboard.TetrisBoard;
 
 import java.io.IOException;
 

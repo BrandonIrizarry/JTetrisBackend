@@ -1,7 +1,7 @@
-package xyz.brandonirizarry.game;
+package xyz.brandonirizarry.jtetris.game;
 
-import xyz.brandonirizarry.controller.Controller;
-import xyz.brandonirizarry.tetrisboard.TetrisBoard;
+import xyz.brandonirizarry.jtetris.controller.Controller;
+import xyz.brandonirizarry.jtetris.tetrisboard.TetrisBoard;
 
 public class Game {
     private final TetrisBoard tetrisBoard;

@@ -1,7 +1,7 @@
-package xyz.brandonirizarry.game;
+package xyz.brandonirizarry.jtetris.game;
 
-import xyz.brandonirizarry.primitives.Delta;
-import xyz.brandonirizarry.tetromino.Tetromino;
+import xyz.brandonirizarry.jtetris.primitives.Delta;
+import xyz.brandonirizarry.jtetris.tetromino.Tetromino;
 
 import java.util.List;
 import java.util.Random;

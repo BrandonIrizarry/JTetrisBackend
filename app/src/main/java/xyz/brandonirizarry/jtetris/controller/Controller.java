@@ -1,12 +1,12 @@
-package xyz.brandonirizarry.controller;
+package xyz.brandonirizarry.jtetris.controller;
 
-import xyz.brandonirizarry.game.Cell;
-import xyz.brandonirizarry.game.DownwardCollisionType;
-import xyz.brandonirizarry.primitives.Delta;
-import xyz.brandonirizarry.primitives.Point;
-import xyz.brandonirizarry.primitives.Rotation;
-import xyz.brandonirizarry.tetrisboard.TetrisBoard;
-import xyz.brandonirizarry.tetromino.Tetromino;
+import xyz.brandonirizarry.jtetris.game.Cell;
+import xyz.brandonirizarry.jtetris.game.DownwardCollisionType;
+import xyz.brandonirizarry.jtetris.primitives.Delta;
+import xyz.brandonirizarry.jtetris.primitives.Point;
+import xyz.brandonirizarry.jtetris.primitives.Rotation;
+import xyz.brandonirizarry.jtetris.tetrisboard.TetrisBoard;
+import xyz.brandonirizarry.jtetris.tetromino.Tetromino;
 
 import java.util.List;
 import java.util.function.Function;

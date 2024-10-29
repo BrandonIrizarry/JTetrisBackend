@@ -1,4 +1,4 @@
-package xyz.brandonirizarry.game;
+package xyz.brandonirizarry.jtetris.game;
 
 public enum DownwardCollisionType {
     FreeFall, Drop, LineClear, DoubleLineClear, TripleLineClear, Tetris, GameLost

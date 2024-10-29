@@ -1,8 +1,8 @@
-package xyz.brandonirizarry.tetrisboard;
+package xyz.brandonirizarry.jtetris.tetrisboard;
 
-import xyz.brandonirizarry.game.Cell;
-import xyz.brandonirizarry.primitives.Delta;
-import xyz.brandonirizarry.primitives.Point;
+import xyz.brandonirizarry.jtetris.game.Cell;
+import xyz.brandonirizarry.jtetris.primitives.Delta;
+import xyz.brandonirizarry.jtetris.primitives.Point;
 
 import java.util.ArrayList;
 import java.util.Arrays;

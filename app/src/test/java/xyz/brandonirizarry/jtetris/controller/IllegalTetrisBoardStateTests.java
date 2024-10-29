@@ -1,10 +1,10 @@
-package xyz.brandonirizarry.controller;
+package xyz.brandonirizarry.jtetris.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.brandonirizarry.tetrisboard.TetrisBoard;
-import xyz.brandonirizarry.tetromino.Tetromino;
+import xyz.brandonirizarry.jtetris.tetrisboard.TetrisBoard;
+import xyz.brandonirizarry.jtetris.tetromino.Tetromino;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

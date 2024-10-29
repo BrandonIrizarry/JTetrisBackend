@@ -1,9 +1,9 @@
-package xyz.brandonirizarry.controller;
+package xyz.brandonirizarry.jtetris.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import xyz.brandonirizarry.TestUtils;
-import xyz.brandonirizarry.tetrisboard.TetrisBoard;
+import xyz.brandonirizarry.jtetris.TestUtils;
+import xyz.brandonirizarry.jtetris.tetrisboard.TetrisBoard;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
