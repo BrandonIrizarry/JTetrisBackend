@@ -12,7 +12,7 @@ import java.util.Random;
  * what is normally displayed on the side panel in a frontend GUI
  * implementation of the game.<br><br>
  *
- * In fact, the Game class (which owns an instance of GameState) uses
+ * The Game class (which owns an instance of GameState) uses
  * the next-piece preview feature to fetch the next piece.
  */
 class GameState {
