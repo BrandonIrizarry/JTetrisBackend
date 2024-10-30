@@ -1,5 +1,5 @@
 package xyz.brandonirizarry.jtetris.game;
 
 public enum Cell {
-    Empty, Tetromino, Garbage;
+    Empty, Tetromino, Garbage
 }
