@@ -1,7 +1,7 @@
 package xyz.brandonirizarry.jtetris.controller;
 
 import xyz.brandonirizarry.jtetris.game.Cell;
-import xyz.brandonirizarry.jtetris.game.DownwardCollisionType;
+import xyz.brandonirizarry.jtetris.primitives.DownwardCollisionType;
 import xyz.brandonirizarry.jtetris.primitives.Delta;
 import xyz.brandonirizarry.jtetris.primitives.Point;
 import xyz.brandonirizarry.jtetris.primitives.Rotation;

@@ -1,6 +1,7 @@
 package xyz.brandonirizarry.jtetris.game;
 
 import xyz.brandonirizarry.jtetris.primitives.Delta;
+import xyz.brandonirizarry.jtetris.primitives.DownwardCollisionType;
 import xyz.brandonirizarry.jtetris.tetromino.Tetromino;
 
 import java.util.List;

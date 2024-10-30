@@ -1,6 +1,7 @@
 package xyz.brandonirizarry.jtetris.game;
 
 import xyz.brandonirizarry.jtetris.controller.Controller;
+import xyz.brandonirizarry.jtetris.primitives.DownwardCollisionType;
 import xyz.brandonirizarry.jtetris.tetrisboard.TetrisBoard;
 
 public class Game {
