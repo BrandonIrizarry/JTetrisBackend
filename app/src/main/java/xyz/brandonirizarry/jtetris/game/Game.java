@@ -7,6 +7,7 @@ public class Game {
     private final TetrisBoard tetrisBoard;
     private final Controller controller;
     private final GameState gameState;
+    private boolean gameLost = false;
 
     public Game(int numRows, int numColumns, int startLevel) {
         this.tetrisBoard = new TetrisBoard(numRows, numColumns);
@@ -30,23 +31,30 @@ public class Game {
         }
     }
 
-    public DownwardCollisionType moveDown() {
+    /**
+     *
+     * @return Whether piece is still in free-fall.
+     */
+    public boolean moveDown() {
         var tentativeCollisionType = controller.moveDown();
 
-        if (tentativeCollisionType != DownwardCollisionType.FreeFall) {
-            var tetromino = gameState.advanceToNextTetromino();
-
-            // Start a new piece. If it spawns inside garbage, the player has lost,
-            // so we report this to the frontend.
-            var spawnedInsideGarbage = controller.startPiece(tetromino);
-
-            if (spawnedInsideGarbage) {
-                return DownwardCollisionType.GameLost;
-            }
+        if (tentativeCollisionType == DownwardCollisionType.FreeFall) {
+            return true;
         }
 
-        gameState.update(tentativeCollisionType);
-        return tentativeCollisionType;
+        var tetromino = gameState.advanceToNextTetromino();
+
+        // Start a new piece. If it spawns inside garbage, the player has lost,
+        // so we report this to the frontend.
+        var spawnedInsideGarbage = controller.startPiece(tetromino);
+
+        if (spawnedInsideGarbage) {
+            this.gameLost = true;
+        } else {
+            gameState.update(tentativeCollisionType);
+        }
+
+        return false;
     }
 
     public void moveLeft() {
@@ -79,5 +87,9 @@ public class Game {
 
     public int getNumLinesCleared() {
         return gameState.getNumLinesCleared();
+    }
+
+    public boolean isGameLost() {
+        return this.gameLost;
     }
 }

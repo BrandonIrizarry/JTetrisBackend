@@ -62,7 +62,7 @@ class GameState {
 
     private void updateScore(DownwardCollisionType collisionType) {
         var pointsEarned = switch (collisionType) {
-            case FreeFall, Drop, GameLost -> 0;
+            case FreeFall, Drop -> 0;
             case LineClear -> 40;
             case DoubleLineClear -> 100;
             case TripleLineClear -> 300;
@@ -74,7 +74,7 @@ class GameState {
 
     private void updateLevel(DownwardCollisionType collisionType) {
         var currentLinesCleared = switch (collisionType) {
-            case FreeFall, Drop, GameLost -> 0;
+            case FreeFall, Drop -> 0;
             case LineClear -> 1;
             case DoubleLineClear -> 2;
             case TripleLineClear -> 3;
