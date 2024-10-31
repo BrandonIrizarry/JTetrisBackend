@@ -9,6 +9,7 @@ public class Game {
     private final Controller controller;
     private final GameState gameState;
     private boolean gameLost = false;
+    private boolean gameStarted = false;
 
     public Game(int numRows, int numColumns, int startLevel) {
         this.tetrisBoard = new TetrisBoard(numRows, numColumns);
@@ -30,6 +31,8 @@ public class Game {
         if (spawnedInsideGarbage) {
             throw new IllegalStateException("Piece spawned in garbage at start of game");
         }
+
+        this.gameStarted = true;
     }
 
     /**
@@ -92,5 +95,9 @@ public class Game {
 
     public boolean isGameLost() {
         return this.gameLost;
+    }
+
+    public boolean gameStarted() {
+        return this.gameStarted;
     }
 }
